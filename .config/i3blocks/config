@@ -1,0 +1,106 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+command=~/.config/i3blocks/scripts/$BLOCK_NAME
+separator_block_width=11
+markup=none
+
+[window]
+interval=-3
+align=left
+
+[cpu_usage]
+label=CPU
+interval=1
+separator=false
+color=#9ab8d7
+
+
+[temperature]
+label=Temp
+interval=5
+color=#9ab8d7
+
+[memory]
+label=RAM
+separator=false
+interval=30
+color=#9ab8d7
+
+[memory]
+label=Swap
+instance=swap
+separator=true
+interval=30
+color=#9ab8d7
+
+[inet]
+label=iNet
+interval=once
+command=sleep 5; curl ipv4.icanhazip.com
+separator=false
+color=#9ab8d7
+
+[iface]
+#instance=wlan0
+label=LAN
+interval=10
+separator=false
+color=#9ab8d7
+
+[wifi]
+label=WiFi
+instance=wlp3s0
+interval=10
+separator=false
+
+[ssid]
+#label=SSID
+interval=10
+separator=true
+color=#9ab8d7
+
+[volume]
+label=Volume
+instance=Master
+interval=once
+signal=10
+color=#9ab8d7
+
+[time]
+command=date '+%d/%m/%Y %I:%M %p'
+interval=15
+color=#9ab8d7
+
+[updates]
+color=#9ab8d7
+interval=480
+
+[trash]
+command=echo -n $(whoami); echo -n "@"; echo $(hostname)
+interval=once
+
+#[diskio]
+#command=diskio
+#interval=persist
+#markup=pango
