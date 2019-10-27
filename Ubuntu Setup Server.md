@@ -12,14 +12,6 @@
     cd /media/vmtools/
     sudo ./VBoxLinuxAdditions.run
 
-
-## zsh
-
-    mkdir .antigen
-    curl -L git.io/antigen > ~/.antigen/antigen.zsh
-    chsh -s /bin/zsh
-
-
 ## Wireguard
 
     modprobe wireguard
