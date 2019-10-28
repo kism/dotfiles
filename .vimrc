@@ -21,6 +21,9 @@ set ruler
 set undolevels=1000
 set backspace=indent,eol,start
 
+syntax on
+filetype plugin indent on
+
 " Vundle specific
 set nocompatible                    " be iMproved, required
 filetype off                        " required
