@@ -4,7 +4,7 @@
 
     sudo apt-get update
     sudo apt-get upgrade -y
-    sudo apt-get install openssh-server htop zsh git tmux vim squid qbittorrent-nox -y
+    sudo apt-get install openssh-server htop zsh git tmux vim wireguard squid qbittorrent-nox -y
 
 ## Virtualbox Tools
 
