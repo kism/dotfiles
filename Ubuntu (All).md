@@ -2,7 +2,7 @@
 
 ## Updates & Packages
 
-    sudo apt-get install zsh git tmux vim openssh-server
+    sudo apt install zsh git tmux vim openssh-server
     sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
     sudo fc-cache -f -v
 
