@@ -23,7 +23,7 @@ Remember to run :PluginInstall
 
 
 ## tmux
-    cp .tmux.config ~/.tmux.config
+    cp .tmux.conf ~/.tmux.conf
 
 ## bash
     cp .bashrc ~/.bashrc
