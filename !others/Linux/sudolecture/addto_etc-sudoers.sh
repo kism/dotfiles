@@ -1,1 +1,1 @@
-Defaults        lecture_file = /etc/sudoers.lecture
+defaults        lecture_file = /etc/sudoers.lecture

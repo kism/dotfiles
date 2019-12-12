@@ -33,68 +33,64 @@ align=left
 label=CPU
 interval=1
 separator=false
-color=#9ab8d7
+color=#fc6f03
 
 
 [temperature]
-label=Temp
+label=TEM
 interval=5
-color=#9ab8d7
+color=#fc6f03
 
 [memory]
 label=RAM
 separator=false
 interval=30
-color=#9ab8d7
+color=#fc6f03
 
 [memory]
-label=Swap
+label=SWP
 instance=swap
 separator=true
 interval=30
-color=#9ab8d7
+color=#fc6f03
 
 [inet]
-label=iNet
+label=NET
 interval=once
 command=sleep 5; curl ipv4.icanhazip.com
 separator=false
-color=#9ab8d7
+color=#fc6f03
 
 [iface]
 #instance=wlan0
 label=LAN
 interval=10
 separator=false
-color=#9ab8d7
-
-[wifi]
-label=WiFi
-instance=wlp3s0
-interval=10
-separator=false
+color=#fc6f03
 
 [ssid]
 #label=SSID
 interval=10
 separator=true
-color=#9ab8d7
+color=#fc6f03
 
 [volume]
-label=Volume
+label=VOL
 instance=Master
 interval=once
 signal=10
-color=#9ab8d7
+color=#fc6f03
+
+[batterypl]
+color=#fc6f03
+markup=pango
+#instance=BAT0
+interval=30
 
 [time]
-command=date '+%d/%m/%Y %I:%M %p'
+command=date '+%Y%m%d %H:%M'
 interval=15
-color=#9ab8d7
-
-[updates]
-color=#9ab8d7
-interval=480
+color=#fc6f03
 
 [trash]
 command=echo -n $(whoami); echo -n "@"; echo $(hostname)
