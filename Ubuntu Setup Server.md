@@ -14,7 +14,7 @@
 
 ## Wireguard
 
-    modprobe wireguard
+    sudo modprobe wireguard
     lsmod | grep wireguard
 
 ## Mullvad
