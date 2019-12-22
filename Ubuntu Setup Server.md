@@ -35,4 +35,5 @@ wget the latest version of mullvad from https://github.com/mullvad/mullvadvpn-ap
     mullvad relay set location sg sin
     mullvad lan set allow
     mullvad connect
+    mullvad auto-connect set on
     mullvad block-when-disconnected set on
