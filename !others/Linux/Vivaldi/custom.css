@@ -1,12 +1,16 @@
+/* Hide the Vivaldi titlebar when fullscreen, Windows Version */
+/* Intended for use with tab position being on the left or right */
+/* @import "custom.css"; */
+/* resources\vivaldi\style\common.css */
+
 /* Remove header */
 :-webkit-any(.native, .maximized)#browser #header {
     min-height: 0 !important;
 }
 
-/* Keep Vivaldi button */
+/* Demolish Vivaldi button */
 :-webkit-any(.native, .maximized)#browser .vivaldi  {
-    z-index: 1;
-    top: 6px !important;
+	display: none !important;
 }
 
 /* Keep horizontal menu */
@@ -59,7 +63,7 @@
     padding-left: 276px !important;
 }
 
-/* Remove coloured bar*/
+/* Remove coloured bar
 .toolbar-addressbar:after {
     display: none !important;
-}    
+}     */

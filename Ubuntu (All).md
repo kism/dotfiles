@@ -2,14 +2,14 @@
 
 ## Updates & Packages
 
-    sudo apt-get install zsh git tmux vim openssh-server
+    sudo apt install zsh git tmux vim openssh-server curl
     sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
     sudo fc-cache -f -v
 
 
 ## zsh
 
-    mkdir .antigen
+    mkdir ~/.antigen
     curl -L git.io/antigen > ~/.antigen/antigen.zsh
     chsh -s /bin/zsh
 
@@ -23,7 +23,7 @@ Remember to run :PluginInstall
 
 
 ## tmux
-    cp .tmux.config ~/.tmux.config
+    cp .tmux.conf ~/.tmux.conf
 
 ## bash
     cp .bashrc ~/.bashrc

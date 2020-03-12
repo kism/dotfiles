@@ -2,9 +2,9 @@
 
 ## Updates & Packages
 
-    sudo apt-get update
-    sudo apt-get upgrade -y
-    sudo apt-get install openssh-server htop zsh git tmux vim squid qbittorrent-nox -y
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt install openssh-server htop zsh git tmux vim wireguard squid qbittorrent-nox -y
 
 ## Virtualbox Tools
 
@@ -14,7 +14,7 @@
 
 ## Wireguard
 
-    modprobe wireguard
+    sudo modprobe wireguard
     lsmod | grep wireguard
 
 ## Mullvad
@@ -35,4 +35,5 @@ wget the latest version of mullvad from https://github.com/mullvad/mullvadvpn-ap
     mullvad relay set location sg sin
     mullvad lan set allow
     mullvad connect
+    mullvad auto-connect set on
     mullvad block-when-disconnected set on
