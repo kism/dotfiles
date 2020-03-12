@@ -29,71 +29,64 @@ markup=none
 interval=-3
 align=left
 
-[cpu_usage]
-label=CPU
+[cputempspeed]
+label=CPU 
 interval=1
-separator=false
-color=#fc6f03
-
-
-[temperature]
-label=TEM
-interval=5
-color=#fc6f03
+color=#34be5b
 
 [memory]
-label=RAM
+label=RAM 
 separator=false
 interval=30
-color=#fc6f03
+color=#34be5b
 
 [memory]
-label=SWP
+label=Swap 
 instance=swap
 separator=true
 interval=30
-color=#fc6f03
+color=#34be5b
 
 [inet]
-label=NET
+label=iNet 
 interval=once
-command=sleep 5; curl ipv4.icanhazip.com
+command=sleep 10; curl ipv4.icanhazip.com
 separator=false
-color=#fc6f03
+color=#34be5b
 
 [iface]
 #instance=wlan0
-label=LAN
-interval=10
-separator=false
-color=#fc6f03
-
-[ssid]
-#label=SSID
+label=LAN 
 interval=10
 separator=true
-color=#fc6f03
+color=#34be5b
 
-[volume]
-label=VOL
-instance=Master
-interval=once
-signal=10
-color=#fc6f03
+#[ssid]
+#label=SSID
+#interval=10
+#separator=true
+#color=#34be5b
 
-[batterypl]
-color=#fc6f03
-markup=pango
-#instance=BAT0
-interval=30
+#[volume]
+#label=Volume 
+#instance=Master
+#interval=once
+#signal=10
+#color=#34be5b
+
+#[battery]
+#label=Battery 
+#color=#34be5b
+#markup=pango
+#interval=30
 
 [time]
-command=date '+%Y%m%d %H:%M'
+command=date '+%Y-%m-%d %H:%M'
 interval=15
-color=#fc6f03
+color=#34be5b
 
 [trash]
-command=echo -n $(whoami); echo -n "@"; echo $(hostname)
+command=echo -n ''; echo -n $(whoami); echo -n "@"; echo -n $(hostname); echo ''
 interval=once
 
 #[diskio]
