@@ -1,5 +1,6 @@
 ### Kieran's Config for i3
-set $mod Mod1
+set $mod Mod1 # Alt, required for Pinebook pro until I update firmware
+#set $mod Mod4 # Super key, preferred tbh
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -149,6 +150,19 @@ exec --no-startup-id compton
 exec --no-startup-id xsetroot -solid "#111111"
 exec --no-startup-id feh --bg-fill /home/kism/Pictures/wall.jpg
 for_window [class="^.*"] border pixel 3
+
+# Resolution and Friends
+#exec --no-startup-id xrandr --output LVDS-1 --primary --mode 1600x900 --pos 1920x0 --rotate normal --output VGA-1-2 --off --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --off
+#workspace 01 output LVDS-1
+#workspace 02 output LVDS-1
+#workspace 03 output LVDS-1
+#workspace 04 output LVDS-1
+#workspace 05 output LVDS-1
+#workspace 06 output HDMI-1
+#workspace 07 output HDMI-1
+#workspace 08 output HDMI-1
+#workspace 09 output HDMI-1
+#workspace 10 output HDMI-1
 
 ##Colours
 set $FOCUS   #34be5b
