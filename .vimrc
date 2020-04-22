@@ -16,7 +16,7 @@ call vundle#begin()                 " Vundle required
 Plugin 'VundleVim/Vundle.vim'       " Vundle main
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
 call vundle#end()                   " required
