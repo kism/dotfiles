@@ -3,9 +3,6 @@
 set nowrap
 set mouse-=a
 
-syntax on
-filetype plugin indent on
-
 " Vundle specific
 set nocompatible                    " be iMproved, required
 filetype off                        " required
