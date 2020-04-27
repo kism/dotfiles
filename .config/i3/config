@@ -1,6 +1,5 @@
 ### Kieran's Config for i3
-set $mod Mod1 # Alt, required for Pinebook pro until I update firmware
-#set $mod Mod4 # Super key, preferred tbh
+set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -100,8 +99,22 @@ bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -f 'pango: DejaVu Sans Mono 12' -m 'Exit i3wm?' -b 'Yes' 'i3-msg exit'"
+
+# Set shut down, restart and locking features
+bindsym $mod+Shift+e mode "$mode_system"
+set $mode_system (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -138,31 +151,22 @@ bar {
 
 ### Kieran Trash
 ## Startup
-# Misc
+exec --no-startup-id start-pulseaudio-x11
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
 exec --no-startup-id pamac-tray
-exec --no-startup-id compton
+exec --no-startup-id blueman-applet
+exec --no-startup-id xinput -set-prop 'HAILUCK CO.,LTD USB KEYBOARD Touchpad' 'libinput Accel Speed' 0.7
+
+# Set wallpaper, start compositor
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b
 
 # Wallpaper
-exec --no-startup-id xsetroot -solid "#111111"
-exec --no-startup-id feh --bg-fill /home/kism/Pictures/wall.jpg
+# exec --no-startup-id xsetroot -solid "#111111"
+# exec --no-startup-id feh --bg-fill /home/kism/Pictures/wall.jpg
 for_window [class="^.*"] border pixel 3
-
-# Resolution and Friends
-#exec --no-startup-id xrandr --output LVDS-1 --primary --mode 1600x900 --pos 1920x0 --rotate normal --output VGA-1-2 --off --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --off
-#workspace 01 output LVDS-1
-#workspace 02 output LVDS-1
-#workspace 03 output LVDS-1
-#workspace 04 output LVDS-1
-#workspace 05 output LVDS-1
-#workspace 06 output HDMI-1
-#workspace 07 output HDMI-1
-#workspace 08 output HDMI-1
-#workspace 09 output HDMI-1
-#workspace 10 output HDMI-1
 
 ##Colours
 set $FOCUS   #34be5b
