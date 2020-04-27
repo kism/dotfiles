@@ -1,4 +1,7 @@
-# My setup for manjaro, might need to change a few things in the i3 dotfiles if you are on x86/amd64 software
+# My setup for Manjaro (Desktop, you are pretty cooked if you run it on a server tbh) 
+Might need to change a few things in the i3 dotfiles if you are on x86/amd64 software
 ## i3 and friends
 
   sudo pacman -S i3 i3blocks i3status dmenu picom nitrogen volumeicon vim zsh htop git
+
+## Important other things you need to do
