@@ -2,6 +2,7 @@
 " Remember to run :PluginInstall
 set nowrap
 set mouse-=a
+set pastetoggle=<F2>
 
 " Vundle specific
 set nocompatible                    " be iMproved, required
