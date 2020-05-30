@@ -18,3 +18,10 @@ antigen theme robbyrussell
 
 # Tell Antigen that you're done.
 antigen apply
+
+# Alias
+alias please='sudo $(fc -ln -1)'
+alias sudp='sudo'
+alias sl='ls'
+alias nano='vim'
+alias screen='echo no #'
