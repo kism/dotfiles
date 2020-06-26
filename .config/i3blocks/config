@@ -25,9 +25,9 @@ command=~/.config/i3blocks/scripts/$BLOCK_NAME
 separator_block_width=11
 markup=none
 
-[window]
-interval=-3
-align=left
+#[window]
+#interval=-3
+#align=left
 
 [cputempspeed]
 label=CPU 
@@ -79,6 +79,11 @@ color=#34be5b
 #color=#34be5b
 #markup=pango
 #interval=30
+
+[weather]
+command=curl "wttr.in/?format="%l+%t+%C""
+interval=1800
+color=#34be5b
 
 [time]
 command=date '+%Y-%m-%d %H:%M'
