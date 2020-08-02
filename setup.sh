@@ -69,7 +69,7 @@ cp _tmux/.tmux.conf ~
 
 # VIM
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-cp _zsh/.vimrc ~
+cp _vim/.vimrc ~
 echo "Remember to run :PluginInstall"
 
 # ZSH
