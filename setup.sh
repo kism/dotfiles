@@ -1,6 +1,6 @@
 #!/bin/bash
 
-baseinstall="vim zsh git tmux openssh-server curl" 
+baseinstall="vim zsh git htop tmux openssh-server curl" 
 
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 
@@ -26,6 +26,7 @@ function setup_centos {
 	hsep
 	yum clean all
 	yum update
+	yum install -y epel-release
 	yum install -y $baseinstall
 }
 
