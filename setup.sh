@@ -3,14 +3,12 @@
 baseinstall="vim zsh git htop tmux openssh-server curl" 
 
 function setup_manjaro {
-	hsep
 	sudo pacman -Syyu
 	sudo pacman -Sy $baseinstall
 	set_shell_chsh
 }
 
 function setup_ubuntu {
-	hsep
 	sudo apt update
 	sudo apt upgrade -y
 	sudo apt install -y $baseinstall
@@ -18,7 +16,6 @@ function setup_ubuntu {
 }
 
 function setup_centos {
-	hsep
 	sudo yum clean all
 	sudo yum update
 	sudo yum install -y epel-release
@@ -34,7 +31,7 @@ function set_shell_chsh {
 function checksuccess {
 	if [ $? -eq 0 ]
 	then
-  		echo "Success"
+  		echo "Success!"
   		echo
 	else
   		echo "Failure" >&2
@@ -65,7 +62,7 @@ sudo echo
 
 if [ $? -eq 0 ]
 then
-  echo "Starting install"
+  echo "Starting install!"
   echo
 else
   echo "sudo failed" >&2
