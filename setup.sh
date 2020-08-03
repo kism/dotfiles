@@ -26,6 +26,7 @@ function setup_centos {
 }
 
 function set_shell_chsh {
+	echo "Setting your default shell"
 	myshell=$(which zsh)
 	chsh -s $myshell $USER
 }
