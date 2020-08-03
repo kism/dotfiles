@@ -12,7 +12,7 @@ function setup_manjaro {
 function setup_ubuntu {
 	hsep
 	sudo apt update
-	sudo apt upgrade
+	sudo apt upgrade -y
 	sudo apt install -y $baseinstall
 	set_shell_chsh
 }
@@ -28,6 +28,17 @@ function setup_centos {
 function set_shell_chsh {
 	myshell=$(which zsh)
 	chsh -s $myshell $USER
+}
+
+function checksuccess {
+	if [ $? -eq 0 ]
+	then
+  		echo "Success"
+  		echo
+	else
+  		echo "Failure" >&2
+  		exit 1
+	fi
 }
 
 function hsep {
@@ -54,6 +65,7 @@ sudo echo
 if [ $? -eq 0 ]
 then
   echo "Starting install"
+  echo
 else
   echo "sudo failed" >&2
   exit 1
@@ -78,23 +90,29 @@ hsep
 # BASH
 hheader "Setting up bash"
 cp _bash/.bashrc ~/.bashrc
+checksuccess
 
 # TMUX
 hheader "Setting up tmux"
 cp _tmux/.tmux.conf ~/.tmux.conf
+checksuccess
 
 # VIM
 hheader "Setting up vim"
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+checksuccess
 cp _vim/.vimrc ~/.vimrc
+checksuccess
 echo "Remember to run :PluginInstall"
 
 # ZSH
 hheader "Setting up zsh"
 mkdir ~/.antigen
+checksuccess
 curl -L git.io/antigen > ~/.antigen/antigen.zsh
+checksuccess
 cp _zsh/.zshrc ~/.zshrc
-echo "Remember to change your shell"
+checksuccess
 
 hsep
 echo " Done!"
