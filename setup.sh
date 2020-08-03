@@ -4,25 +4,25 @@ baseinstall="vim zsh git htop tmux openssh-server curl"
 
 function setup_manjaro {
 	hsep
-	pacman -Syyu
-	pacman -Sy $baseinstall
+	sudo pacman -Syyu
+	sudo pacman -Sy $baseinstall
 	set_shell_chsh
 }
 
 function setup_ubuntu {
 	hsep
-	apt update
-	apt upgrade
-	apt install -y $baseinstall
+	sudo apt update
+	sudo apt upgrade
+	sudo apt install -y $baseinstall
 	set_shell_chsh
 }
 
 function setup_centos {
 	hsep
-	yum clean all
-	yum update
-	yum install -y epel-release
-	yum install -y $baseinstall
+	sudo yum clean all
+	sudo yum update
+	sudo yum install -y epel-release
+	sudo yum install -y $baseinstall
 }
 
 function set_shell_chsh {
