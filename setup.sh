@@ -2,11 +2,6 @@
 
 baseinstall="vim zsh git htop tmux openssh-server curl" 
 
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 
-   exit 1
-fi
-
 function setup_manjaro {
 	hsep
 	pacman -Syyu
@@ -43,7 +38,24 @@ function hsep {
 	echo
 }
 
+function hheader {
+	echo
+	echo "_____________________________________________________________________________"
+}
+
 hsep
+
+# Start
+echo "Installing packages will require sudo"
+sudo echo
+
+if [ $? -eq 0 ]
+then
+  echo "Starting install"
+else
+  echo "sudo failed" >&2
+  exit 1
+fi
 
 # Call function according to detected distro
 if grep Manjaro /etc/os-release
