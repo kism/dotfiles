@@ -23,6 +23,7 @@ function setup_centos {
 }
 
 function set_shell_chsh {
+	echo
 	echo "Setting your default shell"
 	myshell=$(which zsh)
 	chsh -s $myshell $USER
@@ -49,6 +50,7 @@ function hsep {
 
 function hheader () {
 	echo
+	echo "_____________________________________________________________________________"
 	echo "$1"
 	echo "_____________________________________________________________________________"
 	echo
@@ -112,6 +114,6 @@ checksuccess
 cp _zsh/.zshrc ~/.zshrc
 checksuccess
 
-hsep
+hheader
 echo " Done!"
 hsep
