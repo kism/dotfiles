@@ -38,9 +38,11 @@ function hsep {
 	echo
 }
 
-function hheader {
+function hheader () {
 	echo
+	echo "$1"
 	echo "_____________________________________________________________________________"
+	echo
 }
 
 hsep
@@ -74,17 +76,21 @@ fi
 hsep
 
 # BASH
+hheader "Setting up bash"
 cp _bash/.bashrc ~/.bashrc
 
 # TMUX
+hheader "Setting up tmux"
 cp _tmux/.tmux.conf ~/.tmux.conf
 
 # VIM
+hheader "Setting up vim"
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp _vim/.vimrc ~/.vimrc
 echo "Remember to run :PluginInstall"
 
 # ZSH
+hheader "Setting up zsh"
 mkdir ~/.antigen
 curl -L git.io/antigen > ~/.antigen/antigen.zsh
 cp _zsh/.zshrc ~/.zshrc
