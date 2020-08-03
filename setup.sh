@@ -32,7 +32,7 @@ function setup_centos {
 
 function set_shell_chsh {
 	myshell=$(which zsh)
-	chsh $myshell $USER
+	chsh -s $myshell $USER
 }
 
 function hsep {
@@ -62,20 +62,20 @@ fi
 hsep
 
 # BASH
-cp _bash/.bashrc ~
+cp _bash/.bashrc ~/.bashrc
 
 # TMUX
-cp _tmux/.tmux.conf ~
+cp _tmux/.tmux.conf ~/.tmux.conf
 
 # VIM
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-cp _vim/.vimrc ~
+cp _vim/.vimrc ~/.vimrc
 echo "Remember to run :PluginInstall"
 
 # ZSH
 mkdir ~/.antigen
 curl -L git.io/antigen > ~/.antigen/antigen.zsh
-cp _zsh/.zshrc ~
+cp _zsh/.zshrc ~/.zshrc
 echo "Remember to change your shell"
 
 hsep
