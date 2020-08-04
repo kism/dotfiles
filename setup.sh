@@ -111,7 +111,7 @@ h2 "Checking for Vundle:"
 vundlelocation=~/.vim/bundle/Vundle.vim
 if test -d $vundlelocation; then
 	echo -e "Vundle Found!"
-    git -C $vundlelocation pull
+	git -C $vundlelocation pull
 else
 	echo -e "Vundle Not Found!"
 	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation
