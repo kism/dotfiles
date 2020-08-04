@@ -30,8 +30,7 @@ function set_shell_chsh {
 }
 
 function checksuccess {
-	if [ $? -eq 0 ]
-	then
+	if [ $? -eq 0 ]; then
   		echo "Success!"
   		echo
 	else
@@ -62,8 +61,7 @@ hsep
 echo "Installing packages will require sudo"
 sudo echo
 
-if [ $? -eq 0 ]
-then
+if [ $? -eq 0 ]; then
   echo "Starting install!"
   echo
 else
@@ -71,17 +69,12 @@ else
   exit 1
 fi
 
-set -x
-
 # Call function according to detected distro
-if grep Manjaro /etc/os-release
-then
-        setup_manjaro
-elif grep Ubuntu /etc/os-release
-then
+if grep Manjaro /etc/os-release; then
+	setup_manjaro
+elif grep Ubuntu /etc/os-release; then
 	setup_ubuntu
-elif grep CentOS /etc/os-release
-then
+elif grep CentOS /etc/os-release; then
 	setup_centos
 else
 	echo "Unknown *Nix distro"
@@ -101,10 +94,16 @@ checksuccess
 
 # VIM
 hheader "Setting up vim"
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vundlelocation="~/.vim/bundle/Vundle.vim"
+if test -f "$vundlelocation"; then
+    git pull $vundlelocation
+else
+	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation
+fi
 checksuccess
 cp _vim/.vimrc ~/.vimrc
 checksuccess
+
 echo "Remember to run :PluginInstall"
 
 # ZSH
@@ -118,4 +117,3 @@ checksuccess
 
 hheader " Done!"
 hsep
-set +x
