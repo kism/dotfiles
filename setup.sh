@@ -50,9 +50,9 @@ function hsep {
 
 function hheader () {
 	echo
-	echo "-----------------------------------------------------------------------------"
-	echo "$1"
-	echo "_____________________________________________________________________________"
+	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+	echo " $1"
+	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 	echo
 }
 
@@ -70,6 +70,8 @@ else
   echo "sudo failed" >&2
   exit 1
 fi
+
+set -x
 
 # Call function according to detected distro
 if grep Manjaro /etc/os-release
@@ -116,3 +118,4 @@ checksuccess
 
 hheader " Done!"
 hsep
+set +x
