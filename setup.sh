@@ -95,7 +95,7 @@ checksuccess
 # VIM
 hheader "Setting up vim"
 vundlelocation="~/.vim/bundle/Vundle.vim"
-if test -f "$vundlelocation"; then
+if ! test -f "$vundlelocation"; then
     git pull $vundlelocation
 else
 	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation
