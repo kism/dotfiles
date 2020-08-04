@@ -108,8 +108,11 @@ echo "Remember to run :PluginInstall"
 
 # ZSH
 hheader "Setting up zsh"
-mkdir ~/.antigen
-checksuccess
+antigenlocation="~/.antigen"
+if ! test -f "$antigenlocation"; then
+	mkdir ~/.antigen
+	checksuccess
+fi
 curl -L git.io/antigen > ~/.antigen/antigen.zsh
 checksuccess
 cp _zsh/.zshrc ~/.zshrc
