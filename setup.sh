@@ -3,41 +3,41 @@
 baseinstall="vim zsh git htop tmux openssh-server curl" 
 
 function setup_manjaro {
-	hheader "Updating Manjaro"
+	h1 "Updating Manjaro"
 	echo
 	sudo pacman -Syyu
-	hheader "Installing Packages"
+	h1 "Installing Packages"
 	echo
 	sudo pacman -Sy $baseinstall
 	set_shell_chsh
 }
 
 function setup_ubuntu {
-	hheader "Updating Ubuntu"
+	h1 "Updating Ubuntu"
 	echo
 	sudo apt update
 	sudo apt upgrade -y
-	hheader "Installing Packages"
+	h1 "Installing Packages"
 	echo
 	sudo apt install -y $baseinstall
 	set_shell_chsh
 }
 
 function setup_centos {
-	hheader "Updating CentOS"
+	h1 "Updating CentOS"
 	echo
 	sudo dnf clean all
 	sudo dnf update
 	sudo dnf install -y epel-release
-	hheader "Installing Packages"
+	h1 "Installing Packages"
 	echo
 	sudo dnf install -y $baseinstall
 }
 
 function set_shell_chsh {
 	echo
-	hheader "Setting zsh as user shell"
-	header "Setting your default shell:"
+	h1 "Setting zsh as user's shell"
+	h2 "Setting your default shell:"
 	myshell=$(which zsh)
 	chsh -s $myshell $USER; checksuccess
 }
@@ -50,28 +50,28 @@ function checksuccess {
 	fi
 }
 
-function hsep {
+function hr {
 	echo
 	echo "  .--.      .--.      .--.      .--.      .--.      .--.      .--.      .--."
 	echo ":::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\"
 	echo "'      \`--'      \`--'      \`--'      \`--'      \`--'      \`--'      \`--'      \`"
 }
 
-function hheader () {
+function h1 () {
 	echo
 	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 	echo " $1"
 	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 }
 
-function header () {
+function h2 () {
 	echo
 	echo -e "\033[0;35m$1\033[0m"
 }
 
-hsep
+hr
 
-hheader "Dotfiles Install!"
+h1 "Dotfiles Install!"
 
 # Start
 echo -e "\nInstalling packages will require sudo"
@@ -83,7 +83,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Call function according to detected distro
-header "Detecting OS:"
+h2 "Detecting OS:"
 if grep Manjaro /etc/os-release; then
 	setup_manjaro
 elif grep Ubuntu /etc/os-release; then
@@ -96,18 +96,18 @@ else
 fi
 
 # BASH
-hheader "Setting up bash"
-header "Copying .bashrc"
+h1 "Setting up bash"
+h2 "Copying .bashrc"
 cp _bash/.bashrc ~/.bashrc; checksuccess
 
 # TMUX
-hheader "Setting up tmux"
-header "Copying .tmux.conf"
+h1 "Setting up tmux"
+h2 "Copying .tmux.conf"
 cp _tmux/.tmux.conf ~/.tmux.conf; checksuccess
 
 # VIM
-hheader "Setting up vim"
-header "Checking for Vundle:"
+h1 "Setting up vim"
+h2 "Checking for Vundle:"
 vundlelocation=~/.vim/bundle/Vundle.vim
 if test -d $vundlelocation; then
 	echo -e "Vundle Found!"
@@ -117,24 +117,24 @@ else
 	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation
 fi
 checksuccess
-header "Copying .vimrc"
+h2 "Copying .vimrc"
 cp _vim/.vimrc ~/.vimrc; checksuccess
 
 echo -e "\nRemember to run :PluginInstall"
 
 # ZSH
-hheader "Setting up zsh"
+h1 "Setting up zsh"
 antigenlocation=~/.antigen
 if ! test -d $antigenlocation; then
 	echo "Creating $antigenlocation"
 	mkdir $antigenlocation; checksuccess
 fi
-header "Downloading Antigen:"
+h2 "Downloading Antigen:"
 curl -L git.io/antigen > ~/.antigen/antigen.zsh; checksuccess
 
-header "Copying .vimrc"
+h2 "Copying .vimrc"
 cp _zsh/.zshrc ~/.zshrc; checksuccess
 
 echo -e "\nAll done!"
-hsep
+hr
 echo
