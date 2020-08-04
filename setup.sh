@@ -94,10 +94,12 @@ checksuccess
 
 # VIM
 hheader "Setting up vim"
-vundlelocation="~/.vim/bundle/Vundle.vim"
-if test -f "$vundlelocation"; then
-    git pull $vundlelocation
+vundlelocation=~/.vim/bundle/Vundle.vim
+if test -d $vundlelocation; then
+	echo "Vundle Found!"
+    git -C $vundlelocation pull
 else
+	echo "Vundle Not Found!"
 	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation
 fi
 checksuccess
@@ -108,9 +110,9 @@ echo "Remember to run :PluginInstall"
 
 # ZSH
 hheader "Setting up zsh"
-antigenlocation="~/.antigen"
-if ! test -f "$antigenlocation"; then
-	mkdir ~/.antigen
+antigenlocation=~/.antigen
+if ! test -d $antigenlocation; then
+	mkdir $antigenlocation
 	checksuccess
 fi
 curl -L git.io/antigen > ~/.antigen/antigen.zsh
