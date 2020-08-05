@@ -32,6 +32,7 @@ function setup_centos {
 	h1 "Installing Packages"
 	echo
 	sudo dnf install -y $baseinstall
+	set_shell_chsh
 }
 
 function set_shell_chsh {
