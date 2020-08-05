@@ -5,10 +5,10 @@ baseinstall="vim zsh git htop tmux openssh-server curl"
 function setup_manjaro {
 	h1 "Updating Manjaro"
 	echo
-	sudo pacman -Syyu
+	sudo pacman -Syyu --noconfirm
 	h1 "Installing Packages"
 	echo
-	sudo pacman -Sy $baseinstall
+	sudo pacman -Sy --noconfirm $baseinstall
 	set_shell_chsh
 }
 
