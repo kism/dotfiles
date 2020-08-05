@@ -70,11 +70,13 @@ function h2 () {
 	echo -e "\033[0;35m$1\033[0m"
 }
 
-hr
-
-h1 "Dotfiles Install!"
+# Set working dir
+cd "$(dirname "$0")"
 
 # Start
+hr
+h1 "Dotfiles Install!"
+
 echo -e "\nInstalling packages will require sudo"
 sudo echo "Starting install!"
 
