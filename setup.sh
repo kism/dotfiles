@@ -70,6 +70,11 @@ function h2 () {
 	echo -e "\033[0;35m$1\033[0m"
 }
 
+function h3 () {
+	echo
+	echo -e "$1"
+}
+
 # Set working dir
 cd "$(dirname "$0")"
 
@@ -114,7 +119,7 @@ h2 "Checking for Vundle:"
 vundlelocation=~/.vim/bundle/Vundle.vim
 if test -d $vundlelocation; then
 	echo -e "Vundle Found!"
-	git -C $vundlelocation pull
+	git -C $vundlelocation pull --no-rebase
 else
 	echo -e "Vundle Not Found!"
 	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation
@@ -123,7 +128,7 @@ checksuccess
 h2 "Copying .vimrc"
 cp _vim/.vimrc ~/.vimrc; checksuccess
 
-echo -e "\nRemember to run :PluginInstall"
+h3 "Remember to run :PluginInstall"
 
 # ZSH
 h1 "Setting up zsh"
@@ -138,6 +143,6 @@ curl -L git.io/antigen > ~/.antigen/antigen.zsh; checksuccess
 h2 "Copying .vimrc"
 cp _zsh/.zshrc ~/.zshrc; checksuccess
 
-echo -e "\nAll done!"
+h3 "All done!"
 hr
 echo
