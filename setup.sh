@@ -138,7 +138,7 @@ if ! test -d $antigenlocation; then
 	mkdir $antigenlocation; checksuccess
 fi
 h2 "Downloading Antigen:"
-curl -L git.io/antigen > ~/.antigen/antigen.zsh; checksuccess
+curl -s -L git.io/antigen > ~/.antigen/antigen.zsh; checksuccess
 
 h2 "Copying .vimrc"
 cp _zsh/.zshrc ~/.zshrc; checksuccess
