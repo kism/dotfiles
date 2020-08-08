@@ -1,7 +1,7 @@
 #!/bin/bash
 
 baseinstall="vim zsh git htop tmux curl"
-dnfaptinstall "openssh-server"
+dnfaptinstall="openssh-server"
 
 function setup_brew() {
 	if ! which brew > /dev/null; then
@@ -18,7 +18,6 @@ function setup_brew() {
 	h1 "Installing Packages"
 	echo
 	brew install $baseinstall
-	set_shell_chsh
 }
 
 function setup_pacman() {
@@ -38,7 +37,7 @@ function setup_apt() {
 	sudo apt upgrade -y
 	h1 "Installing Packages"
 	echo
-	sudo apt install -y $baseinstall
+	sudo apt install -y $baseinstall $dnfaptinstall
 	set_shell_chsh
 }
 
@@ -50,7 +49,7 @@ function setup_dnf() {
 	sudo dnf install -y epel-release
 	h1 "Installing Packages"
 	echo
-	sudo dnf install -y $baseinstall
+	sudo dnf install -y $baseinstall $dnfaptinstall
 	set_shell_chsh
 }
 
@@ -107,22 +106,21 @@ fi
 hr
 h1 "Dotfiles Install!"
 
-echo -e "\nInstalling packages will require sudo"
-sudo echo "Starting install!"
-
-if [ $? -ne 0 ]; then
-	echo "sudo failed" >&2
-	exit 1
-fi
-
 # Call function according to detected distro
 h2 "Detecting OS:"
 
-if uname | grep Darwin; then
-	echo "MacOS!"
+if uname | grep Darwin > /dev/null; then
+	echo "MacOS"
 	setup_brew
 else
 	echo "$PRETTY_NAME"
+	echo -e "\nInstalling packages will require sudo"
+	sudo echo "Starting install!"
+	if [ $? -ne 0 ]; then
+	    echo "sudo failed" >&2
+	    exit 1
+	fi
+			
 	if type pacman > /dev/null; then
 		setup_pacman
 	elif type apt > /dev/null; then
