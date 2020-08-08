@@ -1,19 +1,38 @@
 #!/bin/bash
 
-baseinstall="vim zsh git htop tmux openssh-server curl" 
+baseinstall="vim zsh git htop tmux curl"
+dnfaptinstall "openssh-server"
 
-function setup_manjaro {
-	h1 "Updating Manjaro"
+function setup_brew() {
+	if ! which brew > /dev/null; then
+		h1 "Installing Brew"
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	fi
+	
+	h1 "Updating Brew"
+	brew update
+
+	h1 "Updating Brew Formulas"
+	brew upgrade
+	
+	h1 "Installing Packages"
+	echo
+	brew install $baseinstall
+	set_shell_chsh
+}
+
+function setup_pacman() {
+	h1 "Updating $PRETTY_NAME"
 	echo
 	sudo pacman -Syyu --noconfirm
 	h1 "Installing Packages"
 	echo
-	sudo pacman -Sy --noconfirm $baseinstall
+	sudo pacman -S --noconfirm $baseinstall
 	set_shell_chsh
 }
 
-function setup_ubuntu {
-	h1 "Updating Ubuntu"
+function setup_apt() {
+	h1 "Updating $PRETTY_NAME"
 	echo
 	sudo apt update
 	sudo apt upgrade -y
@@ -23,8 +42,8 @@ function setup_ubuntu {
 	set_shell_chsh
 }
 
-function setup_centos {
-	h1 "Updating CentOS"
+function setup_dnf() {
+	h1 "Updating $PRETTY_NAME"
 	echo
 	sudo dnf clean all
 	sudo dnf update
@@ -35,48 +54,54 @@ function setup_centos {
 	set_shell_chsh
 }
 
-function set_shell_chsh {
+function set_shell_chsh() {
 	echo
 	h1 "Setting zsh as user's shell"
 	h2 "Setting your default shell:"
 	myshell=$(which zsh)
-	chsh -s $myshell $USER; checksuccess
+	chsh -s $myshell $USER
+	checksuccess
 }
 
-function checksuccess {
+function checksuccess() {
 	if [ $? -eq 0 ]; then
-  		echo -e "\033[0;32mSuccess!\033[0m"
+		echo -e "\033[0;32mSuccess!\033[0m"
 	else
-  		echo -e "\033[0;31mFailure\033[0m" >&2
+		echo -e "\033[0;31mFailure\033[0m" >&2
 	fi
 }
 
-function hr {
+function hr() {
 	echo
 	echo "  .--.      .--.      .--.      .--.      .--.      .--.      .--.      .--."
 	echo ":::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\::::::::.\\"
 	echo "'      \`--'      \`--'      \`--'      \`--'      \`--'      \`--'      \`--'      \`"
 }
 
-function h1 () {
+function h1() {
 	echo
 	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 	echo " $1"
 	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 }
 
-function h2 () {
+function h2() {
 	echo
 	echo -e "\033[0;35m$1\033[0m"
 }
 
-function h3 () {
+function h3() {
 	echo
 	echo -e "$1"
 }
 
 # Set working dir
 cd "$(dirname "$0")"
+
+# Source
+if test -f /etc/os-release; then
+	. /etc/os-release
+fi
 
 # Start
 hr
@@ -86,21 +111,28 @@ echo -e "\nInstalling packages will require sudo"
 sudo echo "Starting install!"
 
 if [ $? -ne 0 ]; then
-  echo "sudo failed" >&2
-  exit 1
+	echo "sudo failed" >&2
+	exit 1
 fi
 
 # Call function according to detected distro
 h2 "Detecting OS:"
-if grep Manjaro /etc/os-release; then
-	setup_manjaro
-elif grep Ubuntu /etc/os-release; then
-	setup_ubuntu
-elif grep CentOS /etc/os-release; then
-	setup_centos
+
+if uname | grep Darwin; then
+	echo "MacOS!"
+	setup_brew
 else
-	echo "Unknown *Nix distro"
-	echo "Install tmux, vim and zsh"
+	echo "$PRETTY_NAME"
+	if type pacman > /dev/null; then
+		setup_pacman
+	elif type apt > /dev/null; then
+		setup_apt
+	elif type dnf > /dev/null; then
+		setup_dnf
+	else
+		echo "Unknown *Nix distro"
+		echo "Install tmux, vim and zsh"
+	fi
 fi
 
 # BASH
@@ -119,12 +151,12 @@ h2 "Checking for Vundle:"
 vundlelocation=~/.vim/bundle/Vundle.vim
 if test -d $vundlelocation; then
 	echo -e "Vundle Found!"
-	git -C $vundlelocation pull --no-rebase
+	git -C $vundlelocation pull --no-rebase; checksuccess
 else
 	echo -e "Vundle Not Found!"
-	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation
+	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation; checksuccess
 fi
-checksuccess
+
 h2 "Copying .vimrc"
 cp _vim/.vimrc ~/.vimrc; checksuccess
 
@@ -138,7 +170,7 @@ if ! test -d $antigenlocation; then
 	mkdir $antigenlocation; checksuccess
 fi
 h2 "Downloading Antigen:"
-curl -s -L git.io/antigen > ~/.antigen/antigen.zsh; checksuccess
+curl -s -L git.io/antigen >~/.antigen/antigen.zsh; checksuccess
 
 h2 "Copying .vimrc"
 cp _zsh/.zshrc ~/.zshrc; checksuccess
