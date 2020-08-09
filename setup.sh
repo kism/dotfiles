@@ -4,51 +4,51 @@ baseinstall="vim zsh git htop tmux curl"
 dnfaptinstall="openssh-server"
 
 function setup_brew() {
+	h1 "Brew (MacOS Package Manager)"
 	if ! which brew > /dev/null; then
-		h1 "Installing Brew"
+		h2 "Installing Brew"
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	else
+		h2 "Updating Brew"
+		brew update
 	fi
 	
-	h1 "Updating Brew"
-	brew update
-
-	h1 "Updating Brew Formulas"
-	brew upgrade
+	h2 "Updating Brew Formulas"
+	brew upgrade; checksuccess
 	
-	h1 "Installing Packages"
+	h2 "Installing Packages"
 	echo
 	brew install $baseinstall
 }
 
 function setup_pacman() {
 	h1 "Updating $PRETTY_NAME"
-	echo
+	h2 "pacman -Syyu"
 	sudo pacman -Syyu --noconfirm
-	h1 "Installing Packages"
-	echo
+	h2 "Installing Packages"
 	sudo pacman -S --noconfirm $baseinstall
 	set_shell_chsh
 }
 
 function setup_apt() {
 	h1 "Updating $PRETTY_NAME"
-	echo
+	h2 "apt update"
 	sudo apt update
+	h2 "apt upgrade"
 	sudo apt upgrade -y
-	h1 "Installing Packages"
-	echo
+	h2 "Installing Packages"
 	sudo apt install -y $baseinstall $dnfaptinstall
 	set_shell_chsh
 }
 
 function setup_dnf() {
 	h1 "Updating $PRETTY_NAME"
-	echo
+	h2 "dnf clean all"
 	sudo dnf clean all
+	h2 "dnf update, install epel"
 	sudo dnf update
 	sudo dnf install -y epel-release
-	h1 "Installing Packages"
-	echo
+	h2 "Installing Packages"
 	sudo dnf install -y $baseinstall $dnfaptinstall
 	set_shell_chsh
 }
@@ -79,9 +79,9 @@ function hr() {
 
 function h1() {
 	echo
-	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 	echo " $1"
-	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+	echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 }
 
 function h2() {
@@ -129,49 +129,64 @@ else
 		setup_dnf
 	else
 		echo "Unknown *Nix distro"
-		echo "Install tmux, vim and zsh"
 	fi
 fi
 
 # BASH
 h1 "Setting up bash"
 h2 "Copying .bashrc"
-cp _bash/.bashrc ~/.bashrc; checksuccess
+if type bash > /dev/null; then
+	cp _bash/.bashrc ~/.bashrc; checksuccess
+else
+	h3 "bash not found, skipping"
+fi
 
 # TMUX
-h1 "Setting up tmux"
-h2 "Copying .tmux.conf"
-cp _tmux/.tmux.conf ~/.tmux.conf; checksuccess
+if type tmux > /dev/null; then
+	h1 "Setting up tmux"
+	h2 "Copying .tmux.conf"
+	cp _tmux/.tmux.conf ~/.tmux.conf; checksuccess
+else
+	h3 "tmux not found, skipping"
+fi
 
 # VIM
-h1 "Setting up vim"
-h2 "Checking for Vundle:"
-vundlelocation=~/.vim/bundle/Vundle.vim
-if test -d $vundlelocation; then
-	echo -e "Vundle Found!"
-	git -C $vundlelocation pull --no-rebase; checksuccess
+if type vim > /dev/null; then
+	h1 "Setting up vim"
+	h2 "Checking for Vundle:"
+	vundlelocation=~/.vim/bundle/Vundle.vim
+	if test -d $vundlelocation; then
+		echo -e "Vundle Found!"
+		git -C $vundlelocation pull --no-rebase; checksuccess
+	else
+		echo -e "Vundle Not Found!"
+		git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation; checksuccess
+	fi
+
+	h2 "Copying .vimrc"
+	cp _vim/.vimrc ~/.vimrc; checksuccess
+	h2 "PluginInstall Starting"
+	vim +PluginInstall +qall; checksuccess
 else
-	echo -e "Vundle Not Found!"
-	git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation; checksuccess
+	h3 "vim not found, skipping"
 fi
-
-h2 "Copying .vimrc"
-cp _vim/.vimrc ~/.vimrc; checksuccess
-
-h3 "Remember to run :PluginInstall"
 
 # ZSH
-h1 "Setting up zsh"
-antigenlocation=~/.antigen
-if ! test -d $antigenlocation; then
-	echo "Creating $antigenlocation"
-	mkdir $antigenlocation; checksuccess
-fi
-h2 "Downloading Antigen:"
-curl -s -L git.io/antigen >~/.antigen/antigen.zsh; checksuccess
+if type vim > /dev/null; then
+	h1 "Setting up zsh"
+	antigenlocation=~/.antigen
+	if ! test -d $antigenlocation; then
+		echo "Creating $antigenlocation"
+		mkdir $antigenlocation; checksuccess
+	fi
+	h2 "Downloading Antigen:"
+	curl -s -L git.io/antigen >~/.antigen/antigen.zsh; checksuccess
 
-h2 "Copying .vimrc"
-cp _zsh/.zshrc ~/.zshrc; checksuccess
+	h2 "Copying .zshrc"
+	cp _zsh/.zshrc ~/.zshrc; checksuccess
+else
+	h3 "zsh not found, skipping"
+fi
 
 h3 "All done!"
 hr
