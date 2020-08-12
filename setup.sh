@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
-baseinstall="vim zsh git htop tmux curl"
+# Dotfiles installer, requires bash, installs prereqs
+
+baseinstall="zsh git htop tmux curl"
+
+notpkginstall"vim"
+pkginstall="vim-console"
+
 dnfaptinstall="openssh-server"
 
 function setup_brew() {
+	baseinstall="$baseinstall $notpkginstall"
 	h1 "Brew (MacOS Package Manager)"
 	if ! which brew > /dev/null; then
 		h2 "Installing Brew"
@@ -22,12 +29,17 @@ function setup_brew() {
 }
 
 function setup_pkg() {
+	baseinstall="$baseinstall $pkginstall"
+	h2 "pkg update"
 	pkg update
+	h2 "pkg upgrade"
 	pkg upgrade
+	h2 "Installing Packages"
 	pkg install $baseinstall
 }
 
 function setup_pacman() {
+	baseinstall="$baseinstall $notpkginstall"
 	h1 "Updating $PRETTY_NAME"
 	h2 "pacman -Syyu"
 	sudo pacman -Syyu --noconfirm
@@ -37,6 +49,7 @@ function setup_pacman() {
 }
 
 function setup_apt() {
+	baseinstall="$baseinstall $notpkginstall"
 	h1 "Updating $PRETTY_NAME"
 	h2 "apt update"
 	sudo apt update
@@ -48,6 +61,7 @@ function setup_apt() {
 }
 
 function setup_dnf() {
+	baseinstall="$baseinstall $notpkginstall"
 	h1 "Updating $PRETTY_NAME"
 	h2 "dnf clean all"
 	sudo dnf clean all
@@ -112,7 +126,7 @@ h2 "Detecting OS:"
 
 unameresult=`uname`
 
-case unameresult in 
+case $unameresult in 
 	Darwin)
 		echo "MacOS"
 		setup_brew
