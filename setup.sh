@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 baseinstall="vim zsh git htop tmux curl"
 dnfaptinstall="openssh-server"
