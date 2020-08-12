@@ -203,7 +203,7 @@ if type vim > /dev/null; then
 	h2 "Copying .vimrc"
 	cp _vim/.vimrc ~/.vimrc; checksuccess
 	h2 "PluginInstall Starting"
-	vim +PluginInstall +qall; checksuccess
+	vim +PluginInstall +qall > /dev/null 2> /dev/null; checksuccess
 else
 	h3 "vim not found, skipping"
 fi
