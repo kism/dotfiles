@@ -21,6 +21,12 @@ function setup_brew() {
 	brew install $baseinstall
 }
 
+function setup_pkg() {
+	pkg update
+	pkg upgrade
+	pkg install $baseinstall
+}
+
 function setup_pacman() {
 	h1 "Updating $PRETTY_NAME"
 	h2 "pacman -Syyu"
@@ -97,11 +103,6 @@ function h3() {
 # Set working dir
 cd "$(dirname "$0")"
 
-# Source
-if test -f /etc/os-release; then
-	. /etc/os-release
-fi
-
 # Start
 hr
 h1 "Dotfiles Install!"
@@ -109,28 +110,50 @@ h1 "Dotfiles Install!"
 # Call function according to detected distro
 h2 "Detecting OS:"
 
-if uname | grep Darwin > /dev/null; then
-	echo "MacOS"
-	setup_brew
-else
-	echo "$PRETTY_NAME"
-	echo -e "\nInstalling packages will require sudo"
-	sudo echo "Starting install!"
-	if [ $? -ne 0 ]; then
-	    echo "sudo failed" >&2
-	    exit 1
-	fi
-			
-	if type pacman > /dev/null; then
-		setup_pacman
-	elif type apt > /dev/null; then
-		setup_apt
-	elif type dnf > /dev/null; then
-		setup_dnf
-	else
-		echo "Unknown *Nix distro"
-	fi
-fi
+unameresult=`uname`
+
+case unameresult in 
+	Darwin)
+		echo "MacOS"
+		setup_brew
+	;;
+
+	FreeBSD)
+		echo $unameresult
+		setup_pkg
+	;;
+
+	Linux)
+		# Source linux os info
+		if test -f /etc/os-release; then
+			. /etc/os-release
+		else
+			echo "What Linux is this even?"
+			exit 1
+		fi
+
+		echo "$PRETTY_NAME"
+		echo -e "\nInstalling packages will require sudo"
+		sudo echo "Starting install!"
+		if [ $? -ne 0 ]; then
+			echo "sudo failed" >&2
+			exit 1
+		fi
+				
+		if type pacman > /dev/null; then
+			setup_pacman
+		elif type apt > /dev/null; then
+			setup_apt
+		elif type dnf > /dev/null; then
+			setup_dnf
+		else
+			echo "Unknown *Nix distro"
+		fi
+	;;
+	*)
+		echo "What OS is this even?"
+		exit 1
+esac
 
 # BASH
 h1 "Setting up bash"
