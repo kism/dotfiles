@@ -30,26 +30,33 @@ function setup_brew() {
 
 function setup_pkg() {
 	baseinstall="$baseinstall $pkginstall"
+	prepsudo
+
 	h2 "pkg update"
-	pkg update
+	sudo pkg update
 	h2 "pkg upgrade"
-	pkg upgrade
+	sudo pkg upgrade
 	h2 "Installing Packages"
-	pkg install $baseinstall
+	sudo pkg install $baseinstall
 }
 
 function setup_pacman() {
 	baseinstall="$baseinstall $notpkginstall"
+	prepsudo
+
 	h1 "Updating $PRETTY_NAME"
 	h2 "pacman -Syyu"
 	sudo pacman -Syyu --noconfirm
 	h2 "Installing Packages"
 	sudo pacman -S --noconfirm $baseinstall
+
 	set_shell_chsh
 }
 
 function setup_apt() {
 	baseinstall="$baseinstall $notpkginstall"
+	prepsudo
+
 	h1 "Updating $PRETTY_NAME"
 	h2 "apt update"
 	sudo apt update
@@ -57,11 +64,14 @@ function setup_apt() {
 	sudo apt upgrade -y
 	h2 "Installing Packages"
 	sudo apt install -y $baseinstall $dnfaptinstall
+
 	set_shell_chsh
 }
 
 function setup_dnf() {
 	baseinstall="$baseinstall $notpkginstall"
+	prepsudo
+
 	h1 "Updating $PRETTY_NAME"
 	h2 "dnf clean all"
 	sudo dnf clean all
@@ -70,6 +80,7 @@ function setup_dnf() {
 	sudo dnf install -y epel-release
 	h2 "Installing Packages"
 	sudo dnf install -y $baseinstall $dnfaptinstall
+	
 	set_shell_chsh
 }
 
@@ -80,6 +91,16 @@ function set_shell_chsh() {
 	myshell=$(which zsh)
 	chsh -s $myshell $USER
 	checksuccess
+}
+
+function prepsudo() {
+	echo "$PRETTY_NAME"
+	echo -e "\nInstalling packages will require sudo"
+	sudo echo "Starting install!"
+	if [ $? -ne 0 ]; then
+		echo "sudo failed" >&2
+		exit 1
+	fi
 }
 
 function checksuccess() {
@@ -143,14 +164,6 @@ case $unameresult in
 			. /etc/os-release
 		else
 			echo "What Linux is this even?"
-			exit 1
-		fi
-
-		echo "$PRETTY_NAME"
-		echo -e "\nInstalling packages will require sudo"
-		sudo echo "Starting install!"
-		if [ $? -ne 0 ]; then
-			echo "sudo failed" >&2
 			exit 1
 		fi
 				
