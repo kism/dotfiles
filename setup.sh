@@ -188,7 +188,7 @@ h2 "Copying .bashrc"
 if type bash > /dev/null; then
 	cp _bash/.bashrc ~/.bashrc; checksuccess
 else
-	h3 "bash not found, skipping"
+	h3 "bash not found, wat?, skipping"
 fi
 
 # TMUX
