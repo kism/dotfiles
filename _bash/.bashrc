@@ -10,12 +10,11 @@ fi
 
 # User specific aliases and functions
 # Prompt
-if [ -n "$TERM" -a "$TERM" = 'screen' ]; then
+#if [ -n "$TERM" -a "$TERM" = 'screen' ]; then
    export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w\n\[\e[35m\]\\$\[\e[m\] "
-else
-
-   export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w \[\e[41m\] NOT IN TMUX \[\e[m\]  \n\[\e[35m\]\\$\[\e[m\] "
-fi
+#else
+#   export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w \[\e[41m\] NOT IN TMUX \[\e[m\]  \n\[\e[35m\]\\$\[\e[m\] "
+#fi
 
 # Alias
 alias ll='ls -l'
@@ -34,14 +33,14 @@ alias cgrep='grep --color=always -e "^" -e'
 #fi
 #uname -s -r
 
-TMUX_RUNNING="$(pgrep tmux)"
+#TMUX_RUNNING="$(pgrep tmux)"
 
-if [ -n "$TERM" -a "$TERM" = 'screen' ]; then
-    printf ""
-else
-    if [ -z "$TMUX_RUNNING" ]; then
-        echo "No tmux sessions running"
-    else
-        tmux ls
-    fi
-fi
+#if [ -n "$TERM" -a "$TERM" = 'screen' ]; then
+#    printf ""
+#else
+#    if [ -z "$TMUX_RUNNING" ]; then
+#        echo "No tmux sessions running"
+#    else
+#        tmux ls
+#    fi
+#fi
