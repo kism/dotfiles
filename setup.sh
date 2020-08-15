@@ -4,7 +4,7 @@
 
 baseinstall="zsh git htop tmux curl neofetch"
 
-notpkginstall"vim"
+notpkginstall="vim"
 pkginstall="vim-console"
 
 dnfaptinstall="openssh-server"
