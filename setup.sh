@@ -238,7 +238,7 @@ if type vim > /dev/null; then
 	h1 "Setting up zsh"
 	antigenlocation=~/.antigen
 	if ! test -d $antigenlocation; then
-		echo "Creating $antigenlocation"
+		h2 "Creating $antigenlocation"
 		mkdir $antigenlocation; checksuccess
 	fi
 	h2 "Downloading Antigen:"
