@@ -223,6 +223,16 @@ else
 	h3 "vim not found, skipping"
 fi
 
+#HTOP
+if type htop > /dev/null; then
+	h1 "setting up htop"
+	h2 "Copying htoprc"
+	cp -r _htop/.config ~ ; checksuccess
+
+else
+	echo -e "htop not found, skipping"
+fi
+
 # ZSH
 if type vim > /dev/null; then
 	h1 "Setting up zsh"
