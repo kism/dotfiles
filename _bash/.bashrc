@@ -11,23 +11,30 @@ fi
 # User specific aliases and functions
 # Prompt
 if [ -n "$TERM" -a "$TERM" = 'screen' ]; then
-   export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w\n \[\e[35m\]\\$\[\e[m\] "
+   export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w\n\[\e[35m\]\\$\[\e[m\] "
 else
 
-   export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w \[\e[41m\] NOT IN TMUX \[\e[m\]  \n \[\e[35m\]\\$\[\e[m\] "
+   export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w \[\e[41m\] NOT IN TMUX \[\e[m\]  \n\[\e[35m\]\\$\[\e[m\] "
 fi
 
 # Alias
+alias ll='ls -l'
+alias la='ls -la'
 alias sl='ls'
 alias sudp='sudo'
 alias please='sudo $(fc -ln -1)'
 alias screen="echo no #"
+alias cgrep='grep --color=always -e "^" -e'
 
 # Startup
-clear
-uname -s -r
+#clear
+#if test -f /etc/os-release; then
+#    . /etc/os-release
+#    echo -e "$PRETTY_NAME, \c"
+#fi
+#uname -s -r
 
-export TMUX_RUNNING="$(pgrep tmux)"
+TMUX_RUNNING="$(pgrep tmux)"
 
 if [ -n "$TERM" -a "$TERM" = 'screen' ]; then
     printf ""
