@@ -20,6 +20,7 @@ antigen apply
 # Alias
 alias please='sudo $(fc -ln -1)'
 alias sudp='sudo'
+alias tmux='tmux -u'
 alias sl='ls'
 alias nano='vim'
 alias screen='echo no #'

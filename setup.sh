@@ -2,7 +2,7 @@
 
 # Dotfiles installer, requires bash, installs prereqs
 
-baseinstall="zsh git htop tmux curl"
+baseinstall="zsh git htop tmux curl neofetch"
 
 notpkginstall"vim"
 pkginstall="vim-console"
@@ -33,11 +33,13 @@ function setup_pkg() {
 	prepsudo
 
 	h2 "pkg update"
-	sudo pkg update
+	yes | sudo pkg update
 	h2 "pkg upgrade"
-	sudo pkg upgrade
+	yes | sudo pkg upgrade
 	h2 "Installing Packages"
-	sudo pkg install $baseinstall
+	yes | sudo pkg install $baseinstall
+
+	h3 "Remember to set zsh as your default shell!"
 }
 
 function setup_pacman() {
@@ -79,7 +81,7 @@ function setup_dnf() {
 	sudo dnf update
 	sudo dnf install -y epel-release
 	h2 "Installing Packages"
-	sudo dnf install -y $baseinstall $dnfaptinstall
+	sudo dnf --setopt=install_weak_deps=False --best install -y $baseinstall $dnfaptinstall
 	
 	set_shell_chsh
 }
@@ -234,6 +236,9 @@ if type vim > /dev/null; then
 
 	h2 "Copying .zshrc"
 	cp _zsh/.zshrc ~/.zshrc; checksuccess
+
+	h2 "Updating Antigen Bundles:"
+	zsh -c ". ~/.zshrc; antigen update"
 else
 	h3 "zsh not found, skipping"
 fi
