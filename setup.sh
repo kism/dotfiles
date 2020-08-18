@@ -169,11 +169,11 @@ case $unameresult in
 			exit 1
 		fi
 				
-		if type pacman > /dev/null; then
+		if type pacman > /dev/null 2> /dev/null; then
 			setup_pacman
-		elif type apt > /dev/null; then
+		elif type apt  > /dev/null 2> /dev/null; then
 			setup_apt
-		elif type dnf > /dev/null; then
+		elif type dnf  > /dev/null 2> /dev/null; then
 			setup_dnf
 		else
 			echo "Unknown *Nix distro"
