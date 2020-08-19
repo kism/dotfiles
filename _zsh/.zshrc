@@ -11,6 +11,10 @@ antigen bundle command-not-found
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
 
+# fish like completion
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-autosuggestions
+
 # Load the theme.
 antigen theme kism/zsh-bira-mod
 
