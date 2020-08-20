@@ -157,7 +157,6 @@ fi
 
 # Call function according to detected distro
 h2 "Detecting OS:"
-
 unameresult=`uname`
 
 case $unameresult in 
@@ -178,7 +177,6 @@ case $unameresult in
 			echo $PRETTY_NAME
 		else
 			echo "What Linux is this even?"
-			exit 1
 		fi
 				
 		if type pacman > /dev/null 2> /dev/null; then
@@ -239,6 +237,7 @@ fi
 if type htop > /dev/null; then
 	h1 "setting up htop"
 	h2 "Copying htoprc"
+	mkdir -p ~/.config/htop/
 	cp -r _htop/.config ~ ; checksuccess
 
 else
