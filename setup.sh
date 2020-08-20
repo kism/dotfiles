@@ -88,28 +88,33 @@ function setup_dnf() {
 
 function set_shell_chsh() {
 	echo
-	h1 "Setting zsh as user's shell"
-	h2 "Setting your default shell:"
-	myshell=$(which zsh)
-	chsh -s $myshell $USER
-	checksuccess
+	if ! getent passwd $USER | cut -d : -f 7 | grep zsh > /dev/null; then
+		h1 "Setting zsh as user's shell"
+		h2 "Setting your default shell:"
+		myshell=$(which zsh)
+		chsh -s $myshell $USER
+		checksuccess
+	else
+		echo "User $USER is already using zsh as their shell"
+	fi
 }
 
 function prepsudo() {
-	echo "$PRETTY_NAME"
 	echo -e "\nInstalling packages will require sudo"
-	sudo echo "Starting install!"
-	if [ $? -ne 0 ]; then
-		echo "sudo failed" >&2
-		exit 1
-	fi
+	type sudo > /dev/null 2> /dev/null; checksuccess "crit"
+	sudo echo "Starting install!"; checksuccess "crit"
 }
 
 function checksuccess() {
 	if [ $? -eq 0 ]; then
 		echo -e "\033[0;32mSuccess!\033[0m"
 	else
-		echo -e "\033[0;31mFailure\033[0m" >&2
+		if [ "$1" != "crit" ]; then
+			echo -e "\033[0;31mFailure\033[0m" >&2
+		else
+			echo -e "\033[0;31mFailure, Exiting\033[0m" >&2
+			exit 1
+		fi
 	fi
 }
 
@@ -144,6 +149,12 @@ cd "$(dirname "$0")"
 hr
 h1 "Dotfiles Install!"
 
+# Preflight checks
+if [ $EUID -eq 0 ]; then
+	echo "This script must not be run as root" 
+	exit 1
+fi
+
 # Call function according to detected distro
 h2 "Detecting OS:"
 
@@ -164,6 +175,7 @@ case $unameresult in
 		# Source linux os info
 		if test -f /etc/os-release; then
 			. /etc/os-release
+			echo $PRETTY_NAME
 		else
 			echo "What Linux is this even?"
 			exit 1
