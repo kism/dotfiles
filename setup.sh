@@ -100,7 +100,7 @@ function set_shell_chsh() {
 }
 
 function prepsudo() {
-	echo -e "\nInstalling packages will require sudo"
+	h3 "Installing packages will require sudo, checking if sudo is installed:"	
 	type sudo > /dev/null 2> /dev/null; checksuccess "crit"
 	sudo echo "Starting install!"; checksuccess "crit"
 }
@@ -235,11 +235,10 @@ fi
 
 #HTOP
 if type htop > /dev/null; then
-	h1 "setting up htop"
+	h1 "Setting up htop"
 	h2 "Copying htoprc"
 	mkdir -p ~/.config/htop/
 	cp -r _htop/.config ~ ; checksuccess
-
 else
 	echo -e "htop not found, skipping"
 fi
