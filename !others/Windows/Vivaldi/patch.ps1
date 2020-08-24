@@ -20,3 +20,4 @@ $vivaldicustomcsspath = -join ($vivaldibasepath, "\custom.css")
 $vivaldicommoncss = Get-Content $vivaldicommoncsspath
 Set-Content -Path $vivaldicommoncsspath -Value '@import "custom.css";', $vivaldicommoncss
 Copy-Item .\custom.css $vivaldicustomcsspath
+write-host "Done!"
