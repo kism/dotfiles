@@ -1,8 +1,11 @@
 " Basic vimrc, parts may get overriden by Vundle...
 " Remember to run :PluginInstall
-set nowrap
-set mouse-=a
-set pastetoggle=<F2>
+
+" Regular preferences 
+set nowrap                          " Wordwrap off
+set mouse-=a                        " Mouse off
+set pastetoggle=<F2>                " Toggle paste mode with F2
+set t_u7=                           " Fix Windows Terminal compatibility
 
 " Vundle specific
 set nocompatible                    " be iMproved, required
