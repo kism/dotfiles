@@ -32,7 +32,7 @@
 
 /* Keep window buttons */
 .maximized#browser .window-buttongroup {
-    z-index: 1;
+    display: none !important;
 }
 
 /* Reduce toolbar size for window buttons */

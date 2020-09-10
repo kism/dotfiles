@@ -8,7 +8,7 @@ if (Test-Path $fileToCheck -PathType leaf) {
 		Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
 		Exit
 	}
-    $vivaldibasepath = "C:\Program Files (x86)\Vivaldi\Application"
+    $vivaldibasepath = "C:\Program Files\Vivaldi\Application"
 }
 
 $FileNames = Get-ChildItem -Path $vivaldibasepath -Directory
