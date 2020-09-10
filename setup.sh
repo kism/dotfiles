@@ -91,7 +91,7 @@ function set_shell_chsh() {
 	if ! getent passwd $USER | cut -d : -f 7 | grep zsh > /dev/null; then
 		h1 "Setting zsh as user's shell"
 		h2 "Setting your default shell:"
-		myshell=$(which zsh)
+		myshell=$(cat /etc/shells | grep -m 1 "zsh")
 		chsh -s $myshell $USER
 		checksuccess
 	else
