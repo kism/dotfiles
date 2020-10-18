@@ -61,11 +61,11 @@ function setup_apt() {
 
 	h1 "Updating $PRETTY_NAME"
 	h2 "apt update"
-	sudo apt update
+	sudo apt-get update
 	h2 "apt upgrade"
-	sudo apt upgrade -y
+	sudo apt-get upgrade -y
 	h2 "Installing Packages"
-	sudo apt install -y $baseinstall $dnfaptinstall
+	sudo apt-get install --no-install-recommends -y $baseinstall $dnfaptinstall
 
 	set_shell_chsh
 }
