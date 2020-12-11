@@ -43,6 +43,7 @@ $Packages = @(
     ("sumatrapdf.install"),
     ("vlc"),
     ("vscode.install"),
+    ("teracopy"),
     ("winscp.install")
 )
 
