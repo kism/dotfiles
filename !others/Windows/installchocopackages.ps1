@@ -31,7 +31,6 @@ $Packages = @(
     ("nmap"),
     ("notepadplusplus.install"),
     ("obs-studio.install"),
-    ("paint.net"),
     ("powertoys"),
     ("putty"),
     ("python3"),
