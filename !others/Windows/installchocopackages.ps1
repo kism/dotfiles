@@ -44,9 +44,10 @@ $Packages = @(
     ("vlc"),
     ("vscode.install"),
     ("teracopy"),
+    ("spacesniffer"),
     ("winscp.install")
 )
 
 ForEach ($PackageName in $Packages) {
-    choco install $PackageName -y
+    choco upgrade $PackageName -y
 }
