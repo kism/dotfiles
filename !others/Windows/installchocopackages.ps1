@@ -44,6 +44,7 @@ $Packages = @(
     ("vscode.install"),
     ("teracopy"),
     ("spacesniffer"),
+    ("goggalaxy"),
     ("winscp.install")
 )
 
