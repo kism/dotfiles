@@ -77,8 +77,8 @@ function setup_dnf() {
 	h1 "Updating $PRETTY_NAME"
 	h2 "dnf clean all"
 	sudo dnf clean all
-	h2 "dnf update, install epel"
-	sudo dnf update
+	h2 "dnf upgrade, install epel"
+	sudo dnf upgrade
 	sudo dnf install -y epel-release
 	h2 "Installing Packages"
 	sudo dnf --setopt=install_weak_deps=False --best install -y $baseinstall $dnfaptinstall

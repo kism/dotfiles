@@ -1,9 +1,7 @@
-
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser
-
-# Remember to grab https://github.com/W4RH4WK/Debloat-Windows-10/
-
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+## Before running this...
+# Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+# https://github.com/W4RH4WK/Debloat-Windows-10/
+# Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 choco feature enable -n allowGlobalConfirmation
 
@@ -31,7 +29,6 @@ $Packages = @(
     ("nmap.install"),
     ("notepadplusplus.install"),
     ("obs-studio.install"),
-    ("paint.net"),
     ("powertoys"),
     ("putty"),
     ("python3"),
@@ -47,11 +44,14 @@ $Packages = @(
     ("winscp.install"),
     ("adoptopenjdk11"),
     ("jdownloader"),
-    ("signal")
+    ("signal"),
+    ("spacesniffer"),
+    ("goggalaxy"),
+    ("winscp.install")
 )
 
 ForEach ($PackageName in $Packages) {
-    choco install $PackageName -y
+    choco upgrade $PackageName -y
 }
 
 Write-Host "Restarting Computer"
