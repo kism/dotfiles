@@ -28,7 +28,7 @@ $Packages = @(
     ("libreoffice-fresh"),
     ("microsoft-windows-terminal"),
     ("mpv.install"),
-    ("nmap"),
+    ("nmap.install"),
     ("notepadplusplus.install"),
     ("obs-studio.install"),
     ("paint.net"),
@@ -44,9 +44,16 @@ $Packages = @(
     ("vlc"),
     ("vscode.install"),
     ("teracopy"),
-    ("winscp.install")
+    ("winscp.install"),
+    ("adoptopenjdk11"),
+    ("jdownloader"),
+    ("signal")
 )
 
 ForEach ($PackageName in $Packages) {
     choco install $PackageName -y
 }
+
+Write-Host "Restarting Computer"
+
+Restart-Computer
