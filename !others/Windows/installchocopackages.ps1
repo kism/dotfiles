@@ -5,6 +5,8 @@
 
 choco feature enable -n allowGlobalConfirmation
 
+# (""),
+
 $Packages = @(
     ("7zip.install"),
     ("audacity"),
@@ -19,8 +21,8 @@ $Packages = @(
     ("gimp"),
     ("git.install"),
     ("gitkraken"),
+    ("goggalaxy"),
     ("hashtab"),
-    ("hasklig"),
     ("kdiff3"),
     ("krita"),
     ("libreoffice-fresh"),
@@ -33,17 +35,24 @@ $Packages = @(
     ("putty"),
     ("python3"),
     ("scrcpy"),
+    ("spacesniffer"),
     ("speedcrunch.install"),
     ("steam"),
     ("streamlink"),
     ("streamlink-twitch-gui"),
     ("sumatrapdf.install"),
+    ("teracopy"),
     ("vlc"),
     ("vscode.install"),
-    ("teracopy"),
-    ("spacesniffer"),
-    ("goggalaxy"),
-    ("winscp.install")
+    ("winscp.install"),
+    # Fonts
+    ("cascadia-code-nerd-font"),
+    ("dejavufonts"),
+    ("fira"),
+    ("firacode"),
+    ("hasklig"),
+    ("inconsolata"),
+    ("sourcecodepro")
 )
 
 ForEach ($PackageName in $Packages) {
