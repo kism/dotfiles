@@ -6,6 +6,7 @@
    "showTerminalTitleInTitlebar": false,
    "requestedTheme": "dark",
    "copyOnSelect": true,
+   "multiLinePasteWarning": false,
    "profiles": [
       {
          // Make changes here to the powershell.exe profile
