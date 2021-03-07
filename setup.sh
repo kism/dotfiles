@@ -258,7 +258,7 @@ if type vim > /dev/null; then
 	cp _zsh/.zshrc ~/.zshrc; checksuccess
 
 	h2 "Updating Antigen Bundles:"
-	zsh -c ". ~/.zshrc; antigen update"
+	zsh -c ". ~/.zshrc; antigen update; antigen cache-gen"
 else
 	h3 "zsh not found, skipping"
 fi
