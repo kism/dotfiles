@@ -26,7 +26,7 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "EnableWindo
 
 # Windows Performance Settings                          
 $UserPreferencesMask = "98,52,03,80,10,00,00,00"
-$UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | % { "0x$_"}
+$UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | ForEach-Object { "0x$_"}
 Set-ItemProperty -Path "HKCU:\Control Panel\Desktop\" -Name "UserPreferencesMask" -Value ([byte[]]$UserPreferencesMaskHex)
 
 # International Settings
