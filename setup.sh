@@ -2,15 +2,13 @@
 
 # Dotfiles installer, requires bash, installs prereqs
 
-baseinstall="zsh git htop tmux curl neofetch"
-
-notpkginstall="vim"
-pkginstall="vim-console"
-
-dnfaptinstall="openssh-server"
+install_base="zsh git htop tmux curl neofetch"
+install_apt_brew_dnf_pacman="vim"
+install_apt_dnf="openssh-server"
+install_pkg="vim-console"
 
 function setup_brew() {
-	baseinstall="$baseinstall $notpkginstall"
+	install_base="$install_base $install_apt_brew_dnf_pacman"
 	h1 "Brew (MacOS Package Manager)"
 	if ! which brew > /dev/null; then
 		h2 "Installing Brew"
@@ -25,11 +23,11 @@ function setup_brew() {
 	
 	h2 "Installing Packages"
 	echo
-	brew install $baseinstall
+	brew install $install_base
 }
 
 function setup_pkg() {
-	baseinstall="$baseinstall $pkginstall"
+	to_install="$install_base $install_pkg"
 	prepsudo
 
 	h2 "pkg update"
@@ -37,26 +35,26 @@ function setup_pkg() {
 	h2 "pkg upgrade"
 	yes | sudo pkg upgrade
 	h2 "Installing Packages"
-	yes | sudo pkg install $baseinstall
+	yes | sudo pkg install $to_install
 
 	h3 "Remember to set zsh as your default shell!"
 }
 
 function setup_pacman() {
-	baseinstall="$baseinstall $notpkginstall"
+	to_install="$install_base $install_apt_brew_dnf_pacman"
 	prepsudo
 
 	h1 "Updating $PRETTY_NAME"
 	h2 "pacman -Syyu"
 	sudo pacman -Syyu --noconfirm
 	h2 "Installing Packages"
-	sudo pacman -S --noconfirm $baseinstall
+	sudo pacman -S --noconfirm $to_install
 
 	set_shell_chsh
 }
 
 function setup_apt() {
-	baseinstall="$baseinstall $notpkginstall"
+	to_install="$install_base $install_apt_brew_dnf_pacman $install_apt_dnf"
 	prepsudo
 
 	h1 "Updating $PRETTY_NAME"
@@ -65,13 +63,13 @@ function setup_apt() {
 	h2 "apt upgrade"
 	sudo apt-get upgrade -y
 	h2 "Installing Packages"
-	sudo apt-get install --no-install-recommends -y $baseinstall $dnfaptinstall
+	sudo apt-get install --no-install-recommends -y $to_install 
 
 	set_shell_chsh
 }
 
 function setup_dnf() {
-	baseinstall="$baseinstall $notpkginstall"
+	to_install="$install_base $install_apt_brew_dnf_pacman $install_apt_dnf"
 	prepsudo
 
 	h1 "Updating $PRETTY_NAME"
@@ -81,7 +79,7 @@ function setup_dnf() {
 	sudo dnf upgrade
 	sudo dnf install -y epel-release
 	h2 "Installing Packages"
-	sudo dnf --setopt=install_weak_deps=False --best install -y $baseinstall $dnfaptinstall
+	sudo dnf --setopt=install_weak_deps=False --best install -y $to_install 
 	
 	set_shell_chsh
 }
