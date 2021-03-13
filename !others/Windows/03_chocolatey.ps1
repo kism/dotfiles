@@ -58,6 +58,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("teracopy"),
         ("vlc"),
         ("vscode.install"),
+        ("winaero-tweaker"),
         ("winscp.install"),
         # Fonts
         ("cascadia-code-nerd-font"),
