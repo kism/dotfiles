@@ -69,10 +69,10 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden"       -Value 1
 
 # Disable Cortana
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value 0
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value 0 -Force
 
 # Disable OneDrive
 if (!(Test-Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows")) {
     New-Item -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows" -Name "OneDrive"
 }
-Set-ItemProperty -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1
+Set-ItemProperty -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1 -Force
