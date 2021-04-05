@@ -37,6 +37,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("goggalaxy"),
         ("gpu-z"),
         ("hashtab"),
+	("hwmonitor"),
         ("kdiff3"),
         ("krita"),
         ("libreoffice-fresh"),
