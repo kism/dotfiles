@@ -49,6 +49,9 @@ Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sLongDate"   
 Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sShortDate"      -Value "yyyy-MM-dd"
 Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sShortTime"      -Value "HH:mm"
 
+# Windows Time Settings
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Value 1 -Force
+
 # Keyboard
 ## Turn off Stickey Keys shortcuts
 Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\Keyboard Response"    -Name "Flags"    -Value 122
