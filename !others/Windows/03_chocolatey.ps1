@@ -42,6 +42,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("krita"),
         ("libreoffice-fresh"),
         ("microsoft-windows-terminal"),
+        ("mkvtoolnix"),
         ("mpv.install"),
         ("nmap"),
         ("notepadplusplus.install"),
