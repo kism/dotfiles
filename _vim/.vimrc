@@ -24,3 +24,4 @@ set mouse-=a                        " Mouse off
 set pastetoggle=<F2>                " Toggle paste mode with F2
 set t_u7=                           " Fix Windows Terminal compatibility
 set tw=0                            " Set text wrapping off for the language formatter
+set noshowmode                      " Dont display -- Insert -- since that's handled by vim-airline
