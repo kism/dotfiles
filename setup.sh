@@ -197,6 +197,7 @@ h1 "Setting up bash"
 h2 "Copying .bashrc"
 if type bash > /dev/null; then
 	cp _bash/.bashrc ~/.bashrc; checksuccess
+	cp _bash/.bash_profile ~/.bash_profile; checksuccess
 else
 	h3 "bash not found, wat?, skipping"
 fi
