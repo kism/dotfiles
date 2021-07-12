@@ -8,9 +8,10 @@ fi
 export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w\n\[\e[35m\]\\$\[\e[m\] "
 
 # Alias
-alias ll='ls -lh'
-alias la='ls -lah'
-alias sl='ls'
+alias ls='ls --color=auto'
+alias ll='ls -lh --color=auto'
+alias la='ls -lah --color=auto'
+alias sl='ls --color=auto'
 alias sudp='sudo'
 alias please='sudo $(fc -ln -1)'
 alias screen="echo no #"
