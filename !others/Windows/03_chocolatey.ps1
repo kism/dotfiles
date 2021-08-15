@@ -4,7 +4,8 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
     if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
         Write-Host "❌ Please run this in an Administrative Shell"
         return
-    } else {
+    }
+    else {
         Write-Host "✔️ Running in an Administrative Shell!"
     }
 
@@ -44,7 +45,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("microsoft-windows-terminal"),
         ("mkvtoolnix"),
         ("mpv.install"),
-	("msiafterburner"),
+        ("msiafterburner"),
         ("nmap"),
         ("notepadplusplus.install"),
         ("obs-studio.install"),
@@ -83,7 +84,8 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
     if (($in | select-string "yes") -or ($in.Substring(0) -eq 'y')) {
         Restart-computer -Force -Confirm:$false
     }
-} else {
+}
+else {
     $ChocolateyURL = "https://chocolatey.org/install"
     Write-Host      "❌Install Chocolatey first please!"
     Write-Host      $ChocolateyURL
