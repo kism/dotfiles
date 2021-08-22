@@ -1,4 +1,7 @@
--- First lua script, vlc style crop for mpv
+-- vlc style crop for mpv
+-- uses hotey 'c', same as VLC
+-- https://github.com/kism/mpvscripts
+
 require "mp.msg"
 require "mp.options"
 
