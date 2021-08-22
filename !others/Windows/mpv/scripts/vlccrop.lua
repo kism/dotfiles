@@ -2,9 +2,9 @@
 require "mp.msg"
 require "mp.options"
 
-local label_prefix = mp.get_script_name()
-local cropstring = string.format("%s-crop", label_prefix)
 local cropnumber = 0
+local cropstring = string.format("%s-crop", mp.get_script_name())
+local command_prefix = 'no-osd' --set this to null to debug
 
 function gettargettar(inaspect)
     local result
@@ -85,6 +85,7 @@ function on_press()
     mp.msg.info("Cropping Video, Target Aspect Ratio: " .. tostring(targetar))
 
     -- Compare target AR to current AR, crop height or width depending on what is needed
+    -- TODO maybe add some tolerance so if the diff is within rounding error tolerance it wont crop
     if targetar < aspect then
         -- Reduce width
         neww = height * targetar
@@ -107,7 +108,23 @@ function on_press()
 
     -- Apply crop
     mp.command(string.format("%s vf pre @%s:lavfi-crop=w=%s:h=%s:x=%s:y=%s",
-                             'no-osd', cropstring, neww, newh, newx, newy))
+                            command_prefix, cropstring, neww, newh, newx, newy))
+end
+
+function cleanup()
+        local filters = mp.get_property_native("vf")
+        for index, filter in pairs(filters) do
+            mp.msg.info("Applied Crop : " .. tostring(filter["label"]) .. " | " .. tostring(index) )
+            mp.msg.info("Removing Crop: " .. tostring(cropstring))
+
+            if filter["label"] == cropstring then
+                mp.command(string.format('%s vf remove @%s', command_prefix, cropstring))
+                return true
+            end
+        end
+
+        return false
 end
 
 mp.add_key_binding("c", "toggle_crop", on_press)
+mp.register_event("file-loaded", cleanup)
