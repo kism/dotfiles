@@ -74,6 +74,7 @@ function on_press()
     local width = mp.get_property_native("width")
     local height = mp.get_property_native("height")
     local aspect = mp.get_property_native("video-params/aspect")
+    local par = mp.get_property_native("video-params/par")
 
     local neww
     local newh
@@ -85,25 +86,24 @@ function on_press()
     mp.msg.info("Cropping Video, Target Aspect Ratio: " .. tostring(targetar))
 
     -- Compare target AR to current AR, crop height or width depending on what is needed
-    -- TODO maybe add some tolerance so if the diff is within rounding error tolerance it wont crop
-    if targetar < aspect then
+    -- The if statements
+    if targetar < aspect * 0.99 then
         -- Reduce width
-        neww = height * targetar
-        newh = height
-        newx = (width - neww) / 2
-        newy = 0
-    elseif targetar > aspect then
+        neww = (height * targetar) / par -- New width is the width multiple by the aspect ratio, adjusted for the PAR (pixel aspect ratio) incase it's not 1:1
+        newh = height                    -- Height stays the same since we only ever crop one axis in this script
+        newx = (width - neww) / 2        -- Width - new width will equal the total space cropped, since its evenly cropped from both sides the offset needs to be halved
+        newy = 0                         -- This along with the height being the video height means that it will crop zero pixels
+    elseif targetar > aspect * 1.01 then
         -- Reduce height
-        neww = width
-        newh = width * (1 / targetar)
-        newx = 0
-        newy = (height - newh) / 2
+        neww = width                            -- See newh above
+        newh = (width * (1 / targetar)) * par   -- See neww above, need to adjust for PAR but it's in the reverse direction
+        newx = 0                                -- See newy above
+        newy = (height - newh) / 2              -- See newh above
     else
-        -- This probably doesnt have to exist tbh
-        neww = width
-        newh = height
-        newx = 0
-        newy = 0
+        -- So if the target aspect ratio is the same as the source (or within 1%), )
+        -- mp.msg.info("\nTARGET ASPECT RATIO = SOURCE, removing filter\n")
+        cleanup() -- remove the crop filter
+        return    -- exit the function before we apply that crop
     end
 
     -- Apply crop
