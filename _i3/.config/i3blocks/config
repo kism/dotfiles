@@ -29,6 +29,12 @@ markup=none
 #interval=-3
 #align=left
 
+[window]
+align=right
+command=xtitle
+interval=-2
+
+
 [cputempspeed]
 label=CPU 
 interval=1
@@ -50,7 +56,7 @@ color=#34be5b
 [inet]
 label=iNet 
 interval=once
-command=sleep 10; curl ipv4.icanhazip.com
+command=sleep 10; curl -Ss ipv4.icanhazip.com
 separator=false
 color=#34be5b
 
@@ -58,14 +64,15 @@ color=#34be5b
 #instance=wlan0
 label=LAN 
 interval=10
-separator=true
+separator=false
 color=#34be5b
 
-#[ssid]
-#label=SSID
-#interval=10
-#separator=true
-#color=#34be5b
+[ssid]
+command=iwgetid -r
+label=SSID 
+interval=10
+separator=true
+color=#34be5b
 
 #[volume]
 #label=Volume 
@@ -81,7 +88,7 @@ color=#34be5b
 #interval=30
 
 [weather]
-command=sleep 10; curl "wttr.in/Canberra?format="%l+%t+%C""
+command=sleep 10; curl -Ss 'wttr.in/Canberra?format=%l+%t+%C'
 interval=1800
 color=#34be5b
 

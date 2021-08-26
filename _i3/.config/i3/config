@@ -9,7 +9,7 @@ set $mod Mod4
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 
 # Easiest
-font pango:DejaVu Sans Mono 11 
+font pango:DejaVu Sans Mono 11
 
 # Generally I decide against nerdfont setups
 #font pango:Hasklug Nerd Font Mono Regular 12 
@@ -70,6 +70,23 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+
+# set monitors to workspace, use names as according to xrandr
+set $monitor_one HDMI-A-0
+set $monitor_two DisplayPort-2
+
+exec --no-startup-id randr --output HDMI-A-0 --left-of DisplayPort-2
+
+workspace 01 output $monitor_one
+workspace 02 output $monitor_one
+workspace 03 output $monitor_one
+workspace 04 output $monitor_one
+workspace 05 output $monitor_one
+workspace 06 output $monitor_two
+workspace 07 output $monitor_two
+workspace 08 output $monitor_two
+workspace 09 output $monitor_two
+workspace 10 output $monitor_two
 
 # switch to workspace
 bindsym $mod+1 workspace 01
@@ -172,7 +189,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec --no-startup-id nitrogen --restore; sleep 1; picom -b
 
 # Set border width
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 2
 
 ##Colours
 set $FOCUS   #34be5b
