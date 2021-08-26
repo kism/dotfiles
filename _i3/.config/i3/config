@@ -186,7 +186,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 # Misc appearancce
 # Set wallpaper, start compositor
 # exec --no-startup-id xsetroot -solid "#111111"
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b --config ~/.config/i3/picom.conf
 
 # Set border width
 for_window [class="^.*"] border pixel 2
