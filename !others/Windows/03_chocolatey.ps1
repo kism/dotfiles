@@ -24,6 +24,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("7zip.install"),
         ("audacity"),
         ("bitwarden"),
+        ("ccleaner"),
         ("cpu-z"),
         ("crystaldiskinfo.install"),
         ("discord.install"),
