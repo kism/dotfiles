@@ -52,6 +52,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("putty.install"),
         ("python3"),
         ("scrcpy"),
+        ("signal"),
         ("spacesniffer"),
         ("speedcrunch.install"),
         ("steam"),
