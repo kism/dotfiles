@@ -168,6 +168,10 @@ case $unameresult in
 		setup_pkg
 	;;
 
+	SunOS)
+		echo $unameresult
+		setup_pkg
+	;;
 	Linux)
 		# Source linux os info
 		if test -f /etc/os-release; then
