@@ -58,6 +58,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("nmap"),
         ("notepadplusplus.install"),
         ("obs-studio.install"),
+        ("powertoys"),
         ("putty.install"),
         ("python3"),
         ("scrcpy"),
