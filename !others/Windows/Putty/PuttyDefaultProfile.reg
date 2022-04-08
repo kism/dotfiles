@@ -117,8 +117,8 @@ Windows Registry Editor Version 5.00
 "WinTitle"=""
 "TermWidth"=dword:00000050
 "TermHeight"=dword:00000018
-"Font"="Terminus"
-"FontIsBold"=dword:00000001
+"Font"="Consolas"
+"FontIsBold"=dword:00000000
 "FontCharSet"=dword:00000000
 "FontHeight"=dword:0000000e
 "FontQuality"=dword:00000000
