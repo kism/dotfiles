@@ -32,5 +32,12 @@ alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
 
-# Path
-PATH=$PATH:$HOME/bin:$HOME/.local/bin
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+if type keychain > /dev/null; then
+    eval `keychain -q --eval --agents ssh id_rsa`
+    eval `keychain -q --eval --agents ssh id_ed25519`
+fi
