@@ -37,7 +37,12 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# Make this a nice list in the future
 if type keychain > /dev/null; then
-    eval `keychain -q --eval --agents ssh id_rsa`
-    eval `keychain -q --eval --agents ssh id_ed25519`
+    if test -f "~/.ssh/id_rsa"; then
+        eval `keychain -q --eval --agents ssh id_rsa`
+    fi
+    if test -f "~/.ssh/id_ed25519"; then
+        eval `keychain -q --eval --agents ssh id_ed25519`
+    fi
 fi
