@@ -37,12 +37,13 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Make this a nice list in the future
+# Load up ssh keys into keychain if it is on this system
 if type keychain > /dev/null; then
-    if [[ -e ~/.ssh/id_rsa ]] ; then
-        eval `keychain -q --eval --agents ssh id_rsa`
-    fi
-    if [[ -e ~/.ssh/id_ed25519 ]] ; then
-        eval `keychain -q --eval --agents ssh id_ed25519`
-    fi
+    sshkeylist=('id_rsa' 'id_ed25519')
+
+    for i in $sshkeylist; do
+        if [[ -e ~/.ssh/$i ]] ; then
+            eval `keychain -q --eval --agents ssh $i`
+        fi
+    done
 fi
