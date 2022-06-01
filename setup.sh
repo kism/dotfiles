@@ -147,9 +147,13 @@ cd "$(dirname "$0")"
 hr
 h1 "Dotfiles Install!"
 
+echo $1
+
 # Preflight checks
-if [ $EUID -eq 0 ]; then
-	echo "This script must not be run as root" 
+if [ $EUID -eq 0 ] && [[ $1 != --allow-root ]] ; then
+	echo "This script must not be run as root!" 
+	echo "Use --allow-root if you really want to risk these wild dotfiles"
+	echo "being added to the root user of your stable system."
 	exit 1
 fi
 
