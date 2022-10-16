@@ -5,6 +5,7 @@ if [ -f /etc/bashrc ]; then
         . /etc/bashrc
 fi
 
+# Prompt
 function get_mercury_retrograde() {
     RESULT=""
     RETROGRADETEMPFILE=~/.config/mercuryretrograde
@@ -25,6 +26,11 @@ function get_mercury_retrograde() {
     echo -e $RESULT
 }
 export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \`get_mercury_retrograde\` \w\n\[\e[35m\]\\$\[\e[m\] "
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Alias
 alias ls='ls --color=auto'
