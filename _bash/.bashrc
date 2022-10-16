@@ -7,7 +7,7 @@ fi
 
 function get_mercury_retrograde() {
     RESULT=""
-    RETROGRADETEMPFILE="/tmp/mercuryretrograde"
+    RETROGRADETEMPFILE="~/.config/mercuryretrograde"
 
     if ! [ -f "$RETROGRADETEMPFILE" ]; then
         touch "$RETROGRADETEMPFILE"
