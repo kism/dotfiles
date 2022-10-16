@@ -9,10 +9,14 @@ function get_mercury_retrograde() {
     RESULT=""
     RETROGRADETEMPFILE="/tmp/mercuryretrograde"
 
+    if ! [ -f "$RETROGRADETEMPFILE" ]; then
+        touch "$RETROGRADETEMPFILE"
+    fi
+
     if type nohup > /dev/null && type curl > /dev/null; then
 
         if [[ $(find "$RETROGRADETEMPFILE" -mtime -0.25 -print) ]]; then
-            nohup curl -s http://mercuryretrogradeapi.com > $RETROGRADETEMPFILE 2>/dev/null
+            nohup curl -s https://mercuryretrogradeapi.com > $RETROGRADETEMPFILE 2>/dev/null
         fi
 
         if cat /tmp/mercuryretrograde | grep false >/dev/null ; then
