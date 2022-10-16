@@ -5,7 +5,27 @@ if [ -f /etc/bashrc ]; then
         . /etc/bashrc
 fi
 
-export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w\n\[\e[35m\]\\$\[\e[m\] "
+function get_mercury_retrograde() {
+    RESULT=""
+    RETROGRADETEMPFILE="/tmp/mercuryretrograde"
+
+    if type nohup > /dev/null && type curl > /dev/null; then
+
+        if [[ $(find "$RETROGRADETEMPFILE" -mtime -0.25 -print) ]]; then
+            nohup curl -s http://mercuryretrogradeapi.com > $RETROGRADETEMPFILE 2>/dev/null
+        fi
+
+        if cat /tmp/mercuryretrograde | grep false >/dev/null ; then
+            RESULT="☿ \033[0;32mPrograde\033[0m"
+        else
+            RESULT="☿ \033[0;31mRetrograde\033[0m"
+        fi
+
+    fi
+    echo -e $RESULT
+}
+
+export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \`get_mercury_retrograde\` \w\n\[\e[35m\]\\$\[\e[m\] "
 
 # Alias
 alias ls='ls --color=auto'
