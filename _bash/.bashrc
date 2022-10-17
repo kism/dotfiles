@@ -13,7 +13,7 @@ function get_mercury_retrograde() {
         mkdir -p ~/.config/ > /dev/null
         touch -a -m -t 197001010000.00 $RETROGRADETEMPFILE
     fi
-    if type nohup > /dev/null && type curl > /dev/null; then
+    if type curl > /dev/null; then
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
             curl -s https://mercuryretrogradeapi.com > $RETROGRADETEMPFILE 2>/dev/null
         fi
