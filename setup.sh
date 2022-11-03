@@ -206,6 +206,7 @@ h2 "Copying .bashrc"
 if type bash > /dev/null; then
 	cp _bash/.bashrc ~/.bashrc; checksuccess
 	cp _bash/.bash_profile ~/.bash_profile; checksuccess
+	cp _bash/.inputrc ~/.inputrc; checksuccess
 else
 	h3 "bash not found, wat?, skipping"
 fi
