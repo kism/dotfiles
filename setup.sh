@@ -90,7 +90,7 @@ function set_shell_chsh() {
 		h1 "Setting zsh as user's shell"
 		h2 "Setting your default shell:"
 		myshell=$(cat /etc/shells | grep -m 1 "zsh")
-		chsh -s $myshell $USER
+		sudo chsh -s $myshell $USER
 		checksuccess
 	else
 		echo "User $USER is already using zsh as their shell"
