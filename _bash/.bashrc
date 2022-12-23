@@ -25,7 +25,7 @@ function get_mercury_retrograde() {
     fi
     echo -e $RESULT
 }
-export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \`get_mercury_retrograde\` \w\n\[\e[35m\]\\$\[\e[m\] "
+export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w\n\[\e[35m\]\\$\[\e[m\] "
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
@@ -47,3 +47,11 @@ alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
 alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
+
+# Startup
+if test -f /etc/os-release; then
+    . /etc/os-release
+    echo -e "$PRETTY_NAME, \c"
+fi
+uname -s -r
+get_mercury_retrograde
