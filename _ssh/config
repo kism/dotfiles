@@ -1,0 +1,3 @@
+Host openwrt
+    HostName openwrt
+    User root

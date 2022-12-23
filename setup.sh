@@ -241,7 +241,7 @@ else
 	h3 "vim not found, skipping"
 fi
 
-#HTOP
+# HTOP
 if type htop > /dev/null; then
 	h1 "Setting up htop"
 	h2 "Copying htoprc"
@@ -250,6 +250,18 @@ if type htop > /dev/null; then
 else
 	echo -e "htop not found, skipping"
 fi
+
+# SSH
+if type ssh > /dev/null; then
+	h1 "Setting up ssh"
+	h2 "Copying htoprc"
+	mkdir -p ~/.ssh
+	chmod 700 ~/.ssh
+	cp -r _ssh/config ~/.ssh/config ; checksuccess
+else
+	echo -e "ssh not found, skipping"
+fi
+
 
 # ZSH
 if type zsh > /dev/null; then
@@ -288,6 +300,8 @@ if type git > /dev/null; then
 	git config --global core.editor vim; checksuccess
 	h2 "git@github.com: instead of https://github.com/"
 	git config --global url."git@github.com:".insteadOf "https://github.com/"; checksuccess
+else
+	h3 "ssh not found, skipping"
 fi
 
 h3 "All done!"
