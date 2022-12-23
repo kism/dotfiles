@@ -48,10 +48,11 @@ alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
 
+
 # Startup
+get_mercury_retrograde
 if test -f /etc/os-release; then
     . /etc/os-release
     echo -e "$PRETTY_NAME, \c"
 fi
-uname -s -r
-get_mercury_retrograde
+echo -e "$(uname -s -r)"
