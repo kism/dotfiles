@@ -17,10 +17,10 @@ function setup_brew() {
 		h2 "Updating Brew"
 		brew update
 	fi
-	
+
 	h2 "Updating Brew Formulas"
 	brew upgrade; checksuccess
-	
+
 	h2 "Installing Packages"
 	echo
 	brew install $install_base
@@ -63,7 +63,7 @@ function setup_apt() {
 	h2 "apt upgrade"
 	sudo apt-get upgrade -y
 	h2 "Installing Packages"
-	sudo apt-get install --no-install-recommends -y $to_install 
+	sudo apt-get install --no-install-recommends -y $to_install
 
 	set_shell_chsh
 }
@@ -79,8 +79,8 @@ function setup_dnf() {
 	sudo dnf upgrade
 	sudo dnf install -y epel-release
 	h2 "Installing Packages"
-	sudo dnf --setopt=install_weak_deps=False --best install -y $to_install 
-	
+	sudo dnf --setopt=install_weak_deps=False --best install -y $to_install
+
 	set_shell_chsh
 }
 
@@ -98,7 +98,7 @@ function set_shell_chsh() {
 }
 
 function prepsudo() {
-	h3 "Installing packages will require sudo, checking if sudo is installed:"	
+	h3 "Installing packages will require sudo, checking if sudo is installed:"
 	type sudo > /dev/null 2> /dev/null; checksuccess "crit"
 	sudo echo "Starting install!"; checksuccess "crit"
 }
@@ -151,7 +151,7 @@ echo $1
 
 # Preflight checks
 if [ $EUID -eq 0 ] && [[ $1 != --allow-root ]] ; then
-	echo "This script must not be run as root!" 
+	echo "This script must not be run as root!"
 	echo "Use --allow-root if you really want to risk these wild dotfiles"
 	echo "being added to the root user of your stable system."
 	exit 1
@@ -161,7 +161,7 @@ fi
 h2 "Detecting OS:"
 unameresult=`uname`
 
-case $unameresult in 
+case $unameresult in
 	Darwin)
 		echo "MacOS"
 		setup_brew
@@ -184,7 +184,7 @@ case $unameresult in
 		else
 			echo "What Linux is this even?"
 		fi
-				
+
 		if type pacman > /dev/null 2> /dev/null; then
 			setup_pacman
 		elif type apt  > /dev/null 2> /dev/null; then
@@ -252,7 +252,7 @@ else
 fi
 
 # ZSH
-if type vim > /dev/null; then
+if type zsh > /dev/null; then
 	h1 "Setting up zsh"
 	antigenlocation=~/.antigen
 	if ! test -d $antigenlocation; then
@@ -269,6 +269,25 @@ if type vim > /dev/null; then
 	zsh -c ". ~/.zshrc; antigen update; antigen reset"
 else
 	h3 "zsh not found, skipping"
+fi
+
+# ZSH
+if type git > /dev/null; then
+	h1 "Setting up git"
+	h2 "Email"
+	git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
+	h2 "Name"
+	git config --global user.name "Kieran Gee"; checksuccess
+	h2 "Rebase setting"
+	git config --global pull.rebase true; checksuccess
+	h2 CLRF""
+	git config --global core.autocrlf false; checksuccess
+	h2 "EOL LF"
+	git config --global core.eol lf; checksuccess
+	h2 "Editor: vim"
+	git config --global core.editor vim; checksuccess
+	h2 "git@github.com: instead of https://github.com/"
+	git config --global url."git@github.com:".insteadOf "https://github.com/"; checksuccess
 fi
 
 h3 "All done!"
