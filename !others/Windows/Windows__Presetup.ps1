@@ -1,3 +1,3 @@
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
-# https://github.com/W4RH4WK/Debloat-Windows-11/
+Start-Process "https://github.com/LeDragoX/Win-Debloat-Tools"
