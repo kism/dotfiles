@@ -262,7 +262,6 @@ else
 	echo -e "ssh not found, skipping"
 fi
 
-
 # ZSH
 if type zsh > /dev/null; then
 	h1 "Setting up zsh"
