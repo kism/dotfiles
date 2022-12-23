@@ -271,7 +271,7 @@ else
 	h3 "zsh not found, skipping"
 fi
 
-# ZSH
+# Git
 if type git > /dev/null; then
 	h1 "Setting up git"
 	h2 "Email"
