@@ -1,3 +1,4 @@
+# zsh Settings
 source ~/.antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -20,6 +21,7 @@ antigen theme kism/zsh-bira-mod
 
 # Tell Antigen that you're done.
 antigen apply
+
 
 # Alias
 alias please='sudo $(fc -ln -1)'
@@ -48,6 +50,35 @@ if type keychain > /dev/null; then
     done
 fi
 
+
+# Functions
+function get_mercury_retrograde() {
+    RESULT=""
+    RETROGRADETEMPFILE=~/.config/mercuryretrograde
+    if ! [ -f $RETROGRADETEMPFILE ]; then
+        mkdir -p ~/.config/ > /dev/null
+        touch -a -m -t 197001010000.00 $RETROGRADETEMPFILE
+    fi
+    if type curl > /dev/null; then
+        if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
+            curl -s https://mercuryretrogradeapi.com > $RETROGRADETEMPFILE 2>/dev/null
+        fi
+        if cat $RETROGRADETEMPFILE | grep false >/dev/null ; then
+            RESULT="☿ \033[0;32mPrograde\033[0m"
+        else
+            RESULT="☿ \033[0;31mRetrograde\033[0m"
+        fi
+    fi
+    echo -e $RESULT
+}
+
+function get_ssh_keys_loaded() {
+    if type keychain > /dev/null; then
+        keychain -l | grep -v "The agent has no identities." | wc -l
+    fi
+}
+
+
 # Keybinds
 ## ctrl+arrows
 bindkey "\e[1;5C" forward-word
@@ -68,3 +99,13 @@ bindkey '^H' backward-kill-word
 bindkey "\e[3;6~" kill-line
 ### urxvt
 bindkey "\e[3@" kill-line
+
+
+# Startup
+if test -f /etc/os-release; then
+    . /etc/os-release
+    echo -e "$PRETTY_NAME, \c"
+fi
+echo -e "$(uname -s -r)), \c"
+echo -e "🗝️$(get_ssh_keys_loaded),\c"
+get_mercury_retrograde
