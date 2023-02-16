@@ -285,8 +285,9 @@ fi
 # Git
 if type git > /dev/null; then
 	h1 "Setting up git"
-	h2 "Email"
-	git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
+	#h2 "Email"
+	# fix so this only happens for DPSHUB hostname
+	#git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
 	h2 "Name"
 	git config --global user.name "Kieran Gee"; checksuccess
 	h2 "Rebase setting"
@@ -297,8 +298,8 @@ if type git > /dev/null; then
 	git config --global core.eol lf; checksuccess
 	h2 "Editor: vim"
 	git config --global core.editor vim; checksuccess
-	h2 "git@github.com: instead of https://github.com/"
-	git config --global url."git@github.com:".insteadOf "https://github.com/"; checksuccess
+	#h2 "git@github.com: instead of https://github.com/"
+	#git config --global url."git@github.com:".insteadOf "https://github.com/"; checksuccess
 else
 	h3 "ssh not found, skipping"
 fi
