@@ -287,6 +287,7 @@ if type git > /dev/null; then
 	h1 "Setting up git"
 	#h2 "Email"
 	# fix so this only happens for DPSHUB hostname
+	# use this fun command for sensitive hostnames: cat /etc/hostname | sha256sum -z | sed 's/[^[:xdigit:]]//g'
 	#git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
 	h2 "Name"
 	git config --global user.name "Kieran Gee"; checksuccess
