@@ -101,12 +101,13 @@ bindkey "\e[3;6~" kill-line
 ### urxvt
 bindkey "\e[3@" kill-line
 
-
-# Startup
-if test -f /etc/os-release; then
-    . /etc/os-release
-    echo -e "$PRETTY_NAME, \c"
+# Startup welcome message, only if we are in an interactive shell
+if [[ -o interactive ]]; then
+    if test -f /etc/os-release; then
+        . /etc/os-release
+        echo -e "$PRETTY_NAME, \c"
+    fi
+    echo -e "$(uname -s -r), \c"
+    echo -e "🗝️$(get_ssh_keys_loaded),\c"
+    get_mercury_retrograde
 fi
-echo -e "$(uname -s -r), \c"
-echo -e "🗝️$(get_ssh_keys_loaded),\c"
-get_mercury_retrograde
