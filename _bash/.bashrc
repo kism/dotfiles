@@ -50,9 +50,9 @@ alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
 
 
 # Startup
-get_mercury_retrograde
 if test -f /etc/os-release; then
     . /etc/os-release
     echo -e "$PRETTY_NAME, \c"
 fi
-echo -e "$(uname -s -r)"
+echo -e "$(uname -s -r), \c"
+get_mercury_retrograde
