@@ -1,0 +1,186 @@
+### Kieran's Config for i3
+# Super
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+
+# Easiest
+font pango:DejaVu Sans Mono 11 
+
+# Generally I decide against nerdfont setups
+#font pango:Hasklug Nerd Font Mono Regular 12 
+
+# If you are low dpi install this and use it
+#font pango:dina 14 
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start rofi (a program launcher that isn't dmenu)
+bindsym $mod+d exec rofi -show drun
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 01
+bindsym $mod+2 workspace 02
+bindsym $mod+3 workspace 03
+bindsym $mod+4 workspace 04
+bindsym $mod+5 workspace 05
+bindsym $mod+6 workspace 06
+bindsym $mod+7 workspace 07
+bindsym $mod+8 workspace 08
+bindsym $mod+9 workspace 09
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 01
+bindsym $mod+Shift+2 move container to workspace 02
+bindsym $mod+Shift+3 move container to workspace 03
+bindsym $mod+Shift+4 move container to workspace 04
+bindsym $mod+Shift+5 move container to workspace 05
+bindsym $mod+Shift+6 move container to workspace 06
+bindsym $mod+Shift+7 move container to workspace 07
+bindsym $mod+Shift+8 move container to workspace 08
+bindsym $mod+Shift+9 move container to workspace 09
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Set shut down, restart and locking features
+bindsym $mod+Shift+e mode "$mode_system"
+set $mode_system (e)xit, switch_(u)ser, (s)uspend, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym s exec exec systemctl suspend
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+## sleep, alternate hotkey
+bindsym $mod+l exec systemctl suspend
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+	# These bindings trigger as soon as you enter the resize mode
+
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 5 px or 5 ppt
+	bindsym Down resize grow height 5 px or 5 ppt
+	bindsym Up resize shrink height 5 px or 5 ppt
+	bindsym Right resize grow width 5 px or 5 ppt
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+	status_command i3blocks
+	position top
+	colors {
+		background #111111
+		separator  #666666
+		statusline #DDDDDD
+		focused_workspace  #34be5b #34be5b #000000
+		active_workspace   #34be5b #34be5b #888888
+		inactive_workspace #333333 #333333 #b1b1b1
+		urgent_workspace   #eb709b #eb709b #ffffff
+	}
+}
+
+### Kieran Trash
+## Startup
+exec --no-startup-id start-pulseaudio-x11 # Audio
+exec --no-startup-id xfce4-power-manager  # Power managemetn
+exec --no-startup-id nm-applet            # Network manager applet
+exec --no-startup-id volumeicon           # Simple volume control applet
+exec --no-startup-id pamac-tray           # Manjaro/Arch Package manager gui
+exec --no-startup-id blueman-applet       # Bluetooth Manager
+
+# allows for sudo in programs that are running as user process
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) & 
+#exec --no-startup-id xinput -set-prop 'HAILUCK CO.,LTD USB KEYBOARD Touchpad' 'libinput Accel Speed' 0.7 # i'm pretty sure this is fixed in that one xorg file, even in the manjaro defaults
+
+
+# Misc appearancce
+# Set wallpaper, start compositor
+# exec --no-startup-id xsetroot -solid "#111111"
+exec --no-startup-id nitrogen --restore; sleep 1 ; picom -b --config ~/.config/i3/picom.conf
+
+# Set border width
+for_window [class="^.*"] border pixel 3
+
+##Colours
+set $FOCUS   #34be5b
+set $UNFOCUS #3c3b37
+
+# Layout colors         bord     bg       text     indicator (split)
+client.focused          $FOCUS   $FOCUS   $FOCUS   $FOCUS
+client.focused_inactive $UNFOCUS $UNFOCUS $UNFOCUS $UNFOCUS
+client.unfocused        $UNFOCUS $UNFOCUS $UNFOCUS $UNFOCUS
+client.urgent           $FOCUS   $FOCUS   $FOCUS   $FOCUS
+client.background       $UNFOCUS
+
+## Window Settings
+for_window [class="steam"]                floating enable
+for_window [class="vlc"]                  floating enable
+for_window [class="pavucontrol"]          floating enable
+for_window [class="nm-connection-editor"] floating enable
+
