@@ -1,24 +1,25 @@
-" Basic vimrc, parts may get overriden by Vundle...
+" Basic vimrc, parts may get overriden by NeoBundle...
 " Remember to run :PluginInstall
 
-" Vundle specific
+" NeoBundle specific
 set nocompatible                    " be iMproved, required
 filetype off                        " required
 
-set rtp+=~/.vim/bundle/Vundle.vim   " Vundle required
-call vundle#begin()                 " Vundle required
+set runtimepath+=~/.vim/bundle/neobundle.vim/    " required
+call neobundle#begin(expand('~/.vim/bundle/'))   " required
 
-Plugin 'VundleVim/Vundle.vim'       " Vundle main
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-sleuth'
-" Plugin 'tpope/vim-fugitive'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle  'tpope/vim-sensible'
+NeoBundle  'tpope/vim-sleuth'
+NeoBundle  'vim-airline/vim-airline'
+NeoBundle  'vim-airline/vim-airline-themes'
 
-call vundle#end()                   " required
+call neobundle#end()                " required
 filetype plugin indent on           " required
 
-" Regular preferences 
+NeoBundleCheck
+
+" Regular preferences
 set nowrap                          " Wordwrap off
 set mouse-=a                        " Mouse off
 set pastetoggle=<F2>                " Toggle paste mode with F2

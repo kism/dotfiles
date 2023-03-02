@@ -2,13 +2,14 @@
 
 # Dotfiles installer, requires bash, installs prereqs
 
-install_base="zsh git htop tmux curl neofetch"
+install_base="zsh git htop tmux curl neofetch keychain"
 install_apt_brew_dnf_pacman="vim"
 install_apt_dnf="openssh-server"
 install_pkg="vim-console"
+install_brew="coreutils"
 
 function setup_brew() {
-	install_base="$install_base $install_apt_brew_dnf_pacman"
+	install_base="$install_base $install_apt_brew_dnf_pacman $install_brew"
 	h1 "Brew (MacOS Package Manager)"
 	if ! which brew > /dev/null; then
 		h2 "Installing Brew"
@@ -223,14 +224,14 @@ fi
 # VIM
 if type vim > /dev/null; then
 	h1 "Setting up vim"
-	h2 "Checking for Vundle:"
-	vundlelocation=~/.vim/bundle/Vundle.vim
-	if test -d $vundlelocation; then
-		echo -e "Vundle Found!"
-		git -C $vundlelocation pull --no-rebase; checksuccess
+	h2 "Checking for NeoBundle:"
+	neobundlelocation=~/.vim/bundle/neobundle.vim
+	if test -d $neobundlelocation; then
+		echo -e "NeoBundle Found!"
+		git -C $neobundlelocation pull --no-rebase; checksuccess
 	else
-		echo -e "Vundle Not Found!"
-		git clone https://github.com/VundleVim/Vundle.vim.git $vundlelocation; checksuccess
+		echo -e "NeoBundle Not Found!"
+		git clone https://github.com/Shougo/neobundle.vim $neobundlelocation; checksuccess
 	fi
 
 	h2 "Copying .vimrc"
