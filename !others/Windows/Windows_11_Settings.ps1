@@ -86,6 +86,10 @@ if (!(Test-Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Wi
     New-Item -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows" -Name "Windows Search"
 }
 Set-ItemProperty -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value 0 -Force
+if (!(Test-Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Windows Search")) {
+    New-Item -Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows" -Name "Windows Search"
+}
+Set-ItemProperty -Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value 0 -Force
 
 # Disable OneDrive
 if (!(Test-Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\OneDrive")) {
@@ -93,9 +97,12 @@ if (!(Test-Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\On
 }
 Set-ItemProperty -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1 -Force
 
-
 # Disable Some Bing Garbage in edge
 if (!(Test-Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Edge")) {
     New-Item -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows" -Name "Edge"
 }
-Set-ItemProperty -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\OneDrive" -Name "HubsSidebarEnabled" -Value 0 -Force
+Set-ItemProperty -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+if (!(Test-Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Edge")) {
+    New-Item -Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows" -Name "Edge"
+}
+Set-ItemProperty -Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
