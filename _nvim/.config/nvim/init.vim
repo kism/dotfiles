@@ -2,6 +2,9 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'averms/black-nvim', {'do': ':UpdateRemotePlugins'}
 call plug#end()
 
 lua << END
