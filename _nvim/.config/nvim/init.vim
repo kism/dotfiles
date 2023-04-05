@@ -1,18 +1,26 @@
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'nvim-lualine/lualine.nvim'
-" If you want to have icons in your statusline choose one of these
 Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
 
 lua << END
-require('lualine').setup()
+require('lualine').setup{
+  options = {
+    icons_enabled = false,
+    theme = 'powerline',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+  }
+}
+
+
 END
 
 " Regular preferences
 set nocompatible            " disable compatibility to old-time vi
 set nowrap                  " Wordwrap off
-set mouse-=a                " Mouse off
+set mouse=                  " Mouse off
 set pastetoggle=<F2>        " Toggle paste mode with F2
 set tw=0                    " Set text wrapping off for the language formatter
 set noshowmode              " Dont display -- Insert -- since that's handled by ???
