@@ -18,7 +18,6 @@ require('lualine').setup{
 }
 END
 
-
 " Cursorline
 set cursorline                    " highlight current cursorline
 highlight CursorLine cterm=NONE   " remove underline
@@ -26,11 +25,10 @@ highlight CursorLine ctermbg=238  " set cursorline to dark grey
 
 " Number
 set number
-highlight LineNr       ctermfg=250
+highlight LineNr       ctermfg=250  " set linenumber colour
 highlight CursorLineNr cterm=NONE   " remove underline
-highlight CursorLineNr ctermbg=234  " set cursorline to dark grey
-highlight CursorLineNr ctermfg=255  " set cursorline to dark grey
-
+highlight CursorLineNr ctermbg=234  " set linenumber bg
+highlight CursorLineNr ctermfg=255  " set linenumber fg
 
 " Paste Toggle
 nnoremap <F2> :set cursorline! <Bar> set number! <Bar> set paste!<CR>
