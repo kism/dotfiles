@@ -250,7 +250,7 @@ elif type nvim > /dev/null; then
 
     cp -r _nvim/.config ~; checksuccess
 
-    nvim +'PlugInstall --sync' +qa > /dev/null 2> /dev/null; checksuccess 
+    nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksuccess 
 
 else
     echo "no nvim or vim"
