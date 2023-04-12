@@ -23,13 +23,22 @@ END
 set cursorline                    " highlight current cursorline
 highlight CursorLine cterm=NONE   " remove underline
 highlight CursorLine ctermbg=238  " set cursorline to dark grey
-noremap <F2> : set cursorline! <CR>   " Toggle with F2
+
+" Number
+set number
+highlight LineNr       ctermfg=250
+highlight CursorLineNr cterm=NONE   " remove underline
+highlight CursorLineNr ctermbg=234  " set cursorline to dark grey
+highlight CursorLineNr ctermfg=255  " set cursorline to dark grey
+
+
+" Paste Toggle
+nnoremap <F2> :set cursorline! <Bar> set number! <Bar> set paste!<CR>
 
 " Regular preferences
 set nocompatible            " disable compatibility to old-time vi
 set nowrap                  " Wordwrap off
 set mouse=                  " Mouse off
-set pastetoggle=<F2>        " Toggle paste mode with F2
 set tw=0                    " Set text wrapping off for the language formatter
 set noshowmode              " Dont display -- Insert -- since that's handled by ???
 set ttyfast                 " Speed up scrolling in Vim
