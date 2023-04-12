@@ -16,9 +16,14 @@ require('lualine').setup{
     section_separators = { left = '', right = ''},
   }
 }
-
-
 END
+
+
+" Cursorline
+set cursorline                    " highlight current cursorline
+highlight CursorLine cterm=NONE   " remove underline
+highlight CursorLine ctermbg=238  " set cursorline to dark grey
+noremap <F2> : set cursorline! <CR>   " Toggle with F2
 
 " Regular preferences
 set nocompatible            " disable compatibility to old-time vi
@@ -27,5 +32,4 @@ set mouse=                  " Mouse off
 set pastetoggle=<F2>        " Toggle paste mode with F2
 set tw=0                    " Set text wrapping off for the language formatter
 set noshowmode              " Dont display -- Insert -- since that's handled by ???
-set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
