@@ -4,13 +4,13 @@
 
 install_base="zsh git htop tmux curl neofetch keychain"
 install_apt_brew_dnf="vim"
-install_pacman="neovim"
+install_pacman_brew="neovim"
 install_apt_dnf="openssh-server"
 install_pkg="vim-console"
 install_brew="coreutils"
 
 function setup_brew() {
-    install_base="$install_base $install_apt_brew_dnf $install_brew"
+    install_base="$install_base $install_apt_brew_dnf $install_brew $install_pacman_brew"
     h1 "Brew (MacOS Package Manager)"
     if ! which brew > /dev/null; then
         h2 "Installing Brew"
@@ -43,7 +43,7 @@ function setup_pkg() {
 }
 
 function setup_pacman() {
-    to_install="$install_base $install_pacman"
+    to_install="$install_base $install_pacman_brew"
     prepsudo
 
     h1 "Updating $PRETTY_NAME"
@@ -241,7 +241,7 @@ if type vim > /dev/null && ! type nvim > /dev/null; then
     h2 "Copying .vimrc"
     cp _vim/.vimrc ~/.vimrc; checksuccess
     h2 "PluginInstall Starting"
-    vim +PluginInstall +qall > /dev/null 2> /dev/null; checksuccess
+    vim +'PluginInstall +qall' > /dev/null 2> /dev/null; checksuccess
 elif type nvim > /dev/null; then
     h1 "Setting up neovim"
     h2 "Checking for Plug:"
@@ -249,6 +249,8 @@ elif type nvim > /dev/null; then
     curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs; checksuccess
 
     cp -r _nvim/.config ~; checksuccess
+
+    nvim +'PlugInstall --sync' +qa > /dev/null 2> /dev/null; checksuccess 
 
 else
     echo "no nvim or vim"
