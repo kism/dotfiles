@@ -225,7 +225,6 @@ else
 fi
 
 # VIM
-
 if type vim > /dev/null && ! type nvim > /dev/null; then
     h1 "Setting up vim"
     h2 "Checking for NeoBundle:"
@@ -244,14 +243,14 @@ if type vim > /dev/null && ! type nvim > /dev/null; then
     vim +'PluginInstall +qall' > /dev/null 2> /dev/null; checksuccess
 elif type nvim > /dev/null; then
     h1 "Setting up neovim"
-    h2 "Checking for Plug:"
-
+    h2 "Installing Plug:"
     curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs; checksuccess
-
+    h2 "Copying neovim config:"
     cp -r _nvim/.config ~; checksuccess
-
+    h2 "Running neovim PlugInstall:"
     nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksuccess 
-
+    h2 "Setting vim neovim alias"
+    sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc
 else
     echo "no nvim or vim"
 fi
