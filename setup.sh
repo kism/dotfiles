@@ -151,8 +151,6 @@ cd "$(dirname "$0")"
 hr
 h1 "Dotfiles Install!"
 
-echo $1
-
 # Preflight checks
 if [ $EUID -eq 0 ] && [[ $1 != --allow-root ]] ; then
     echo "This script must not be run as root!"
