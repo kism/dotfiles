@@ -1,12 +1,21 @@
+" Plug init https://github.com/junegunn/vim-plug
 call plug#begin()
+" Basics
 Plug 'tpope/vim-sensible'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+" Python
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'averms/black-nvim', {'do': ':UpdateRemotePlugins'}
+" Themes
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'morhetz/gruvbox'
+Plug 'EdenEast/nightfox.nvim'
+Plug 'mhartington/oceanic-next'
 call plug#end()
 
+" Lualine
 lua << END
 require('lualine').setup{
   options = {
