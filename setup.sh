@@ -286,7 +286,7 @@ if type zsh > /dev/null; then
         mkdir $antigenlocation; checksuccess
     fi
     h2 "Downloading Antigen:"
-    curl -s -L git.io/antigen >~/.antigen/antigen.zsh; checksuccess
+    curl -s -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh >~/.antigen/antigen.zsh; checksuccess
 
     h2 "Copying .zshrc"
     cp _zsh/.zshrc ~/.zshrc; checksuccess
