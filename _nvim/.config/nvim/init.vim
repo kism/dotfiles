@@ -1,4 +1,4 @@
-" Plug init https://github.com/junegunn/vim-plug
+" Plug Init
 call plug#begin()
 " Basics
 Plug 'tpope/vim-sensible'
@@ -15,7 +15,6 @@ Plug 'EdenEast/nightfox.nvim'
 Plug 'mhartington/oceanic-next'
 call plug#end()
 
-" Lualine
 lua << END
 require('lualine').setup{
   options = {
@@ -39,11 +38,14 @@ highlight CursorLineNr cterm=NONE   " remove underline
 highlight CursorLineNr ctermbg=234  " set linenumber bg
 highlight CursorLineNr ctermfg=255  " set linenumber fg
 
+" List
+set list
+set listchars=tab:▷▷,trail:◄,extends:>,precedes:<
+
 " Paste Toggle
-nnoremap <F2> :set cursorline! <Bar> set number! <Bar> set paste!<CR>
+nnoremap <F2> :set cursorline! <Bar> set number! <Bar> set paste! <Bar> set list!<CR>
 
 " Regular preferences
-set nocompatible            " disable compatibility to old-time vi
 set nowrap                  " Wordwrap off
 set mouse=                  " Mouse off
 set tw=0                    " Set text wrapping off for the language formatter
