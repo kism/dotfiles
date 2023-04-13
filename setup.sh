@@ -56,7 +56,7 @@ function setup_pacman() {
 }
 
 function setup_apt() {
-    to_install="$install_base $install_apt_brew_dnf $install_apt_dnf" neovim
+    to_install="$install_base $install_apt_brew_dnf $install_apt_dnf"
     prepsudo
 
     h1 "Updating $PRETTY_NAME"
