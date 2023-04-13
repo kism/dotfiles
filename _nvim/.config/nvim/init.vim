@@ -11,7 +11,6 @@ Plug 'averms/black-nvim', {'do': ':UpdateRemotePlugins'}
 " Themes
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'morhetz/gruvbox'
-Plug 'EdenEast/nightfox.nvim'
 Plug 'mhartington/oceanic-next'
 call plug#end()
 
