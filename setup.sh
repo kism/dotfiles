@@ -213,6 +213,26 @@ else
     h3 "bash not found, wat?, skipping"
 fi
 
+# ZSH
+if type zsh > /dev/null; then
+    h1 "Setting up zsh"
+    antigenlocation=~/.antigen
+    if ! test -d $antigenlocation; then
+        h2 "Creating $antigenlocation"
+        mkdir $antigenlocation; checksuccess
+    fi
+    h2 "Downloading Antigen:"
+    curl -s -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh >~/.antigen/antigen.zsh; checksuccess
+
+    h2 "Copying .zshrc"
+    cp _zsh/.zshrc ~/.zshrc; checksuccess
+
+    h2 "Updating Antigen Bundles:"
+    zsh -c ". ~/.zshrc; antigen update; antigen reset"
+else
+    h3 "zsh not found, skipping"
+fi
+
 # TMUX
 if type tmux > /dev/null; then
     h1 "Setting up tmux"
@@ -273,26 +293,6 @@ if type ssh > /dev/null; then
     cp -r _ssh/config ~/.ssh/config ; checksuccess
 else
     echo -e "ssh not found, skipping"
-fi
-
-# ZSH
-if type zsh > /dev/null; then
-    h1 "Setting up zsh"
-    antigenlocation=~/.antigen
-    if ! test -d $antigenlocation; then
-        h2 "Creating $antigenlocation"
-        mkdir $antigenlocation; checksuccess
-    fi
-    h2 "Downloading Antigen:"
-    curl -s -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh >~/.antigen/antigen.zsh; checksuccess
-
-    h2 "Copying .zshrc"
-    cp _zsh/.zshrc ~/.zshrc; checksuccess
-
-    h2 "Updating Antigen Bundles:"
-    zsh -c ". ~/.zshrc; antigen update; antigen reset"
-else
-    h3 "zsh not found, skipping"
 fi
 
 # Git
