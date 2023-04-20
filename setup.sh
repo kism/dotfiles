@@ -268,7 +268,11 @@ elif type nvim > /dev/null; then
     h2 "Running neovim PlugInstall:"
     nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksuccess 
     h2 "Setting vim neovim alias"
-    sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc
+    if [[ $(uname) == Linux ]]; then
+        sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
+    else # God damn bsd sed smh
+        sed -i '' 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
+    fi
 else
     echo "no nvim or vim"
 fi
