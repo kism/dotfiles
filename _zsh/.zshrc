@@ -80,7 +80,7 @@ function get_mercury_retrograde() {
 
 function get_ssh_keys_loaded() {
     if type keychain > /dev/null; then
-        keychain -l | grep -v "The agent has no identities." | wc -l
+        keychain -l | grep -v "The agent has no identities." | wc -l | xargs
     fi
 }
 
