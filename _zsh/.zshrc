@@ -106,6 +106,14 @@ bindkey "\e[3;6~" kill-line
 ### urxvt
 bindkey "\e[3@" kill-line
 
+# Absolutely filthy way of checking if we are in windows terminal, I hate this but it works for me
+SPACING="  "
+SPACING2=" "
+if [[ $(uname -r) == *Microsoft* ]]; then
+  SPACING=""
+  SPACING2=" "
+fi
+
 # Startup welcome message, only if we are in an interactive shell
 if [[ -o interactive ]]; then
     if test -f /etc/os-release; then
@@ -113,6 +121,6 @@ if [[ -o interactive ]]; then
         echo -e "$PRETTY_NAME, \c"
     fi
     echo -e "$(uname -s -r), \c"
-    echo -e "🗝️$(get_ssh_keys_loaded),\c"
+    echo -e "🗝️$SPACING$(get_ssh_keys_loaded),$SPACING2\c"
     get_mercury_retrograde
 fi
