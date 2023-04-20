@@ -2,7 +2,7 @@
 
 # Dotfiles installer, requires bash, installs prereqs
 
-install_base="zsh git htop tmux curl neofetch keychain"
+install_base="zsh git htop tmux curl wget neofetch keychain tree ncdu"
 install_apt_brew_dnf="vim"
 install_pacman_brew="neovim"
 install_apt_dnf="openssh-server"
@@ -265,6 +265,7 @@ elif type nvim > /dev/null; then
     curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs; checksuccess
     h2 "Copying neovim config:"
     cp -r _nvim/.config ~; checksuccess
+    cp -r _nvim/.local ~; checksuccess
     h2 "Running neovim PlugInstall:"
     nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksuccess 
     h2 "Setting vim neovim alias"
@@ -303,9 +304,10 @@ fi
 if type git > /dev/null; then
     h1 "Setting up git"
     #h2 "Email"
-    # fix so this only happens for DPSHUB hostname
-    # use this fun command for sensitive hostnames: cat /etc/hostname | sha256sum -z | sed 's/[^[:xdigit:]]//g'
-    #git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
+    if [ "$USER" = "kism" ]; then
+        h2 "Setting email as username is kism"
+        git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
+    fi
     h2 "Name"
     git config --global user.name "Kieran Gee"; checksuccess
     h2 "Rebase setting"

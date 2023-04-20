@@ -18,7 +18,7 @@ lua << END
 require('lualine').setup{
   options = {
     icons_enabled = false,
-    theme = 'powerline',
+    theme = 'powerline_custom',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
   }
