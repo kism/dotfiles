@@ -110,7 +110,7 @@ bindkey "\e[3@" kill-line
 # Absolutely filthy way of checking if we are in windows terminal, I hate this but it works for me
 SPACING="  "
 SPACING2=" "
-if [[ $(uname -r) == *Microsoft* ]]; then
+if [[ $(uname -r) == *WSL* ]]; then
   SPACING=""
   SPACING2=" "
 fi
