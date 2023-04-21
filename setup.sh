@@ -271,8 +271,10 @@ elif type nvim > /dev/null; then
     h2 "Setting vim neovim alias"
     if [[ $(uname) == Linux ]]; then
         sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
+        sed -i 's/alias vim=vim/alias view="nvim -R"' ~/.zshrc; checksuccess
     else # God damn bsd sed smh
         sed -i '' 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
+        sed -i '' 's/alias vim=vim/alias view="nvim -R"' ~/.zshrc; checksuccess
     fi
 else
     echo "no nvim or vim"
@@ -307,6 +309,8 @@ if type git > /dev/null; then
     if [ "$USER" = "kism" ]; then
         h2 "Setting email as username is kism"
         git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
+        h2 "git@github.com: instead of https://github.com/"
+        git config --global url."git@github.com:".insteadOf "https://github.com/"; checksuccess
     fi
     h2 "Name"
     git config --global user.name "Kieran Gee"; checksuccess
@@ -318,8 +322,6 @@ if type git > /dev/null; then
     git config --global core.eol lf; checksuccess
     h2 "Editor: vim"
     git config --global core.editor vim; checksuccess
-    #h2 "git@github.com: instead of https://github.com/"
-    #git config --global url."git@github.com:".insteadOf "https://github.com/"; checksuccess
 else
     h3 "ssh not found, skipping"
 fi
