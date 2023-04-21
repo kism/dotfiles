@@ -44,6 +44,11 @@ set listchars=tab:▷▷,trail:◄,extends:>,precedes:<
 " Paste Toggle
 nnoremap <F2> :set cursorline! <Bar> set number! <Bar> set paste! <Bar> set list!<CR>
 
+" Indentation, 4 spaces
+set tabstop=4
+set softtabstop=0 noexpandtab
+set shiftwidth=4
+
 " Regular preferences
 set nowrap                  " Wordwrap off
 set mouse=                  " Mouse off
