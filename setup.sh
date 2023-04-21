@@ -254,7 +254,6 @@ if type vim > /dev/null && ! type nvim > /dev/null; then
         echo -e "NeoBundle Not Found!"
         git clone https://github.com/Shougo/neobundle.vim $neobundlelocation; checksuccess
     fi
-
     h2 "Copying .vimrc"
     cp _vim/.vimrc ~/.vimrc; checksuccess
     h2 "PluginInstall Starting"
@@ -271,10 +270,10 @@ elif type nvim > /dev/null; then
     h2 "Setting vim neovim alias"
     if [[ $(uname) == Linux ]]; then
         sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
-        sed -i 's/alias vim=vim/alias view="nvim -R"' ~/.zshrc; checksuccess
+        sed -i 's/alias view=view/alias view="nvim -R"' ~/.zshrc; checksuccess
     else # God damn bsd sed smh
         sed -i '' 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
-        sed -i '' 's/alias vim=vim/alias view="nvim -R"' ~/.zshrc; checksuccess
+        sed -i '' 's/alias view=view/alias view="nvim -R"' ~/.zshrc; checksuccess
     fi
 else
     echo "no nvim or vim"
