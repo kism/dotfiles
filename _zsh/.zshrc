@@ -35,6 +35,7 @@ alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
 alias vim=vim
+alias view=view
 alias whom=who
 
 # Set editor
