@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-
-# Dotfiles installer, requires bash, installs prereqs
+# Dotfiles installer, requires bash or zsh, installs prereqs
+# For KiSM's dotfiles specifically
 
 install_base="zsh git htop tmux curl wget neofetch keychain tree ncdu"
 install_apt_brew_dnf="vim"
