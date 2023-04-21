@@ -291,15 +291,15 @@ else
 fi
 
 # SSH
-if type ssh > /dev/null; then
-    h1 "Setting up ssh"
-    h2 "Copying htoprc"
-    mkdir -p ~/.ssh
-    chmod 700 ~/.ssh
-    cp -r _ssh/config ~/.ssh/config ; checksuccess
-else
-    echo -e "ssh not found, skipping"
-fi
+# if type ssh > /dev/null; then
+#     h1 "Setting up ssh"
+#     h2 "Copying htoprc"
+#     mkdir -p ~/.ssh
+#     chmod 700 ~/.ssh
+#     cp -r _ssh/config ~/.ssh/config ; checksuccess
+# else
+#     echo -e "ssh not found, skipping"
+# fi
 
 # Git
 if type git > /dev/null; then
