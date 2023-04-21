@@ -112,7 +112,7 @@ SPACING="  "
 SPACING2=" "
 if [[ $(uname -r) == *WSL* ]]; then
   SPACING=""
-  SPACING2=" "
+  SPACING2=""
 fi
 
 # Startup welcome message, only if we are in an interactive shell
