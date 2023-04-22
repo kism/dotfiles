@@ -34,8 +34,8 @@ alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
 alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
-alias vim=vim
-alias view=view
+alias vim=nvim
+alias view="nvim -R"
 alias whom=who
 
 # Set editor
@@ -120,6 +120,8 @@ if [[ -o interactive ]]; then
     if test -f /etc/os-release; then
         . /etc/os-release
         echo -e "$PRETTY_NAME, \c"
+    elif type sw_vers > /dev/null; then
+        echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
     fi
     echo -e "$(uname -s -r), \c"
     echo -e "🗝️$SPACING$(get_ssh_keys_loaded),$SPACING2\c"
