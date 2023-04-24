@@ -266,7 +266,7 @@ elif type nvim > /dev/null; then
     cp -r _nvim/.config ~; checksuccess
     cp -r _nvim/.local ~; checksuccess
     h2 "Running neovim PlugInstall:"
-    nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksuccess 
+    nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksuccess
     h2 "Setting vim neovim alias"
     if [[ $(uname) == Linux ]]; then
         sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
@@ -291,15 +291,17 @@ else
 fi
 
 # SSH
-# if type ssh > /dev/null; then
-#     h1 "Setting up ssh"
-#     h2 "Copying htoprc"
-#     mkdir -p ~/.ssh
-#     chmod 700 ~/.ssh
-#     cp -r _ssh/config ~/.ssh/config ; checksuccess
-# else
-#     echo -e "ssh not found, skipping"
-# fi
+if [ "$USER" = "kism" ]; then
+    if type ssh > /dev/null; then
+        h1 "Setting up ssh"
+        h2 "Copying .ssh/config"
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        cp _ssh/config ~/.ssh/config ; checksuccess
+    else
+        echo -e "ssh not found, skipping"
+    fi
+fi
 
 # Git
 if type git > /dev/null; then

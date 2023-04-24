@@ -1,3 +1,8 @@
 Host openwrt
-    HostName openwrt
     User root
+
+Host kierangee.au
+    ForwardAgent yes
+
+Host kism.duckdns.org
+    ForwardAgent yes
