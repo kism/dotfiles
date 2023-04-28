@@ -6,3 +6,9 @@ Host kierangee.au
 
 Host kism.duckdns.org
     ForwardAgent yes
+    
+Host ent
+    ForwardAgent yes
+
+Host ent.kg.lan
+    ForwardAgent yes
