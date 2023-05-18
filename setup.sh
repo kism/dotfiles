@@ -243,7 +243,7 @@ else
 fi
 
 # VIM
-if type vim > /dev/null && ! type nvim > /dev/null; then
+if type vim > /dev/null && ! type nvim > /dev/null 2>/dev/null; then
     h1 "Setting up vim"
     h2 "Checking for NeoBundle:"
     neobundlelocation=~/.vim/bundle/neobundle.vim
