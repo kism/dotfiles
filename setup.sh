@@ -4,13 +4,13 @@
 
 install_base="zsh git htop tmux curl wget neofetch keychain tree ncdu"
 install_apt_brew_dnf="vim"
-install_pacman_brew="neovim"
+install_apt_pacman_brew="neovim"
 install_apt_dnf="openssh-server"
 install_pkg="vim-console"
 install_brew="coreutils"
 
 function setup_brew() {
-    install_base="$install_base $install_apt_brew_dnf $install_brew $install_pacman_brew"
+    install_base="$install_base $install_apt_brew_dnf $install_brew $install_apt_pacman_brew"
     h1 "Brew (MacOS Package Manager)"
     if ! which brew > /dev/null; then
         h2 "Installing Brew"
@@ -43,7 +43,7 @@ function setup_pkg() {
 }
 
 function setup_pacman() {
-    to_install="$install_base $install_pacman_brew"
+    to_install="$install_base $install_apt_pacman_brew"
     prepsudo
 
     h1 "Updating $PRETTY_NAME"
@@ -56,7 +56,7 @@ function setup_pacman() {
 }
 
 function setup_apt() {
-    to_install="$install_base $install_apt_brew_dnf $install_apt_dnf"
+    to_install="$install_base $install_apt_brew_dnf $install_apt_dnf $install_apt_pacman_brew"
     prepsudo
 
     h1 "Updating $PRETTY_NAME"
