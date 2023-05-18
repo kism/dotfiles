@@ -264,9 +264,10 @@ elif type nvim > /dev/null; then
     curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs; checksuccess
     h2 "Copying neovim config:"
     cp -r _nvim/.config ~; checksuccess
-    cp -r _nvim/.local ~; checksuccess
+    rm -rf ~/.local/share/nvim/plugged/lualine.nvim > /dev/null 2> /dev/null # TODO, FIND A BETTER WAY
     h2 "Running neovim PlugInstall:"
-    nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksuccess
+    nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksucces
+    cp -r _nvim/.local ~; checksuccess # TODO, FIND A BETTER WAY
     h2 "Setting vim neovim alias"
     if [[ $(uname) == Linux ]]; then
         sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
