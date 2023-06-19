@@ -76,7 +76,7 @@ function get_mercury_retrograde() {
             RESULT="☿ \033[0;31mRetrograde\033[0m"
         fi
     fi
-    echo -e $RESULT
+    echo -e " $RESULT"
 }
 
 function get_ssh_keys_loaded() {
