@@ -1,0 +1,86 @@
+{
+    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "blocks": [
+        {
+            "alignment": "left",
+            "segments": [
+                {
+                    "foreground": "white",
+                    "properties": {
+                        "fetch_version": false
+                    },
+                    "style": "plain",
+                    "template": "({{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }})",
+                    "type": "python"
+                }
+            ],
+            "type": "prompt"
+        },
+        {
+            "alignment": "left",
+            "newline": true,
+            "segments": [
+                {
+                    "properties": {
+                        "macos": "\uf179 ",
+                        "ubuntu": "\uf31b ",
+                        "windows": "\ue62a "
+                    },
+                    "style": "plain",
+                    "template": "{{ if .WSL }}WSL at {{ end }}{{.Icon}}",
+                    "type": "os"
+                },
+                {
+                    "foreground": "red",
+                    "style": "plain",
+                    "template": " % ",
+                    "type": "root"
+                },
+                {
+                    "style": "plain",
+                    "template": "<cyan>{{ .UserName }}</><white>@</><cyan>{{ .HostName }}</> ",
+                    "type": "session"
+                },
+                {
+                    "foreground": "white",
+                    "properties": {
+                        "style": "full"
+                    },
+                    "style": "plain",
+                    "template": "{{ .Path }} ",
+                    "type": "path"
+                },
+                {
+                    "style": "plain",
+                    "template": "<darkGray>on</> <white>git:</><cyan>{{ .HEAD }}</>{{ if .Working.Changed }}<red> x</>{{ end }} ",
+                    "type": "git",
+                    "properties": {
+                        "fetch_status": true
+                    }
+                },
+                {
+                    "foreground": "red",
+                    "style": "plain",
+                    "template": " C:{{ if gt .Code 0 }}{{ .Code }}{{ end }} ",
+                    "type": "status"
+                }
+            ],
+            "type": "prompt"
+        },
+        {
+            "alignment": "left",
+            "newline": true,
+            "segments": [
+                {
+                    "foreground": "white",
+                    "style": "plain",
+                    "template": "$",
+                    "type": "text"
+                }
+            ],
+            "type": "prompt"
+        }
+    ],
+    "final_space": true,
+    "version": 2
+}
