@@ -115,6 +115,11 @@ if [[ $(uname -r) == *WSL* ]]; then
   SPACING2=""
 fi
 
+# Unbreak ansible on macos
+if [[ "$OSTYPE" == darwin* ]]; then
+    export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+fi
+
 # Startup welcome message, only if we are in an interactive shell
 if [[ -o interactive ]]; then
     if test -f /etc/os-release; then
