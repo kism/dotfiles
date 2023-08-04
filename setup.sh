@@ -256,8 +256,8 @@ if type vim > /dev/null && ! type nvim > /dev/null 2>/dev/null; then
     fi
     h2 "Copying .vimrc"
     cp _vim/.vimrc ~/.vimrc; checksuccess
-    h2 "PluginInstall Starting"
-    vim +'PluginInstall +qall' > /dev/null 2> /dev/null; checksuccess
+    h2 "NeoBundleInstall Starting"
+    vim +'NeoBundleInstall +qall' > /dev/null 2> /dev/null; checksuccess
 elif type nvim > /dev/null; then
     h1 "Setting up neovim"
     h2 "Installing Plug:"
