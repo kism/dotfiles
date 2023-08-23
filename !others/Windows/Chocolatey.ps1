@@ -77,6 +77,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("fira"),
         ("firacode"),
         ("hasklig"),
+        ("nerd-fonts-hasklig"),
         ("inconsolata"),
         ("sourcecodepro")
     )
