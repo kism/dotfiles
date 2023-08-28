@@ -1,4 +1,4 @@
-if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) { 
+if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
     Write-Host "✔️ Chocolatey is installed!"
 
     if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
@@ -32,7 +32,6 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("discord.install"),
         ("dropbox"),
         ("eartrumpet"),
-        ("fancontrol"),
         ("ffmpeg"),
         ("foobar2000"),
         ("furmark"),
@@ -54,13 +53,13 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("nmap"),
         ("notepadplusplus.install"),
         ("obs-studio.install"),
+        ('oh-my-posh'),
         ("powertoys"),
         ("putty.install"),
         ("python3"),
         ("scrcpy"),
         ("signal"),
         ("spacesniffer"),
-        ("speedcrunch.install"),
         ("steam"),
         ("streamlink"),
         ("streamlink-twitch-gui"),
@@ -70,7 +69,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("vlc"),
         ("vscode.install"),
         ("winscp.install"),
-        ("youtube-dl"),
+        ("yt-dlp"),
         # Fonts
         ("cascadia-code-nerd-font"),
         ("dejavufonts"),
