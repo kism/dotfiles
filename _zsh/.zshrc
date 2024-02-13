@@ -38,8 +38,14 @@ alias vim=nvim
 alias view="nvim -R"
 alias whom=who
 
-# Set editor
+# Exports
 export EDITOR="$(which vim)"
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+if [[ "$OSTYPE" == darwin* ]]; then 
+    export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
+fi
+
+
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
@@ -113,11 +119,6 @@ SPACING2=" "
 if [[ $(uname -r) == *WSL* ]]; then
   SPACING=""
   SPACING2=""
-fi
-
-# Unbreak ansible on macos
-if [[ "$OSTYPE" == darwin* ]]; then
-    export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 fi
 
 # Startup welcome message, only if we are in an interactive shell
