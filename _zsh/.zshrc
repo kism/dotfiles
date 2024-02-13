@@ -45,8 +45,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 fi
 
-
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
