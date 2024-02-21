@@ -105,4 +105,10 @@ Set-ItemProperty -Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Win
 if (!(Test-Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Edge")) {
     New-Item -Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows" -Name "Edge"
 }
+
+# Firewall
+New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Enabled True -Direction Inbound -Action Allow
+New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Enabled True -Direction Inbound -Action Allow
+
+
 Set-ItemProperty -Path "HKCU:\HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
