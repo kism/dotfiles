@@ -87,7 +87,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
     }
 }
 else {
-    $ChocolateyURL = "https://chocolatey.org/install"
+    $ChocolateyURL = "https://chocolatey.org/install#individual"
     Write-Host      "❌Install Chocolatey first please!"
     Write-Host      $ChocolateyURL
     Start-Process   $ChocolateyURL
