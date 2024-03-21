@@ -116,9 +116,23 @@ if ($windowsMajorVersion -eq 11) {
 
 }
 
+# Start menu search
+## Disable web search in start menu
+if ($windowsMajorVersion -eq 10) {
+    ## Up to Windows 10 version 1909, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
+    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -Name "CortanaConsent" -Value 0
+    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -Value 0
+}
+
+# For Windows 10 version 2004 or later, "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer"
+if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Explorer"
+}
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1
+
 # Disable Cortana
 # "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
-if (!(Test-Path "HKLM:\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Windows Search")) {
+if (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Search")) {
     New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows" -Name "Windows Search"
 }
 Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value 0 -Force
