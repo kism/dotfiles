@@ -16,16 +16,10 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
 
     $Packages = @(
         # VCRedist
-        ("vcredist2005"),
-        ("vcredist2008"),
-        ("vcredist2010"),
-        ("vcredist2013"),
-        ("vcredist2015"),
-        ("vcredist140"),
+        ("vcredist-all"),
         # Programs
         ("7zip.install"),
         ("audacity"),
-        ("alacritty"),
         ("bitwarden"),
         ("chatterino"),
         ("cpu-z"),
@@ -100,3 +94,13 @@ else {
 }
 
 
+# Package Dumping ground
+("vcredist140"),
+("vcredist2005"),
+("vcredist2008"),
+("vcredist2010"),
+("vcredist2012"),
+("vcredist2013"),
+("vcredist2015"),
+("vcredist2017"),
+("alacritty"),

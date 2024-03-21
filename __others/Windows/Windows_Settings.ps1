@@ -1,4 +1,3 @@
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
 # Check if the current session is elevated
 $isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
