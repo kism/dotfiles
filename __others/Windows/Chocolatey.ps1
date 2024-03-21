@@ -1,3 +1,5 @@
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+
 if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
     Write-Host "✔️ Chocolatey is installed!"
 
