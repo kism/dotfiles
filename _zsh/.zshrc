@@ -39,7 +39,7 @@ alias view="nvim -R"
 alias whom=who
 
 # Exports
-export EDITOR="$(which vim)"
+export EDITOR=nvim
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 if [[ "$OSTYPE" == darwin* ]]; then 
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
