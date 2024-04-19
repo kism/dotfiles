@@ -281,10 +281,12 @@ fi
 if [ "$USER" = "kism" ]; then
     if type ssh > /dev/null; then
         h1 "Setting up ssh"
-        h2 "Copying .ssh/config"
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
-        cp _ssh/config ~/.ssh/config ; checksuccess
+        if [ ! -f "$HOME/.ssh/config" ]; then
+            h2 "Copying .ssh/config"
+            cp _ssh/config ~/.ssh/config ; checksuccess
+        fi
     else
         echo -e "ssh not found, skipping"
     fi
