@@ -163,44 +163,44 @@ fi
 h2 "Detecting OS:"
 unameresult=`uname`
 
-case $unameresult in
-    Darwin)
-        echo "MacOS"
-        setup_brew
-    ;;
+# case $unameresult in
+#     Darwin)
+#         echo "MacOS"
+#         setup_brew
+#     ;;
 
-    FreeBSD)
-        echo $unameresult
-        setup_pkg
-    ;;
+#     FreeBSD)
+#         echo $unameresult
+#         setup_pkg
+#     ;;
 
-    SunOS)
-        echo $unameresult
-        setup_pkg
-    ;;
-    Linux)
-        # Source linux os info
-        if test -f /etc/os-release; then
-            . /etc/os-release
-            echo $PRETTY_NAME
-        else
-            echo "What Linux is this even?"
-        fi
+#     SunOS)
+#         echo $unameresult
+#         setup_pkg
+#     ;;
+#     Linux)
+#         # Source linux os info
+#         if test -f /etc/os-release; then
+#             . /etc/os-release
+#             echo $PRETTY_NAME
+#         else
+#             echo "What Linux is this even?"
+#         fi
 
-        if type pacman > /dev/null 2> /dev/null; then
-            setup_pacman
-        elif type apt  > /dev/null 2> /dev/null; then
-            setup_apt
-        elif type dnf  > /dev/null 2> /dev/null; then
-            setup_dnf
-        else
-            echo "Unknown *Nix distro"
-        fi
-    ;;
-    *)
-        echo "What OS is this even?"
-        exit 1
-esac
+#         if type pacman > /dev/null 2> /dev/null; then
+#             setup_pacman
+#         elif type apt  > /dev/null 2> /dev/null; then
+#             setup_apt
+#         elif type dnf  > /dev/null 2> /dev/null; then
+#             setup_dnf
+#         else
+#             echo "Unknown *Nix distro"
+#         fi
+#     ;;
+#     *)
+#         echo "What OS is this even?"
+#         exit 1
+# esac
 
 # BASH
 h1 "Setting up bash"
@@ -242,42 +242,19 @@ else
     h3 "tmux not found, skipping"
 fi
 
-# VIM
-if type vim > /dev/null && ! type nvim > /dev/null 2>/dev/null; then
-    h1 "Setting up vim"
-    h2 "Checking for NeoBundle:"
-    neobundlelocation=~/.vim/bundle/neobundle.vim
-    if test -d $neobundlelocation; then
-        echo -e "NeoBundle Found!"
-        git -C $neobundlelocation pull --no-rebase; checksuccess
-    else
-        echo -e "NeoBundle Not Found!"
-        git clone https://github.com/Shougo/neobundle.vim $neobundlelocation; checksuccess
-    fi
-    h2 "Copying .vimrc"
-    cp _vim/.vimrc ~/.vimrc; checksuccess
-    h2 "NeoBundleInstall Starting"
-    vim +'NeoBundleInstall +qall' > /dev/null 2> /dev/null; checksuccess
-elif type nvim > /dev/null; then
+# NeoVim
+if type nvim > /dev/null; then
     h1 "Setting up neovim"
     h2 "Installing Plug:"
     curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs; checksuccess
+    nvim --headless +PlugInstall +qa; checksuccess
     h2 "Copying neovim config:"
     cp -r _nvim/.config ~; checksuccess
-    rm -rf ~/.local/share/nvim/plugged/lualine.nvim > /dev/null 2> /dev/null # TODO, FIND A BETTER WAY
     h2 "Running neovim PlugInstall:"
-    nvim --headless +PlugInstall +qa > /dev/null 2> /dev/null; checksucces
-    cp -r _nvim/.local ~; checksuccess # TODO, FIND A BETTER WAY
-    h2 "Setting vim neovim alias"
-    if [[ $(uname) == Linux ]]; then
-        sed -i 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
-        sed -i 's/^alias view=view$/alias view="nvim -R"/' ~/.zshrc; checksuccess
-    else # God damn bsd sed smh
-        sed -i '' 's/alias vim=vim/alias vim=nvim/' ~/.zshrc; checksuccess
-        sed -i '' 's/^alias view=view$/alias view="nvim -R"/' ~/.zshrc; checksuccess
-    fi
+    nvim --headless +PlugInstall +qa; checksuccess
+    cp -r _nvim/.local ~; checksuccess # not great
 else
-    echo "no nvim or vim"
+    echo "no nvim"
 fi
 
 # HTOP
@@ -310,9 +287,9 @@ if type git > /dev/null; then
     if [ "$USER" = "kism" ]; then
         h2 "Setting email as username is kism"
         git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
-        h2 "git@github.com: instead of https://github.com/"
-        git config --global url."git@github.com:".insteadOf "https://github.com/"; checksuccess
     fi
+    h2 "Credential Helper"
+    git config --global credential.helper store; checksuccess
     h2 "Name"
     git config --global user.name "Kieran Gee"; checksuccess
     h2 "Rebase setting"
