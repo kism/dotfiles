@@ -26,7 +26,6 @@ antigen theme kism/zsh-bira-mod
 # Tell Antigen that you're done.
 antigen apply
 
-
 # Alias
 alias please='sudo $(fc -ln -1)'
 alias sudp='sudo'
@@ -62,10 +61,7 @@ if type keychain > /dev/null; then
             eval `keychain -q --eval --agents ssh $i`
         fi
     done
-fi
-
-
-# Functions
+fi# Functions
 function get_mercury_retrograde() {
     RESULT=""
     RETROGRADETEMPFILE=~/.config/mercuryretrograde
@@ -91,7 +87,6 @@ function get_ssh_keys_loaded() {
         keychain -l | grep -v "The agent has no identities." | wc -l | xargs
     fi
 }
-
 
 # Keybinds
 ## ctrl+arrows
