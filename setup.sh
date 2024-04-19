@@ -147,6 +147,14 @@ function h3() {
 # Set working dir
 cd "$(dirname "$0")"
 
+# Help
+if [[ $1 == --help ]] ; then
+    echo Kieran\'s Dotfiles installer
+    echo bash setup.sh --allow-root \# If you want to allow this to setup on the root account
+    echo bash setup.sh --no-install \# Don\'t install packages with the package manager, useful for re-running
+    exit 0
+fi
+
 # Start
 hr
 h1 "Dotfiles Install!"
@@ -163,44 +171,46 @@ fi
 h2 "Detecting OS:"
 unameresult=`uname`
 
-# case $unameresult in
-#     Darwin)
-#         echo "MacOS"
-#         setup_brew
-#     ;;
+if [[ $1 != --no-install ]] ; then
+    case $unameresult in
+        Darwin)
+            echo "MacOS"
+            setup_brew
+        ;;
 
-#     FreeBSD)
-#         echo $unameresult
-#         setup_pkg
-#     ;;
+        FreeBSD)
+            echo $unameresult
+            setup_pkg
+        ;;
 
-#     SunOS)
-#         echo $unameresult
-#         setup_pkg
-#     ;;
-#     Linux)
-#         # Source linux os info
-#         if test -f /etc/os-release; then
-#             . /etc/os-release
-#             echo $PRETTY_NAME
-#         else
-#             echo "What Linux is this even?"
-#         fi
+        SunOS)
+            echo $unameresult
+            setup_pkg
+        ;;
+        Linux)
+            # Source linux os info
+            if test -f /etc/os-release; then
+                . /etc/os-release
+                echo $PRETTY_NAME
+            else
+                echo "What Linux is this even?"
+            fi
 
-#         if type pacman > /dev/null 2> /dev/null; then
-#             setup_pacman
-#         elif type apt  > /dev/null 2> /dev/null; then
-#             setup_apt
-#         elif type dnf  > /dev/null 2> /dev/null; then
-#             setup_dnf
-#         else
-#             echo "Unknown *Nix distro"
-#         fi
-#     ;;
-#     *)
-#         echo "What OS is this even?"
-#         exit 1
-# esac
+            if type pacman > /dev/null 2> /dev/null; then
+                setup_pacman
+            elif type apt  > /dev/null 2> /dev/null; then
+                setup_apt
+            elif type dnf  > /dev/null 2> /dev/null; then
+                setup_dnf
+            else
+                echo "Unknown *Nix distro"
+            fi
+        ;;
+        *)
+            echo "What OS is this even?"
+            exit 1
+    esac
+fi
 
 # BASH
 h1 "Setting up bash"
