@@ -61,7 +61,9 @@ if type keychain > /dev/null; then
             eval `keychain -q --eval --agents ssh $i`
         fi
     done
-fi# Functions
+fi
+
+# Functions
 function get_mercury_retrograde() {
     RESULT=""
     RETROGRADETEMPFILE=~/.config/mercuryretrograde
