@@ -280,7 +280,6 @@ else
     echo "no nvim or vim"
 fi
 
-
 # HTOP
 if type htop > /dev/null; then
     h1 "Setting up htop"
