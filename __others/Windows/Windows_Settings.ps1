@@ -11,9 +11,6 @@ if (-not $isElevated) {
 # Get the operating system version
 $windowsVersion = (Get-WmiObject Win32_OperatingSystem).Caption
 
-
-
-
 # Taskbar, "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 if ($windowsMajorVersion -eq "Windows 10") { # On Windows 11, Install startallback lmao, or maybe that stardock one
     ## Small icons
@@ -44,19 +41,24 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "ColorPreval
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "Composition"                   -Value 0x1
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "EnableAeroPeek"                -Value 0x1
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "EnableWindowColorization"      -Value 0x1
-# Theme
+## Theme
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme"    -Value 0x0
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme"       -Value 0x0
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "ColorPrevalence"         -Value 0x1
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency"      -Value 0x1
 
-# Windows Performance Settings, "Computer\HKEY_CURRENT_USER\Control Panel\Desktop"
+## Windows Performance Settings, "Computer\HKEY_CURRENT_USER\Control Panel\Desktop"
 $UserPreferencesMask = "98,1E,03,80,12,00,00,00"
 if ($windowsMajorVersion -eq "Windows 10") {
     $UserPreferencesMask = "98,52,03,80,10,00,00,00"
 }
 $UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | ForEach-Object { "0x$_"}
 Set-ItemProperty -Path "HKCU:\Control Panel\Desktop\" -Name "UserPreferencesMask" -Value ([byte[]]$UserPreferencesMaskHex)
+
+if ($windowsMajorVersion -eq "Windows 11") { # On Windows 11, Install startallback lmao, or maybe that stardock one
+    # Windows 11 SnapBar (thing at top to snap windows when draging a window), Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "EnableSnapBar" -Value 0
+}
 
 # International Settings, "Computer\HKEY_CURRENT_USER\Control Panel\International"
 Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "iCalendarType"   -Value 1
