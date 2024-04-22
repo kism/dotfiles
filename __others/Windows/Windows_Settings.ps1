@@ -9,10 +9,13 @@ if (-not $isElevated) {
 }
 
 # Get the operating system version
-$windowsMajorVersion = [Environment]::OSVersion.Version.Major
+$windowsVersion = (Get-WmiObject Win32_OperatingSystem).Caption
+
+
+
 
 # Taskbar, "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-if ($windowsMajorVersion -eq 10) { # On Windows 11, Install startallback lmao, or maybe that stardock one
+if ($windowsMajorVersion -eq "Windows 10") { # On Windows 11, Install startallback lmao, or maybe that stardock one
     ## Small icons
     Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarSmallIcons"    -Value 1
     # Hide Cortana, task view
@@ -49,7 +52,7 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 
 # Windows Performance Settings, "Computer\HKEY_CURRENT_USER\Control Panel\Desktop"
 $UserPreferencesMask = "98,1E,03,80,12,00,00,00"
-if ($windowsMajorVersion -eq 10) {
+if ($windowsMajorVersion -eq "Windows 10") {
     $UserPreferencesMask = "98,52,03,80,10,00,00,00"
 }
 $UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | ForEach-Object { "0x$_"}
@@ -93,11 +96,11 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path "HKCU:HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_TrackDocs" -Value 0
 
 # Disable Get "Even More Out Of Windows"
-if ($windowsMajorVersion -eq 10) {
+if ($windowsMajorVersion -eq "Windows 10") {
     # "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement"
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Value 0
 }
-if ($windowsMajorVersion -eq 11) {
+if ($windowsMajorVersion -eq "Windows 11") {
     # "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding"
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "Browser"           -Value '{"progress":100}'
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "CheckMSAAccount"   -Value '{"progress":100}'
@@ -118,7 +121,7 @@ if ($windowsMajorVersion -eq 11) {
 
 # Start menu search
 ## Disable web search in start menu
-if ($windowsMajorVersion -eq 10) {
+if ($windowsMajorVersion -eq "Windows 10") {
     ## Up to Windows 10 version 1909, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -Name "CortanaConsent" -Value 0
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -Value 0
