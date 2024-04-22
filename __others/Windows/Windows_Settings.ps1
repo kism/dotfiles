@@ -160,3 +160,37 @@ if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
     New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+
+
+## Context Menu
+$ConfirmPreference = 'High'
+New-PSDrive -Name "HKCR" -PSProvider Registry -Root "HKEY_CLASSES_ROOT"
+
+$ContextMenuRegPaths = @(
+    # Git Bash
+    ('HKCR:\Directory\shell\git_gui'),
+    ('HKCR:\Directory\shell\git_shell'),
+    ('HKCR:\LibraryFolder\background\shell\git_gui'),
+    ('HKCR:\LibraryFolder\background\shell\git_shell'),
+    ('HKLM:\SOFTWARE\Classes\Directory\background\shell\git_gui'),
+    ('HKLM:\SOFTWARE\Classes\Directory\background\shell\git_shell'),
+    # VLC
+    ('HKCR:\Directory\shell\AddToPlaylistVLC'),
+    ('HKCR:\Directory\shell\PlayWithVLC')
+    # kdiff3
+    ('HKCR:\*\shellex\ContextMenuHandlers\diff-ext-for-kdiff3')
+    ('HKCR:\*\shellex\ContextMenuHandlers\diff-ext-for-kdiff3-64')
+    # Dropbox
+    ('HKCR:\*\shellex\ContextMenuHandlers\DropboxExt')
+    # Teracopy
+    ('HKCR:\*\shellex\ContextMenuHandlers\TeraCopy')
+    # VSCode
+    ('HKCR:\*\shell\VSCode')
+    ('HKCR:\Directory\shell\VSCode')
+
+)
+
+ForEach ($RegPath in $ContextMenuRegPaths) {
+    Remove-Item -Path $RegPath -Recurse -Confirm -ErrorAction SilentlyContinue
+}
+
