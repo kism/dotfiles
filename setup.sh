@@ -213,15 +213,9 @@ if [[ $1 != --no-install ]] ; then
 fi
 
 # BASH
-h1 "Setting up bash"
-h2 "Copying .bashrc"
-if type bash > /dev/null; then
-    cp _bash/.bashrc ~/.bashrc; checksuccess
-    cp _bash/.bash_profile ~/.bash_profile; checksuccess
-    cp _bash/.inputrc ~/.inputrc; checksuccess
-else
-    h3 "bash not found, wat?, skipping"
-fi
+curl --silent https://raw.githubusercontent.com/kism/dotfiles-simple/master/.bash_profile > .bash_profile
+curl --silent https://raw.githubusercontent.com/kism/dotfiles-simple/master/.bashrc > .bashrc
+curl --silent https://raw.githubusercontent.com/kism/dotfiles-simple/master/.inputrc > .inputrc
 
 # ZSH
 if type zsh > /dev/null; then
@@ -252,10 +246,10 @@ else
     h3 "tmux not found, skipping"
 fi
 
-# Vim
-curl -q https://raw.githubusercontent.com/kism/dotfiles-simple/master/.vimrc > ~/.vimrc
+# VIM
+curl --silent -L https://raw.githubusercontent.com/kism/dotfiles-simple/master/.vimrc > ~/.vimrc
 
-# NeoVim
+# NEOVIM
 if type nvim > /dev/null; then
     h1 "Setting up neovim"
     h2 "Installing Plug:"
@@ -271,14 +265,8 @@ else
 fi
 
 # HTOP
-if type htop > /dev/null; then
-    h1 "Setting up htop"
-    h2 "Copying htoprc"
-    mkdir -p ~/.config/htop/
-    cp -r _htop/.config ~ ; checksuccess
-else
-    echo -e "htop not found, skipping"
-fi
+mkdir -p ~/.config/htop/
+curl --silent https://raw.githubusercontent.com/kism/dotfiles-simple/master/htoprc > ~/.config/htop/htoprc
 
 # SSH
 if [ "$USER" = "kism" ]; then
@@ -289,6 +277,8 @@ if [ "$USER" = "kism" ]; then
         if [ ! -f "$HOME/.ssh/config" ]; then
             h2 "Copying .ssh/config"
             cp _ssh/config ~/.ssh/config ; checksuccess
+        else
+            echo -e "ssh config file found, not copying"
         fi
     else
         echo -e "ssh not found, skipping"
