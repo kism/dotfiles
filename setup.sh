@@ -83,7 +83,7 @@ function setup_dnf() {
     h2 "dnf clean all"
     sudo dnf clean all
     h2 "dnf upgrade, install epel"
-    sudo dnf upgrade
+    sudo dnf upgrade -y
     sudo dnf install -y epel-release
     h2 "Installing Packages"
     sudo dnf --setopt=install_weak_deps=False --best install -y $to_install
@@ -98,7 +98,7 @@ function set_shell_chsh() {
         h2 "Setting your default shell:"
         myshell=$(cat /etc/shells | grep -m 1 "zsh")
         sudo chsh -s $myshell $USER
-        checksuccess
+
     else
         echo "User $USER is already using zsh as their shell"
     fi
@@ -106,21 +106,8 @@ function set_shell_chsh() {
 
 function prepsudo() {
     h3 "Installing packages will require sudo, checking if sudo is installed:"
-    type sudo > /dev/null 2> /dev/null; checksuccess "crit"
-    sudo echo "Starting install!"; checksuccess "crit"
-}
-
-function checksuccess() {
-    if [ $? -eq 0 ]; then
-        echo -e "\033[0;32mSuccess!\033[0m"
-    else
-        if [ "$1" != "crit" ]; then
-            echo -e "\033[0;31mFailure\033[0m" >&2
-        else
-            echo -e "\033[0;31mFailure, Exiting\033[0m" >&2
-            exit 1
-        fi
-    fi
+    type sudo > /dev/null 2> /dev/null
+    sudo echo "Starting install!"
 }
 
 function hr() {
@@ -262,7 +249,7 @@ if type nvim > /dev/null; then
     cp -r _nvim/.config ~
     h2 "Running neovim PlugInstall:"
     nvim --headless +PlugInstall +qa
-    cp -r _nvim/.local ~; checksuccess # not great
+    cp -r _nvim/.local ~
 else
     echo "no nvim"
 fi
