@@ -295,6 +295,8 @@ if type git > /dev/null; then
     git config --global core.eol lf
     h2 "Editor: vim"
     git config --global core.editor vim
+    h2 "New repo default branch name"
+    git config --global init.defaultBranch main
 else
     h3 "ssh not found, skipping"
 fi
