@@ -66,6 +66,6 @@ vim.cmd('set noshowmode')              --- Dont display -- Insert -- since that'
 vim.cmd('set ttyfast')                 --- Speed up scrolling in Vim
 
 --- Binds
-vim.cmd('map q <Nop>')                 --- Speed up scrolling in Vim
+vim.cmd('map q <Nop>')                 --- Unbind macros
 
 
