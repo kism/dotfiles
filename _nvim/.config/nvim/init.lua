@@ -64,3 +64,8 @@ vim.cmd('set mouse=')                  --- Mouse off
 vim.cmd('set tw=0')                    --- vim.cmd('set text wrapping off for the language formatter
 vim.cmd('set noshowmode')              --- Dont display -- Insert -- since that's handled by ???
 vim.cmd('set ttyfast')                 --- Speed up scrolling in Vim
+
+--- Binds
+vim.cmd('map q <Nop>')                 --- Speed up scrolling in Vim
+
+
