@@ -252,6 +252,9 @@ else
     h3 "tmux not found, skipping"
 fi
 
+# Vim
+curl -q https://raw.githubusercontent.com/kism/dotfiles-simple/master/.vimrc > ~/.vimrc
+
 # NeoVim
 if type nvim > /dev/null; then
     h1 "Setting up neovim"
