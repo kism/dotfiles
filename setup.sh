@@ -2,6 +2,9 @@
 # Dotfiles installer, requires bash or zsh, installs prereqs
 # For KiSM's dotfiles specifically
 
+# Turn on errors
+set -e
+
 install_base="zsh git htop tmux curl wget neofetch keychain tree ncdu"
 install_apt_brew_dnf="vim"
 install_apt_brew_dnf_pacman="neovim"
@@ -21,7 +24,7 @@ function setup_brew() {
     fi
 
     h2 "Updating Brew Formulas"
-    brew upgrade; checksuccess
+    brew upgrade
 
     h2 "Installing Packages"
     echo
@@ -223,13 +226,13 @@ if type zsh > /dev/null; then
     antigenlocation=~/.antigen
     if ! test -d $antigenlocation; then
         h2 "Creating $antigenlocation"
-        mkdir $antigenlocation; checksuccess
+        mkdir $antigenlocation
     fi
     h2 "Downloading Antigen:"
-    curl -s -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh >~/.antigen/antigen.zsh; checksuccess
+    curl -s -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh >~/.antigen/antigen.zsh
 
     h2 "Copying .zshrc"
-    cp _zsh/.zshrc ~/.zshrc; checksuccess
+    cp _zsh/.zshrc ~/.zshrc
 
     h2 "Updating Antigen Bundles:"
     zsh -c ". ~/.zshrc; antigen update; antigen reset"
@@ -241,7 +244,7 @@ fi
 if type tmux > /dev/null; then
     h1 "Setting up tmux"
     h2 "Copying .tmux.conf"
-    cp _tmux/.tmux.conf ~/.tmux.conf; checksuccess
+    cp _tmux/.tmux.conf ~/.tmux.conf
 else
     h3 "tmux not found, skipping"
 fi
@@ -253,12 +256,12 @@ curl --silent -L https://raw.githubusercontent.com/kism/dotfiles-simple/master/.
 if type nvim > /dev/null; then
     h1 "Setting up neovim"
     h2 "Installing Plug:"
-    curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs; checksuccess
-    nvim --headless +PlugInstall +qa; checksuccess
+    curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs
+    nvim --headless +PlugInstall +qa
     h2 "Copying neovim config:"
-    cp -r _nvim/.config ~; checksuccess
+    cp -r _nvim/.config ~
     h2 "Running neovim PlugInstall:"
-    nvim --headless +PlugInstall +qa; checksuccess
+    nvim --headless +PlugInstall +qa
     cp -r _nvim/.local ~; checksuccess # not great
 else
     echo "no nvim"
@@ -276,7 +279,7 @@ if [ "$USER" = "kism" ]; then
         chmod 700 ~/.ssh
         if [ ! -f "$HOME/.ssh/config" ]; then
             h2 "Copying .ssh/config"
-            cp _ssh/config ~/.ssh/config ; checksuccess
+            cp _ssh/config ~/.ssh/config
         else
             echo -e "ssh config file found, not copying"
         fi
@@ -291,20 +294,20 @@ if type git > /dev/null; then
     #h2 "Email"
     if [ "$USER" = "kism" ]; then
         h2 "Setting email as username is kism"
-        git config --global user.email "kieran.lost.the.game@gmail.com"; checksuccess
+        git config --global user.email "kieran.lost.the.game@gmail.com"
     fi
     h2 "Credential Helper"
-    git config --global credential.helper store; checksuccess
+    git config --global credential.helper store
     h2 "Name"
-    git config --global user.name "Kieran Gee"; checksuccess
+    git config --global user.name "Kieran Gee"
     h2 "Rebase setting"
-    git config --global pull.rebase true; checksuccess
+    git config --global pull.rebase true
     h2 CLRF""
-    git config --global core.autocrlf false; checksuccess
+    git config --global core.autocrlf false
     h2 "EOL LF"
-    git config --global core.eol lf; checksuccess
+    git config --global core.eol lf
     h2 "Editor: vim"
-    git config --global core.editor vim; checksuccess
+    git config --global core.editor vim
 else
     h3 "ssh not found, skipping"
 fi
