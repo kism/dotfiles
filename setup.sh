@@ -55,7 +55,7 @@ function setup_pacman() {
     h2 "Installing Packages"
     sudo pacman -S --noconfirm $to_install
 
-    set_shell_chsh
+    set_shell
 }
 
 function setup_apt() {
@@ -72,7 +72,7 @@ function setup_apt() {
     h2 "Installing Packages"
     sudo apt-get install --no-install-recommends -y $to_install
 
-    set_shell_chsh
+    set_shell
 }
 
 function setup_dnf() {
@@ -88,17 +88,20 @@ function setup_dnf() {
     h2 "Installing Packages"
     sudo dnf --setopt=install_weak_deps=False --best install -y $to_install
 
-    set_shell_chsh
+    set_shell
 }
 
-function set_shell_chsh() {
+function set_shell() {
     echo
     if ! getent passwd $USER | cut -d : -f 7 | grep zsh > /dev/null; then
         h1 "Setting zsh as user's shell"
         h2 "Setting your default shell:"
         myshell=$(cat /etc/shells | grep -m 1 "zsh")
-        sudo chsh -s $myshell $USER
-
+        if type chsh > /dev/null; then
+            sudo chsh -s $myshell $USER
+        else
+            sudo usermod --shell $myshell $USER
+        fi
     else
         echo "User $USER is already using zsh as their shell"
     fi

@@ -1,13 +1,13 @@
-Host openwrt
+Host kierangee.au kism.duckdns.org
+    ForwardAgent yes
+
+Host openwrt openwrt.kg.lan
     User root
 
-Host kierangee.au
-    ForwardAgent yes
+Host pve*
+    BatchMode=yes
 
-Host kism.duckdns.org
-    ForwardAgent yes
-
-Host ent
+Host ent ent.kg.lan
     ForwardAgent yes
 
 Host ent.kg.lan
