@@ -19,6 +19,9 @@ if (!$sshKeyLoaded) {
 	$funkey = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F511",16))
 }
 
+# Alias
+New-Alias npp notepad++.exe
+
 # Startup Message
 $bootuptime = (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
 $CurrentDate = Get-Date

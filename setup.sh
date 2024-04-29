@@ -286,10 +286,10 @@ if type git > /dev/null; then
         h2 "Setting email as username is kism"
         git config --global user.email "kieran.lost.the.game@gmail.com"
     fi
-    h2 "Credential Helper"
-    git config --global credential.helper store
     h2 "Name"
     git config --global user.name "Kieran Gee"
+    h2 "Credential Helper"
+    git config --global credential.helper store
     h2 "Rebase setting"
     git config --global pull.rebase true
     h2 CLRF""

@@ -33,7 +33,7 @@
                 {
                     "foreground": "red",
                     "style": "plain",
-                    "template": " % ",
+                    "template": "% ",
                     "type": "root"
                 },
                 {
