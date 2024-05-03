@@ -42,6 +42,7 @@ alias whom=who
 
 # Exports
 export EDITOR=nvim
+export VISUAL=nvim
 export VIRTUAL_ENV_DISABLE_PROMPT=1                   # VSCode Fix?
 export SSH_AUTH_SOCK=$(ls -t /tmp/ssh-**/* | head -1) # VSCode Fix
 if [[ "$OSTYPE" == darwin* ]]; then

@@ -12,7 +12,8 @@ if (-not $isElevated) {
 $windowsVersion = (Get-WmiObject Win32_OperatingSystem).Caption
 
 # Taskbar, "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-if ($windowsMajorVersion -eq "Windows 10") { # On Windows 11, Install startallback lmao, or maybe that stardock one
+if ($windowsMajorVersion -eq "Windows 10") {
+    # On Windows 11, Install startallback lmao, or maybe that stardock one
     ## Small icons
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarSmallIcons"    -Value 1
     # Hide Cortana, task view
@@ -52,10 +53,11 @@ $UserPreferencesMask = "98,1E,03,80,12,00,00,00"
 if ($windowsMajorVersion -eq "Windows 10") {
     $UserPreferencesMask = "98,52,03,80,10,00,00,00"
 }
-$UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | ForEach-Object { "0x$_"}
+$UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | ForEach-Object { "0x$_" }
 Set-ItemProperty -Path "HKCU:\Control Panel\Desktop\" -Name "UserPreferencesMask" -Value ([byte[]]$UserPreferencesMaskHex)
 
-if ($windowsMajorVersion -eq "Windows 11") { # On Windows 11, Install startallback lmao, or maybe that stardock one
+if ($windowsMajorVersion -eq "Windows 11") {
+    # On Windows 11, Install startallback lmao, or maybe that stardock one
     # Windows 11 SnapBar (thing at top to snap windows when draging a window), Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\
     Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "EnableSnapBar" -Value 0
 }
@@ -98,10 +100,9 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path "HKCU:HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_TrackDocs" -Value 0
 
 # Disable Get "Even More Out Of Windows"
-if ($windowsMajorVersion -eq "Windows 10") {
-    # "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement"
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Value 0
-}
+## "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement"
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Value 0
+
 if ($windowsMajorVersion -eq "Windows 11") {
     # "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding"
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "Browser"           -Value '{"progress":100}'
@@ -114,11 +115,11 @@ if ($windowsMajorVersion -eq "Windows 11") {
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "TipsFiles"         -Value '{"progress":100}'
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "Welcome"           -Value '{"progress":100}'
 
+    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-310093Enabled" -Value 0
+
     if (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement")) {
         New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion" -Name "UserProfileEngagement"
     }
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Value 0
-
 }
 
 # Start menu search
