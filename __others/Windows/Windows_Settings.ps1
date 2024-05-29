@@ -1,15 +1,13 @@
 
-# Check if the current session is elevated
-$isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
-# If not elevated, exit with an error message
-if (-not $isElevated) {
-    Write-Host "This script requires elevated privileges. Please run it as an administrator."
-    exit 1
+# Get the operating system version
+$windowsMajorVersion = (Get-WmiObject Win32_OperatingSystem).Caption
+if ($windowsMajorVersion -contains "Windows 10") {
+    $windowsMajorVersion = "Windows 10"
+}
+elseif ($windowsMajorVersion -contains "Windows 11") {
+    $windowsMajorVersion = "Windows 11"
 }
 
-# Get the operating system version
-$windowsVersion = (Get-WmiObject Win32_OperatingSystem).Caption
 
 # Taskbar, "Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 if ($windowsMajorVersion -eq "Windows 10") {
@@ -76,8 +74,6 @@ Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sLongDate"   
 Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sShortDate"      -Value "yyyy-MM-dd"
 Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sShortTime"      -Value "HH:mm"
 
-# Windows Time Settings, "Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Value 1 -Force
 
 # Keyboard, "Computer\HKEY_CURRENT_USER\Control Panel\Accessibility"
 ## Turn off Stickey Keys shortcuts
@@ -136,6 +132,38 @@ if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1
 
+
+# Edge, I give up on this tbh
+if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
+}
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+
+################################################################################################################################################################
+#### ELEVATED SECTION
+################################################################################################################################################################
+
+# Check if the current session is elevated
+$isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+# If not elevated, exit with an error message
+if (-not $isElevated) {
+    Write-Host "The rest of this script requires elevated privileges. Please run it as an administrator."
+    exit 1
+}
+
+# Firewall
+New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Enabled True -Direction Inbound -Action Allow
+New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Enabled True -Direction Inbound -Action Allow
+
+
+# Edge, I give up on this tbh, "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Edge"
+if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
+}
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+
+
 # Disable Cortana
 # "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
 if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search")) {
@@ -149,20 +177,9 @@ if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows")) {
 }
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1 -Force
 
-# Firewall
-New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Enabled True -Direction Inbound -Action Allow
-New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Enabled True -Direction Inbound -Action Allow
 
-# Edge, I give up on this tbh, "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Edge"
-if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
-}
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
-
-if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
-}
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+# Windows Time Settings, "Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Value 1 -Force
 
 
 ## Context Menu
