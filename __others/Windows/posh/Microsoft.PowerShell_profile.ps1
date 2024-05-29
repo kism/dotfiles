@@ -27,5 +27,5 @@ $bootuptime = (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
 $CurrentDate = Get-Date
 $uptime = $CurrentDate - $bootuptime
 $version = [System.Environment]::OSVersion.Version
-Write-Output "Windows $version Powershell $env:POSH_SHELL_VERSION"
+Write-Output "Windows $version Powershell $PSVersionTable.PSVersion"
 Write-Output "$env:username@$env:USERDNSDOMAIN $env:computername Up: $($uptime.days) Days, $($uptime.Hours)h$($uptime.Minutes)m $funkey"
