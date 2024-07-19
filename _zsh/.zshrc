@@ -42,24 +42,25 @@ alias whom=who
 
 # Exports
 export EDITOR=nvim
-export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
+export VISUAL=nvim
+export VIRTUAL_ENV_DISABLE_PROMPT=1                   # VSCode Fix?
 export SSH_AUTH_SOCK=$(ls -t /tmp/ssh-**/* | head -1) # VSCode Fix
 if [[ "$OSTYPE" == darwin* ]]; then
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
+if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
 # Load up ssh keys into keychain if it is on this system
-if type keychain > /dev/null; then
+if type keychain >/dev/null; then
     sshkeylist=('id_rsa' 'id_ed25519')
 
     for i in $sshkeylist; do
-        if [[ -e ~/.ssh/$i ]] ; then
-            eval `keychain -q --eval --agents ssh $i`
+        if [[ -e ~/.ssh/$i ]]; then
+            eval $(keychain -q --eval --agents ssh $i)
         fi
     done
 fi
@@ -69,14 +70,14 @@ function get_mercury_retrograde() {
     RESULT=""
     RETROGRADETEMPFILE=~/.config/mercuryretrograde
     if ! [ -f $RETROGRADETEMPFILE ]; then
-        mkdir -p ~/.config/ > /dev/null
+        mkdir -p ~/.config/ >/dev/null
         touch -a -m -t 197001010000.00 $RETROGRADETEMPFILE
     fi
-    if type curl > /dev/null; then
+    if type curl >/dev/null; then
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            curl -s https://mercuryretrogradeapi.com > $RETROGRADETEMPFILE 2>/dev/null
+            curl -s https://mercuryretrogradeapi.com >$RETROGRADETEMPFILE 2>/dev/null
         fi
-        if cat $RETROGRADETEMPFILE | grep false >/dev/null ; then
+        if cat $RETROGRADETEMPFILE | grep false >/dev/null; then
             RESULT="☿ \033[0;32mPrograde\033[0m"
         else
             RESULT="☿ \033[0;31mRetrograde\033[0m"
@@ -86,7 +87,7 @@ function get_mercury_retrograde() {
 }
 
 function get_ssh_keys_loaded() {
-    if type keychain > /dev/null; then
+    if type keychain >/dev/null; then
         keychain -l | grep -v "The agent has no identities." | wc -l | xargs
     fi
 }
@@ -112,21 +113,21 @@ bindkey "\e[3;6~" kill-line
 ### urxvt
 bindkey "\e[3@" kill-line
 
-# # Absolutely filthy way of checking if we are in windows terminal, I hate this but it works for me
-# SPACING="  "
-# SPACING2=" "
-# if [[ $(uname -r) == *WSL* ]]; then
-#   SPACING=""
-#   SPACING2=""
-# fi
-SPACING=""
+# Okay way of checking if we are in a VSCode remote
+if [[ -v VSCODE_IPC_HOOK_CLI ]]; then
+    SPACING="  "
+    SPACING2=""
+else
+    SPACING=""
+    SPACING2=""
+fi
 
 # Startup welcome message, only if we are in an interactive shell
 if [[ -o interactive ]]; then
     if test -f /etc/os-release; then
         . /etc/os-release
         echo -e "$PRETTY_NAME, \c"
-    elif type sw_vers > /dev/null; then
+    elif type sw_vers >/dev/null; then
         echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
     fi
     echo -e "$(uname -s -r), \c"

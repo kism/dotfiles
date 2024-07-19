@@ -1,15 +1,13 @@
 
-# Check if the current session is elevated
-$isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
-# If not elevated, exit with an error message
-if (-not $isElevated) {
-    Write-Host "This script requires elevated privileges. Please run it as an administrator."
-    exit 1
+# Get the operating system version
+$windowsMajorVersion = (Get-WmiObject Win32_OperatingSystem).Caption
+if ($windowsMajorVersion -contains "Windows 10") {
+    $windowsMajorVersion = "Windows 10"
+}
+elseif ($windowsMajorVersion -contains "Windows 11") {
+    $windowsMajorVersion = "Windows 11"
 }
 
-# Get the operating system version
-$windowsVersion = (Get-WmiObject Win32_OperatingSystem).Caption
 
 # Taskbar, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 if ($windowsMajorVersion -eq "Windows 10") { # On Windows 11, Install startallback lmao, or maybe that stardock one
@@ -52,10 +50,11 @@ $UserPreferencesMask = "98,1E,03,80,12,00,00,00"
 if ($windowsMajorVersion -eq "Windows 10") {
     $UserPreferencesMask = "98,52,03,80,10,00,00,00"
 }
-$UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | ForEach-Object { "0x$_"}
+$UserPreferencesMaskHex = $UserPreferencesMask.Split(',') | ForEach-Object { "0x$_" }
 Set-ItemProperty -Path "HKCU:\Control Panel\Desktop\" -Name "UserPreferencesMask" -Value ([byte[]]$UserPreferencesMaskHex)
 
-if ($windowsMajorVersion -eq "Windows 11") { # On Windows 11, Install startallback lmao, or maybe that stardock one
+if ($windowsMajorVersion -eq "Windows 11") {
+    # On Windows 11, Install startallback lmao, or maybe that stardock one
     # Windows 11 SnapBar (thing at top to snap windows when draging a window), Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\
     Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "EnableSnapBar" -Value 0
 }
@@ -114,11 +113,11 @@ if ($windowsMajorVersion -eq "Windows 11") {
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "TipsFiles"         -Value '{"progress":100}'
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "Welcome"           -Value '{"progress":100}'
 
+    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-310093Enabled" -Value 0
+
     if (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement")) {
         New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion" -Name "UserProfileEngagement"
     }
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Value 0
-
 }
 
 # Start menu search
@@ -135,6 +134,38 @@ if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1
 
+
+# Edge, I give up on this tbh
+if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
+}
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+
+################################################################################################################################################################
+#### ELEVATED SECTION
+################################################################################################################################################################
+
+# Check if the current session is elevated
+$isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+# If not elevated, exit with an error message
+if (-not $isElevated) {
+    Write-Host "The rest of this script requires elevated privileges. Please run it as an administrator."
+    exit 1
+}
+
+# Firewall
+New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Enabled True -Direction Inbound -Action Allow
+New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Enabled True -Direction Inbound -Action Allow
+
+
+# Edge, I give up on this tbh, "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Edge"
+if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
+}
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+
+
 # Disable Cortana
 # "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
 if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search")) {
@@ -148,9 +179,6 @@ if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows")) {
 }
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1 -Force
 
-# Firewall
-New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Enabled True -Direction Inbound -Action Allow
-New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Enabled True -Direction Inbound -Action Allow
 
 # Edge, I give up on this tbh, "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Edge"
 if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {

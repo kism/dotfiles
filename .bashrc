@@ -41,3 +41,4 @@ alias cgrep='grep --color=always -e "^" -e'
 alias whom=who
 
 export EDITOR=vim
+export VISUAL=vim
