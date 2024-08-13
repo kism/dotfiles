@@ -43,6 +43,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("kdiff3"),
         ("krita"),
         ("libreoffice-fresh"),
+        ("mediainfo"),
         ("mkvtoolnix"),
         ("mpv.install"),
         ("msiafterburner"),
