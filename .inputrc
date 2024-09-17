@@ -1,3 +1,6 @@
+# .inputrc
+# https://github.com/kism/dotfiles-simple/blob/main/.inputrc
+
 ### Page Up/Down
 # History Search
 "\e[5~": history-search-backward

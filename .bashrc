@@ -1,4 +1,5 @@
 # .bashrc
+# https://github.com/kism/dotfiles-simple/blob/main/.bashrc
 
 PATH=$PATH:$HOME/bin:$HOME/.local/bin
 export PATH
@@ -12,7 +13,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
+export SYSTEMD_PAGER=
 
 # User specific aliases and functions
 # Prompt
@@ -22,6 +23,19 @@ if [ $EUID -eq 0 ] ; then
         export PS1="[\[\e[31m\]\u\[\e[m\]@\[\e[31m\]\h\[\e[m\]] \w\n\[\e[33m\]\\$\[\e[m\] "
 else
         export PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[36m\]\h\[\e[m\]] \w\n\[\e[35m\]\\$\[\e[m\] "
+fi
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
 fi
 
 # Alias

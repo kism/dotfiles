@@ -1,4 +1,0 @@
-#!/usr/bin/python
-import socket, getpass
-
-print(getpass.getuser() + '@' + socket.gethostname())

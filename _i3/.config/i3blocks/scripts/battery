@@ -1,4 +1,0 @@
-#!/bin/bash
-#printf $(/sys/class/power_supply/cw2015-battery/capacity)
-#tail /sys/class/power_supply/cw2015-battery/capacity
-echo $(tail /sys/class/power_supply/cw2015-battery/capacity)%
