@@ -52,3 +52,9 @@ Restow
 ```bash
 stow  --target=$HOME --restow .
 ```
+
+## Packages per environment
+
+```bash
+./setup.sh
+```

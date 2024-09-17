@@ -20,6 +20,8 @@ _darcs
 
 __others
 
+setup.sh
+
 .+~          # emacs backup files
 \#.*\#       # emacs autosave files
 
