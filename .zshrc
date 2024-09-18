@@ -36,9 +36,13 @@ alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
 alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
-alias vim=nvim
-alias view="nvim -R"
 alias whom=who
+
+if type nvim >/dev/null; then
+    alias vi=nvim
+    alias vim=nvim
+    alias view="nvim -R"
+fi
 
 # Exports
 export EDITOR=nvim

@@ -5,15 +5,13 @@
 # Turn on errors
 set -e
 
-install_base="zsh git htop tmux curl wget neofetch keychain tree ncdu"
-install_apt_brew_dnf="vim"
+install_base="zsh git htop tmux curl wget tree ncdu"
 install_apt_brew_dnf_pacman="neovim"
-install_apt_dnf="openssh-server"
 install_pkg="vim-console"
 install_brew="coreutils"
 
 function setup_brew() {
-    install_base="$install_base $install_apt_brew_dnf $install_brew $install_apt_brew_dnf_pacman"
+    install_base="$install_base $install_brew $install_apt_brew_dnf_pacman"
     h1 "Brew (MacOS Package Manager)"
     if ! which brew >/dev/null; then
         h2 "Installing Brew"
@@ -53,13 +51,13 @@ function setup_pacman() {
     h2 "pacman -Syyu"
     sudo pacman -Syyu --noconfirm
     h2 "Installing Packages"
-    sudo pacman -S --noconfirm $to_install
+    sudo pacman -S --noconfirm --needed $to_install
 
     set_shell
 }
 
 function setup_apt() {
-    to_install="$install_base $install_apt_brew_dnf $install_apt_dnf $install_apt_brew_dnf_pacman"
+    to_install="$install_base $install_apt_brew_dnf_pacman"
     prepsudo
 
     h1 "Updating $PRETTY_NAME"
@@ -76,7 +74,7 @@ function setup_apt() {
 }
 
 function setup_dnf() {
-    to_install="$install_base $install_apt_brew_dnf $install_apt_dnf $install_apt_brew_dnf_pacman"
+    to_install="$install_base $install_apt_brew_dnf_pacman"
     prepsudo
 
     h1 "Updating $PRETTY_NAME"
@@ -231,7 +229,6 @@ if type nvim >/dev/null; then
     nvim --headless +PlugInstall +qa
     h2 "Running neovim PlugInstall:"
     nvim --headless +PlugInstall +qa
-    cp -r _nvim/.local ~
 else
     echo "no nvim"
 fi
