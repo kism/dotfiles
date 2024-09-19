@@ -5,7 +5,7 @@
 # Turn on errors
 set -e
 
-install_base="zsh git htop tmux curl wget tree ncdu"
+install_base="zsh git htop tmux curl wget tree ncdu stow"
 install_apt_brew_dnf_pacman="neovim"
 install_pkg="vim-console"
 install_brew="coreutils"

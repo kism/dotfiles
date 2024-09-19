@@ -54,5 +54,11 @@ alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias whom=who
 
+if type nvim >/dev/null; then
+    alias vi=nvim
+    alias vim=nvim
+    alias view="nvim -R"
+fi
+
 export EDITOR=vim
 export VISUAL=vim
