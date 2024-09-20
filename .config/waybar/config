@@ -5,11 +5,12 @@
 	"modules-left": [
 		"sway/mode",
 		"sway/workspaces",
+		"custom/arrow10",
 		"sway/window"
 	],
 
 	"modules-right": [
-		"custom/arrow9",
+		// "custom/arrow9",
 		"wireplumber",
 		"custom/arrow8",
 		"network",
@@ -21,7 +22,7 @@
 		"temperature",
 		"custom/arrow4",
 		"sway/language",
-		"custom/arrow2",
+		// "custom/arrow2",
 		"tray",
 		"clock#date",
 		"custom/arrow1",
@@ -29,9 +30,6 @@
 	],
 
 	// Modules
-
-
-
 	"clock#time": {
 		"interval": 10,
 		"format": "{:%H:%M}",
@@ -48,8 +46,8 @@
 	"cpu": {
 		"interval": 5,
 		"tooltip": false,
-		"format": " {usage}%",
-		"format-alt": " {load}",
+		"format": "CPU {usage}%",
+		"format-alt": "Load {load}",
 		"states": {
 			"warning": 70,
 			"critical": 90
@@ -57,7 +55,7 @@
 	},
 
 	"sway/language": {
-		"format": " {}",
+		"format": "KBD {}",
 		"min-length": 5,
 		"on-click": "swaymsg 'input * xkb_switch_layout next'",
 		"tooltip": false
@@ -65,7 +63,7 @@
 
 	"memory": {
 		"interval": 5,
-		"format": " {used:0.1f}G/{total:0.1f}G",
+		"format": "Mem {used:0.1f}G/{total:0.1f}G",
 		"states": {
 			"warning": 70,
 			"critical": 90
@@ -75,10 +73,10 @@
 
 	"network": {
 		"interval": 5,
-		"format-wifi": " {essid} ({signalStrength}%)",
-		"format-ethernet": " {ifname}",
+		"format-wifi": "WiFi {essid} ({signalStrength}%)",
+		"format-ethernet": "{ifname}",
 		"format-disconnected": "No connection",
-		"format-alt": " {ipaddr}/{cidr}",
+		"format-alt": "Network {ipaddr}/{cidr}",
 		"tooltip": false
 	},
 
@@ -101,7 +99,7 @@
 	},
 
 	"wireplumber": {
-		"format": " {volume}%",
+		"format": "Volume {volume}%",
 		"format-bluetooth": "󰥰 {volume}%",
 		"format-muted": "",
 		"scroll-step": 1,
@@ -112,14 +110,7 @@
 	"temperature": {
 		"critical-threshold": 90,
 		"interval": 5,
-		"format": "{icon} {temperatureC}°",
-		"format-icons": [
-			"",
-			"",
-			"",
-			"",
-			""
-		],
+		"format": "Temp {temperatureC}°",
 		"tooltip": false
 	},
 
@@ -129,52 +120,52 @@
 	},
 
 	"custom/arrow1": {
-		"format": "",
+		"format": "",
 		"tooltip": false
 	},
 
 	"custom/arrow2": {
-		"format": "",
+		"format": " ",
 		"tooltip": false
 	},
 
 	"custom/arrow3": {
-		"format": "",
+		"format": "|",
 		"tooltip": false
 	},
 
 	"custom/arrow4": {
-		"format": "",
+		"format": "|",
 		"tooltip": false
 	},
 
 	"custom/arrow5": {
-		"format": "",
+		"format": "|",
 		"tooltip": false
 	},
 
 	"custom/arrow6": {
-		"format": "",
+		"format": "|",
 		"tooltip": false
 	},
 
 	"custom/arrow7": {
-		"format": "",
+		"format": "|",
 		"tooltip": false
 	},
 
 	"custom/arrow8": {
-		"format": "",
+		"format": "|",
 		"tooltip": false
 	},
 
 	"custom/arrow9": {
-		"format": "",
+		"format": "|",
 		"tooltip": false
 	},
 
 	"custom/arrow10": {
-		"format": "",
+		"format": "|>",
 		"tooltip": false
 	}
 }

@@ -1,69 +1,60 @@
 /* Keyframes */
 
 @keyframes blink-critical {
-	to {
-		/*color: @white;*/
-		background-color: @critical;
-	}
+  to {
+    /*color: @white;*/
+    background-color: @critical;
+  }
 }
-
 
 /* Styles */
 
 /* Colors (gruvbox) */
-@define-color black	#282828;
-@define-color red	#cc241d;
-@define-color green	#98971a;
-@define-color yellow	#d79921;
-@define-color blue	#458588;
-@define-color purple	#b16286;
-@define-color aqua	#689d6a;
-@define-color gray	#a89984;
-@define-color brgray	#928374;
-@define-color brred	#fb4934;
-@define-color brgreen	#b8bb26;
-@define-color bryellow	#fabd2f;
-@define-color brblue	#83a598;
-@define-color brpurple	#d3869b;
-@define-color braqua	#8ec07c;
-@define-color white	#ebdbb2;
-@define-color bg2	#504945;
+@define-color black		#000000;
+@define-color red		#FF0000;
+@define-color green		#008000;
+@define-color yellow	#FFFF00;
+@define-color blue		#0000FF;
+@define-color purple	#800080;
+@define-color aqua		#00FFFF;
+@define-color gray		#808080;
+@define-color white		#FFFFFF;
+@define-color teal		#008080;
 
-
-@define-color warning 	@bryellow;
+@define-color warning 	@yellow;
 @define-color critical	@red;
-@define-color mode	@black;
-@define-color unfocused	@bg2;
-@define-color focused	@braqua;
-@define-color inactive	@purple;
-@define-color sound	@brpurple;
-@define-color network	@purple;
-@define-color memory	@braqua;
-@define-color cpu	@green;
-@define-color temp	@brgreen;
-@define-color layout	@bryellow;
-@define-color date	@black;
-@define-color time	@white;
+@define-color mode		@black;
+@define-color unfocused	@black;
+@define-color focused	@purple;
+@define-color inactive	@gray;
+@define-color sound		@white;
+@define-color network	@white;
+@define-color memory	@white;
+@define-color cpu		@white;
+@define-color temp		@white;
+@define-color layout	@white;
+@define-color date		@black;
+@define-color time		@white;
 
 /* Reset all styles */
 * {
-	border: none;
-	border-radius: 0;
-	min-height: 0;
-	margin: 0;
-	padding: 0;
-	box-shadow: none;
-	text-shadow: none;
-	icon-shadow: none;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: none;
+  icon-shadow: none;
 }
 
 /* The whole bar */
 #waybar {
-	background: rgba(40, 40, 40, 1); /* #282828e0 */
-	color: @white;
-	font-family: FiraCode Nerd Font Mono, Siji;
-	font-size: 13pt;
-	/*font-weight: bold;*/
+  background: @black;
+  color: @white;
+  font-family: FiraCode Nerd Font Mono, Siji;
+  font-size: 14pt;
+  /*font-weight: bold;*/
 }
 
 /* Each module */
@@ -76,13 +67,12 @@
 #wireplumber,
 #temperature,
 #tray,
-#backlight,
 #idle_inhibitor,
 #disk,
 #user,
 #mpris {
-	padding-left: 8pt;
-	padding-right: 8pt;
+  padding-left: 8pt;
+  padding-right: 8pt;
 }
 
 /* Each critical module */
@@ -103,142 +93,142 @@
 
 /* Current sway mode (resize etc) */
 #mode {
-	color: @white;
-	background: @mode;
+  color: @white;
+  background: @mode;
 }
 
 /* Workspaces stuff */
 #workspaces button {
-	/*font-weight: bold;*/
-	padding-left: 2pt;
-	padding-right: 2pt;
-	color: @white;
-	background: @unfocused;
+  /*font-weight: bold;*/
+  padding-left: 2pt;
+  padding-right: 2pt;
+  color: @white;
+  background: @unfocused;
 }
 
 /* Inactive (on unfocused output) */
 #workspaces button.visible {
-	color: @white;
-	background: @inactive;
+  color: @white;
+  background: @inactive;
 }
 
 /* Active (on focused output) */
 #workspaces button.focused {
-	color: @black;
-	background: @focused;
+  color: @white;
+  background: @focused;
 }
 
 /* Contains an urgent window */
 #workspaces button.urgent {
-	color: @black;
-	background: @warning;
+  color: @black;
+  background: @warning;
 }
 
 /* Style when cursor is on the button */
 #workspaces button:hover {
-	background: @black;
-	color: @white;
+  background: @black;
+  color: @white;
 }
 
 #window {
-	margin-right: 35pt;
-	margin-left: 35pt;
+  margin-right: 35pt;
+  margin-left: 35pt;
 }
 
 #wireplumber {
-	background: @sound;
-	color: @black;
+  background: @memory;
+  color: @black;
 }
 
 #network {
-	background: @network;
-	color: @white;
+  background: @network;
+  color: @black;
 }
 
 #memory {
-	background: @memory;
-	color: @black;
+  background: @memory;
+  color: @black;
 }
 
 #cpu {
-	background: @cpu;
-	color: @white;
+  background: @cpu;
+  color: @black;
 }
 
 #temperature {
-	background: @temp;
-	color: @black;
+  background: @temp;
+  color: @black;
 }
 
 #language {
-	background: @layout;
-	color: @black;
+  background: @layout;
+  color: @black;
 }
 
 #tray {
-	background: @date;
+  background: @date;
 }
 
 #clock.date {
-	background: @date;
-	color: @white;
+  background: @date;
+  color: @white;
 }
 
 #clock.time {
-	background: @time;
-	color: @black;
+  color: @black;
+  background: @white;
 }
 
 #custom-arrow1 {
-	font-size: 13pt;
-	color: @time;
-	background: @date;
+  font-size: 14pt;
+  color: @black;
+  background: @network;
 }
 
 #custom-arrow2 {
-	font-size: 13pt;
-	color: @date;
-	background: @layout;
+  font-size: 14pt;
+  color: @black;
+  background: @network;
 }
 
 #custom-arrow4 {
-	font-size: 13pt;
-	color: @layout;
-	background: @temp;
+  font-size: 14pt;
+  color: @black;
+  background: @network;
 }
 
 #custom-arrow5 {
-	font-size: 13pt;
-	color: @temp;
-	background: @cpu;
+  font-size: 14pt;
+  color: @black;
+  background: @network;
 }
 
 #custom-arrow6 {
-	font-size: 13pt;
-	color: @cpu;
-	background: @memory;
+  font-size: 14pt;
+  color: @black;
+  background: @network;
 }
 
 #custom-arrow7 {
-	font-size: 13pt;
-	color: @memory;
-	background: @network;
+  font-size: 14pt;
+  color: @black;
+  background: @network;
 }
 
 #custom-arrow8 {
-	font-size: 13pt;
-	color: @network;
-	background: @sound;
+  font-size: 14pt;
+  color: @black;
+  background: @network;
 }
 
 #custom-arrow9 {
-	font-size: 13pt;
-	color: @sound;
-	background: transparent;
+  font-size: 14pt;
+  color: @sound;
+  background: transparent;
 }
 
 #custom-arrow10 {
-	font-size: 13pt;
-	color: @unfocused;
-	background: transparent;
+  font-size: 14pt;
+  color: @white;
+  background: transparent;
 }
