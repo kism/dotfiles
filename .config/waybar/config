@@ -4,6 +4,7 @@
 
 	"modules-left": [
 		"sway/mode",
+		"custom/arrow9",
 		"sway/workspaces",
 		"custom/arrow10",
 		"sway/window"
@@ -11,6 +12,7 @@
 
 	"modules-right": [
 		// "custom/arrow9",
+		"custom/work",
 		"wireplumber",
 		"custom/arrow8",
 		"network",
@@ -18,7 +20,7 @@
 		"memory",
 		"custom/arrow6",
 		"cpu",
-		"custom/arrow5",
+		// "custom/arrow5",
 		"temperature",
 		"custom/arrow4",
 		"sway/language",
@@ -30,6 +32,16 @@
 	],
 
 	// Modules
+
+
+	"custom/work": {
+		"format": "{}",
+		"return-type": "json",
+		"interval": 2,
+		"exec": "$HOME/.config/waybar/scripts/workmode.py",
+		"tooltip": true
+	},
+
 	"clock#time": {
 		"interval": 10,
 		"format": "{:%H:%M}",
@@ -93,7 +105,7 @@
 
 	"sway/workspaces": {
 		"disable-scroll-wraparound": true,
-		"smooth-scrolling-threshold": 4,
+		"smooth-scrolling-threshold": 1,
 		"enable-bar-scroll": true,
 		"format": "{name}"
 	},
@@ -110,7 +122,7 @@
 	"temperature": {
 		"critical-threshold": 90,
 		"interval": 5,
-		"format": "Temp {temperatureC}°",
+		"format": "@{temperatureC}°",
 		"tooltip": false
 	},
 
@@ -160,12 +172,12 @@
 	},
 
 	"custom/arrow9": {
-		"format": "|",
+		"format": " ",
 		"tooltip": false
 	},
 
 	"custom/arrow10": {
-		"format": "|>",
+		"format": "",
 		"tooltip": false
 	}
 }

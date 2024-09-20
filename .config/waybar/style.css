@@ -45,7 +45,7 @@
   padding: 0;
   box-shadow: none;
   text-shadow: none;
-  icon-shadow: none;
+  -gtk-icon-shadow: 0px 0px 0px transparent;
 }
 
 /* The whole bar */
@@ -67,6 +67,7 @@
 #wireplumber,
 #temperature,
 #tray,
+#custom-work,
 #idle_inhibitor,
 #disk,
 #user,
@@ -101,7 +102,7 @@
 #workspaces button {
   /*font-weight: bold;*/
   padding-left: 2pt;
-  padding-right: 2pt;
+  padding-right: 2.6pt;
   color: @white;
   background: @unfocused;
 }
@@ -126,8 +127,8 @@
 
 /* Style when cursor is on the button */
 #workspaces button:hover {
-  background: @black;
-  color: @white;
+  background: @white;
+  color: @black;
 }
 
 #window {
@@ -179,6 +180,11 @@
   background: @white;
 }
 
+#custom-work {
+  background: @purple;
+  color: @white;
+}
+
 #custom-arrow1 {
   font-size: 14pt;
   color: @black;
@@ -222,12 +228,14 @@
 }
 
 #custom-arrow9 {
+  padding-right: 3pt;
   font-size: 14pt;
-  color: @sound;
+  color: @white;
   background: transparent;
 }
 
 #custom-arrow10 {
+  padding-left: 3pt;
   font-size: 14pt;
   color: @white;
   background: transparent;
