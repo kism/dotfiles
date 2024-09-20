@@ -12,7 +12,7 @@
 
 	"modules-right": [
 		// "custom/arrow9",
-		// "custom/work",
+		"custom/work",
 		"wireplumber",
 		"custom/arrow8",
 		"network",
