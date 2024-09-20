@@ -115,7 +115,7 @@
 		"format-bluetooth": "󰥰 {volume}%",
 		"format-muted": "",
 		"scroll-step": 1,
-		"on-click": "pwvucontrol",
+		"on-click": "sway-floating foot pulsemixer",
 		"tooltip": false
 	},
 
