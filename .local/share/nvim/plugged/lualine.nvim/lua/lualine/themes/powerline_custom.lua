@@ -1,4 +1,4 @@
--- Copyright (c) 2020-2021 shadmansaleh
+-- Copyright (c) 2020-2021 shadmansaleh, kism
 -- MIT license, see LICENSE for more details.
 -- stylua: ignore
 local Colors = {

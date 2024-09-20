@@ -12,7 +12,7 @@
 
 	"modules-right": [
 		// "custom/arrow9",
-		"custom/work",
+		// "custom/work",
 		"wireplumber",
 		"custom/arrow8",
 		"network",
@@ -22,8 +22,8 @@
 		"cpu",
 		// "custom/arrow5",
 		"temperature",
-		"custom/arrow4",
-		"sway/language",
+		// "custom/arrow4",
+		// "sway/language",
 		// "custom/arrow2",
 		"tray",
 		"clock#date",

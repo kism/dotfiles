@@ -1,4 +1,4 @@
-### Kieran's Config for i3
+### Kieran's Config for Sway
 # Super
 set $mod Mod4
 
@@ -18,9 +18,6 @@ focus output DP-2
 
 # Easiest
 font pango:Hasklug Nerd Font Mono 12
-
-# Generally I decide against nerdfont setups
-#font pango:Hasklug Nerd Font Mono Regular 12
 
 # If you are low dpi install this and use it
 #font pango:dina 14
@@ -186,7 +183,8 @@ set $gnome-schema org.gnome.desktop.interface
 
 exec_always {
     # gsettings set $gnome-schema gtk-theme 'Arc-Dark-solid'
-    gsettings set $gnome-schema gtk-theme 'Numix'
+    gsettings set $gnome-schema gtk-theme 'Numix':
+    gsettings set $gnome-schema color-scheme 'prefer-dark'
     gsettings set $gnome-schema icon-theme 'Numix'
     gsettings set $gnome-schema cursor-theme 'Adwaita'
     gsettings set $gnome-schema font-name 'Cantarell'

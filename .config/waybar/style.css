@@ -11,7 +11,7 @@
 
 /* Colors (gruvbox) */
 @define-color black		#000000;
-@define-color red		#FF0000;
+@define-color red		  #FF0000;
 @define-color green		#008000;
 @define-color yellow	#FFFF00;
 @define-color blue		#0000FF;
@@ -23,14 +23,14 @@
 
 @define-color warning 	@yellow;
 @define-color critical	@red;
-@define-color mode		@black;
+@define-color mode      @yellow;
 @define-color unfocused	@black;
-@define-color focused	@purple;
+@define-color focused	  @purple;
 @define-color inactive	@gray;
-@define-color sound		@white;
-@define-color network	@white;
-@define-color memory	@white;
-@define-color cpu		@white;
+@define-color sound		  @white;
+@define-color network	  @white;
+@define-color memory	  @white;
+@define-color cpu		  @white;
 @define-color temp		@white;
 @define-color layout	@white;
 @define-color date		@black;
@@ -94,7 +94,7 @@
 
 /* Current sway mode (resize etc) */
 #mode {
-  color: @white;
+  color: @black;
   background: @mode;
 }
 
