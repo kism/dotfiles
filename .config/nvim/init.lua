@@ -1,10 +1,13 @@
 --- Plug Init
 local vim = vim
 
-local handle = io.popen(whoami)
-local user = handle:read("*a")
+local handle = io.popen("id -u")
+local user_id = handle:read("*a")
+handle:close()
 
-if user ~= "root" then
+user_id = user_id:gsub("%s+", "")
+
+if user_id ~= "0" then
     local Plug = vim.fn['plug#']
     vim.call('plug#begin')
 
@@ -90,7 +93,10 @@ vim.cmd('set expandtab')
 vim.cmd('set nowrap') --- Wordwrap off
 vim.cmd('set mouse=') --- Mouse off
 vim.cmd('set tw=0') --- vim.cmd('set text wrapping off for the language formatter
-vim.cmd('set noshowmode') --- Dont display -- Insert -- since that's handled by ???
+if user_id ~= "0" then
+  vim.cmd('set noshowmode') --- Dont display -- Insert -- since that's handled by ???
+end
+
 vim.cmd('set ttyfast') --- Speed up scrolling in Vim
 
 --- Binds
