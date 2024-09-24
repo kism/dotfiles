@@ -20,6 +20,11 @@ fi
 echo Setting up vim...
 curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.vimrc >~/.vimrc
 
+# NeoVim
+echo Setting up neovim...
+mkdir -p ~/.config/nvim/
+curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.config/nvim/init.lua >~/.config/nvim/init.lua
+
 # Htop
 echo Setting up htop...
 mkdir -p ~/.config/htop/
