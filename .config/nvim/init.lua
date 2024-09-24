@@ -8,6 +8,7 @@ handle:close()
 user_id = user_id:gsub("%s+", "")
 
 if user_id ~= "0" then
+    vim.print("we are not root!")
     local Plug = vim.fn['plug#']
     vim.call('plug#begin')
 
@@ -45,7 +46,6 @@ if user_id ~= "0" then
             }
         }
     }
-
 end
 
 --- Set transparent background
@@ -100,17 +100,17 @@ vim.cmd('set ttyfast') --- Speed up scrolling in Vim
 --- Binds
 vim.cmd('map q <Nop>') --- Unbind macros
 
---- Statusline (Root user) https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
-if user_id == "0" then
+if user_id == "0" then --- Statusline (Root user) https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
+    vim.print("we are root!")
     local modes = {
         ["n"] = "NORMAL",
         ["no"] = "NORMAL",
         ["v"] = "VISUAL",
         ["V"] = "VISUAL LINE",
-        [""] = "VISUAL BLOCK",
+        [""] = "VISUAL BLOCK",
         ["s"] = "SELECT",
         ["S"] = "SELECT LINE",
-        [""] = "SELECT BLOCK",
+        [""] = "SELECT BLOCK",
         ["i"] = "INSERT",
         ["ic"] = "INSERT",
         ["R"] = "REPLACE",
@@ -137,7 +137,7 @@ if user_id == "0" then
             mode_color = "%#StatuslineAccent#"
         elseif current_mode == "i" or current_mode == "ic" then
             mode_color = "%#StatuslineInsertAccent#"
-        elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
+        elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
             mode_color = "%#StatuslineVisualAccent#"
         elseif current_mode == "R" then
             mode_color = "%#StatuslineReplaceAccent#"
