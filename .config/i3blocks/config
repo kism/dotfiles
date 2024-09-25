@@ -64,15 +64,15 @@ color=#008080
 #instance=wlan0
 label=LAN 
 interval=10
-separator=false
-color=#008080
-
-[ssid]
-command=iwgetid -r
-label=SSID
-interval=10
 separator=true
 color=#008080
+
+#[ssid]
+#command=iwgetid -r
+#label=SSID
+#interval=10
+#separator=true
+#color=#008080
 
 #[volume]
 #label=Volume
