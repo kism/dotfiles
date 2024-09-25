@@ -129,12 +129,17 @@ fi
 # Startup welcome message, only if we are in an interactive shell
 if [[ -o interactive ]]; then
     if test -f /etc/os-release; then
-        . /etc/os-release
+        source /etc/os-release
         echo -e "$PRETTY_NAME, \c"
     elif type sw_vers >/dev/null; then
         echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
     fi
     echo -e "$(uname -s -r), \c"
-    echo -e "🗝️$SPACING$(get_ssh_keys_loaded),$SPACING2\c"
-    get_mercury_retrograde
+
+    if [[ "$TERM" == xterm* || "$TERM" == rxvt* || "$TERM" == urxvt* ]]; then
+        echo -e "🗝️$SPACING$(get_ssh_keys_loaded),$SPACING2\c"
+        get_mercury_retrograde
+    else
+        echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
+    fi
 fi
