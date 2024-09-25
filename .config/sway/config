@@ -17,7 +17,7 @@ focus output DP-2
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 
 # Easiest
-font pango:Hasklug Nerd Font Mono 12
+font pango:Hasklug Nerd Font Mono 14
 
 # If you are low dpi install this and use it
 #font pango:dina 14
@@ -180,13 +180,17 @@ for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"]      floating enable
 for_window [window_type="menu"]        floating enable
 
-set $gnome-schema org.gnome.desktop.interface
+for_window [shell="xwayland"] title_format "[XWayland] %title"
 
-exec_always {
-    # gsettings set $gnome-schema gtk-theme 'Arc-Dark-solid'
-    gsettings set $gnome-schema gtk-theme 'Numix':
-    gsettings set $gnome-schema color-scheme 'prefer-dark'
-    gsettings set $gnome-schema icon-theme 'Numix'
-    gsettings set $gnome-schema cursor-theme 'Adwaita'
-    gsettings set $gnome-schema font-name 'Cantarell'
-}
+# set $gnome-schema org.gnome.desktop.interface
+
+# exec_always {
+#     gsettings set $gnome-schema gtk-theme 'Arc-Dark-solid'
+#     # gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+#     # gsettings set $gnome-schema gtk-theme 'Adwaita:Dark'
+#     # gsettings set $gnome-schema gtk-theme 'Numix:Dark'
+#     gsettings set $gnome-schema color-scheme 'prefer-dark'
+#     gsettings set $gnome-schema icon-theme 'Numix'
+#     gsettings set $gnome-schema cursor-theme 'Breeze'
+#     gsettings set $gnome-schema font-name 'Cantarell'
+# }
