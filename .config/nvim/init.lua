@@ -8,7 +8,7 @@ handle:close()
 user_id = user_id:gsub("%s+", "")
 
 if user_id ~= "0" then
-    vim.print("we are not root!")
+    -- vim.print("we are not root!")
     local Plug = vim.fn['plug#']
     vim.call('plug#begin')
 
@@ -59,8 +59,8 @@ vim.cmd [[
 --- Set transparent background
 vim.cmd [[
   highlight Normal guibg=none
-  highlight NonText guibg=none
   highlight Normal ctermbg=none
+  highlight NonText guibg=none
   highlight NonText ctermbg=none
 ]]
 
@@ -101,7 +101,7 @@ vim.cmd('set ttyfast') --- Speed up scrolling in Vim
 vim.cmd('map q <Nop>') --- Unbind macros
 
 if user_id == "0" then --- Statusline (Root user) https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
-    vim.print("we are root!")
+    -- vim.print("we are root!")
     local modes = {
         ["n"] = "NORMAL",
         ["no"] = "NORMAL",
@@ -163,7 +163,7 @@ if user_id == "0" then --- Statusline (Root user) https://nuxsh.is-a.dev/blog/cu
         if fname == "" then
             return ""
         end
-        return fname .. " "
+        return "%#INVALIDWIP#" .. fname .. " "
     end
 
     local function filetype()
