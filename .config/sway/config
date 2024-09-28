@@ -70,17 +70,19 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-workspace 1 output DP-3
-workspace 2 output DP-3
-workspace 3 output DP-3
+workspace 1 output DP-2
+workspace 2 output DP-2
+workspace 3 output DP-2
 workspace 4 output DP-2
 workspace 5 output DP-2
 workspace 6 output DP-2
-workspace 7 output DP-1
-workspace 8 output DP-1
-workspace 9 output DP-1
-workspace 10 output DP-1
+workspace 7 output DP-2
+workspace 8 output DP-2
+workspace 9 output DP-2
+workspace 10 output DP-2
 
+workspace DP-1 output DP-1
+workspace DP-3 output DP-3
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -194,3 +196,7 @@ for_window [shell="xwayland"] title_format "[XWayland] %title"
 #     gsettings set $gnome-schema cursor-theme 'Breeze'
 #     gsettings set $gnome-schema font-name 'Cantarell'
 # }
+
+# Use nwg-look to change other themes
+
+seat seat0 xcursor_theme Breeze 20
