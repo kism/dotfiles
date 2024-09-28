@@ -31,6 +31,9 @@ bindsym $mod+Return exec foot
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# Super + Tab
+bindsym $mod+Tab exec rofi -show window
+
 # start rofi (a program launcher that isn't dmenu)
 bindsym $mod+d exec rofi -show drun
 
