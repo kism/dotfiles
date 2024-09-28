@@ -36,6 +36,8 @@ bindsym $mod+Tab exec rofi -show window
 
 # start rofi (a program launcher that isn't dmenu)
 bindsym $mod+d exec rofi -show drun
+bindsym $mod+Shift+d exec rofi -show run
+
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left  focus left
