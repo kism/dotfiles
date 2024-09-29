@@ -1,7 +1,2 @@
 generated.txt
-<<<<<<< HEAD
 .local/share/nvim
-
-=======
-.local/share/nvim/site/autoload/plug.vim
->>>>>>> 7c7a7db (another laptop)
