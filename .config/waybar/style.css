@@ -53,7 +53,7 @@
   background: @black;
   color: @white;
   font-family: FiraCode Nerd Font Mono, Siji;
-  font-size: 14pt;
+  font-size: 10pt;
   /*font-weight: bold;*/
 }
 
@@ -186,57 +186,57 @@
 }
 
 #custom-arrow1 {
-  font-size: 14pt;
+  font-size: 10pt;
   color: @black;
   background: @network;
 }
 
 #custom-arrow2 {
-  font-size: 14pt;
+  font-size: 10pt;
   color: @black;
   background: @network;
 }
 
 #custom-arrow4 {
-  font-size: 14pt;
+  font-size: 10pt;
   color: @black;
   background: @network;
 }
 
 #custom-arrow5 {
-  font-size: 14pt;
+  font-size: 10pt;
   color: @black;
   background: @network;
 }
 
 #custom-arrow6 {
-  font-size: 14pt;
+  font-size: 10pt;
   color: @black;
   background: @network;
 }
 
 #custom-arrow7 {
-  font-size: 14pt;
+  font-size: 10pt;
   color: @black;
   background: @network;
 }
 
 #custom-arrow8 {
-  font-size: 14pt;
+  font-size: 10pt;
   color: @black;
   background: @network;
 }
 
 #custom-arrow9 {
   padding-right: 3pt;
-  font-size: 14pt;
+  font-size: 10pt;
   color: @white;
   background: transparent;
 }
 
 #custom-arrow10 {
   padding-left: 3pt;
-  font-size: 14pt;
+  font-size: 10pt;
   color: @white;
   background: transparent;
 }

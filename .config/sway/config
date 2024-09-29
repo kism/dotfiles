@@ -17,7 +17,7 @@ focus output DP-2
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 
 # Easiest
-font pango:Hasklug Nerd Font Mono 14
+font pango:Hasklug Nerd Font Mono 12
 
 # If you are low dpi install this and use it
 #font pango:dina 14
@@ -149,8 +149,8 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Gaps
 # smart_gaps on
-gaps outer 5
-gaps inner 10
+gaps outer 3
+gaps inner 6
 
 # Set border width
 for_window [class="^.*"] border pixel 3
