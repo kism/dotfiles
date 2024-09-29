@@ -29,73 +29,67 @@ markup=none
 #interval=-3
 #align=left
 
-[window]
-align=right
-command=xtitle
-interval=-2
-
-
 [cputempspeed]
 label=CPU 
 interval=1
-color=#008080
+color=#34be5b
 
 [memory]
 label=RAM 
 separator=false
 interval=30
-color=#008080
+color=#34be5b
 
 [memory]
 label=Swap 
 instance=swap
 separator=true
 interval=30
-color=#008080
+color=#34be5b
 
 [inet]
 label=iNet 
 interval=once
-command=sleep 10; curl -Ss ipv4.icanhazip.com
+command=sleep 10; curl ipv4.icanhazip.com
 separator=false
-color=#008080
+color=#34be5b
 
 [iface]
 #instance=wlan0
 label=LAN 
 interval=10
 separator=true
-color=#008080
+color=#34be5b
 
-#[ssid]
-#command=iwgetid -r
-#label=SSID
-#interval=10
-#separator=true
-#color=#008080
+[ssid]
+label=SSID
+interval=10
+separator=true
+color=#34be5b
 
 #[volume]
-#label=Volume
+#label=Volume 
 #instance=Master
 #interval=once
 #signal=10
-#color=#008080
+#color=#34be5b
 
 #[battery]
-#label=Battery
-#color=#008080
+#label=Battery 
+#color=#34be5b
 #markup=pango
 #interval=30
 
-#[weather]
-#command=sleep 10; curl -Ss 'wttr.in/Canberra?format=%l+%t+%C'
-#interval=1800
-#color=#008080
+[weather]
+command=curl "wttr.in/Canberra?format="%l+%t+%C""
+markup=none
+interval=3600
+color=#34be5b
 
 [time]
 command=date '+%Y-%m-%d %H:%M'
 interval=15
-color=#008080
+color=#34be5b
 
 [trash]
 command=echo -n ''; echo -n $(whoami); echo -n "@"; echo -n $(hostname); echo ''

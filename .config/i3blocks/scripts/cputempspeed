@@ -23,5 +23,5 @@ cpu_temp=/sys/class/thermal/thermal_zone0/temp
 clk=$(cat $cpu_freq)
 cpu=$(cat $cpu_temp)
 
-echo $(($clk/1000))" Ghz @ "$(($cpu/1000))"° C" 
+echo $(($clk/1000))" MHz @ "$(($cpu/1000))"° C" 
 #echo -ne $(($clk/1000))" Mhz / "$(($cpu/1000))"° C \r" 
