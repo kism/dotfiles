@@ -46,13 +46,13 @@ tree -a /tmp/stowtest
 Stow
 
 ```bash
-stow  --target=$HOME --stow .
+stow --no-folding --target=$HOME --stow .
 ```
 
 Stow and override existing files
 
 ```bash
-stow --adopt --target=$HOME --stow .
+stow --no-folding --adopt --target=$HOME --stow .
 ```
 
 Unstow
