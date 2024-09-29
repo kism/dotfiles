@@ -36,6 +36,8 @@ bindsym $mod+Tab exec rofi -show window
 bindsym $mod+d exec rofi -show drun
 bindsym $mod+Shift+d exec rofi -show run
 
+# Bring up logout menu
+bindsym $mod+Shift+e exec wlogout
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left  focus left
