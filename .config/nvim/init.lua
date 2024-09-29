@@ -24,11 +24,6 @@ if user_id ~= "0" then
         end
     })
     Plug('deoplete-plugins/deoplete-jedi')
-    Plug('averms/black-nvim', {
-        ['do'] = function()
-            vim.fn[':UpdateRemotePlugins']()
-        end
-    })
 
     vim.call('plug#end')
 
