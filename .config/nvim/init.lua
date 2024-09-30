@@ -49,7 +49,7 @@ vim.cmd('map q <Nop>') --- Unbind macros
 
 vim.cmd [[
     highlight ModeIndicatorNormal guifg=#FFFFFF guibg=#808080
-    highlight ModeIndicatorInsert guifg=#FFFFFF guibg=#008000
+    highlight ModeIndicatorInsert guifg=#FFFFFF guibg=#00af00
     highlight ModeIndicatorVisual guifg=#FFFFFF guibg=#800080
     highlight ModeIndicatorReplace guifg=#FFFFFF guibg=#808000
     highlight ModeIndicatorCmdLine guifg=#FFFFFF guibg=#008080
