@@ -4,6 +4,10 @@ set $mod Mod4
 
 # swaymsg -t get_outputsswaymsg -t get_outputs
 # Monitors
+output DP-3 pos 640  0 background #008080 solid_color
+output DP-2 pos 2560 0 background #008080 solid_color res 2560x1440@165Hz
+output DP-1 pos 5120 0 background #008080 solid_color
+
 output LVDS-1 pos 0 0 background #008080 solid_color
 
 focus output DP-2
