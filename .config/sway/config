@@ -96,16 +96,7 @@ exec --no-startup-id blueman-applet       # Bluetooth Manager
 # allows for sudo in programs that are running as user process
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
 
-# Gaps
-# smart_gaps on
-gaps outer 3
-gaps inner 6
-
-# Set border width
-for_window [class="^.*"] border pixel 3
-#for_window [class="^.*"] border none
-
-##Colours
+## Colours
 set $FOCUS   #FFFFFF
 set $UNFOCUS #808080
 
