@@ -149,4 +149,5 @@ for_window [shell="xwayland"] title_format "[XWayland] %title"
 
 # Use nwg-look to change other themes
 
-seat seat0 xcursor_theme Breeze 20
+seat seat xcursor_theme Breeze 20
+# exec gsettings set org.gnome.desktop.interface cursor-size '20'
