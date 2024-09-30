@@ -4,41 +4,45 @@
 
 	"modules-left": [
 		"sway/mode",
-		"custom/arrow9",
+		"custom/arrow_left",
 		"sway/workspaces",
-		"custom/arrow10",
+		"custom/arrow_right",
 		"sway/window"
 	],
 
 	"modules-right": [
-		// "custom/arrow9",
 		"custom/work",
 		"wireplumber",
-		"custom/arrow8",
+		"custom/column_black",
 		"network",
-		"custom/arrow7",
+		"custom/column_black",
 		"memory",
-		"custom/arrow6",
+		"custom/column_black",
 		"cpu",
-		// "custom/arrow5",
 		"temperature",
-		// "custom/arrow4",
-		// "sway/language",
-		// "custom/arrow2",
+		"custom/column_black",
+		"custom/user",
 		"tray",
 		"clock#date",
-		"custom/arrow1",
+		"custom/column_invisible",
 		"clock#time"
 	],
 
 	// Modules
-
-
 	"custom/work": {
 		"format": "{}",
 		"return-type": "json",
 		"interval": 2,
 		"exec": "$HOME/.config/waybar/scripts/workmode.py",
+		"tooltip": true
+	},
+
+	"custom/user": {
+		"format": "{}",
+		"return-type": "json",
+		"interval": 2,
+		"exec": "$HOME/.config/waybar/scripts/user.sh",
+		"on-click": "wlogout",
 		"tooltip": true
 	},
 
@@ -131,52 +135,22 @@
 		//"spacing": 10
 	},
 
-	"custom/arrow1": {
+	"custom/column_invisible": {
 		"format": "",
 		"tooltip": false
 	},
 
-	"custom/arrow2": {
-		"format": " ",
-		"tooltip": false
-	},
-
-	"custom/arrow3": {
+	"custom/column_black": {
 		"format": "|",
 		"tooltip": false
 	},
 
-	"custom/arrow4": {
-		"format": "|",
-		"tooltip": false
-	},
-
-	"custom/arrow5": {
-		"format": "|",
-		"tooltip": false
-	},
-
-	"custom/arrow6": {
-		"format": "|",
-		"tooltip": false
-	},
-
-	"custom/arrow7": {
-		"format": "|",
-		"tooltip": false
-	},
-
-	"custom/arrow8": {
-		"format": "|",
-		"tooltip": false
-	},
-
-	"custom/arrow9": {
+	"custom/arrow_left": {
 		"format": " ",
 		"tooltip": false
 	},
 
-	"custom/arrow10": {
+	"custom/arrow_right": {
 		"format": "",
 		"tooltip": false
 	}
