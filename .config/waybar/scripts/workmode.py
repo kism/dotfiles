@@ -48,10 +48,10 @@ def check_windows(window_list, list_of_list_of_titles):
 check_windows(window_list, list_of_titles)
 
 if len(found_window_list) == 0:
-    output_message = { "text": "No work windows", "tooltip": "No work windows" }
+    output_message = { "text": "󱁖", "tooltip": "No work windows" }
 elif len(found_window_list) == 1:
     output_message = { "text": found_window_list[0], "tooltip": found_window_list[0] }
 else:
-    output_message = { "text": f"{len(found_window_list)} chats", "tooltip": ", ".join(found_window_list) }
+    output_message = { "text": f"{len(found_window_list)} 󰭹", "tooltip": ", ".join(found_window_list) }
 
 print(json.dumps(output_message))
