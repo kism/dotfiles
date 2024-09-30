@@ -88,10 +88,15 @@ bar {
      swaybar_command waybar
 }
 
-### Kieran Trash
 ## Startup
 exec mako                                 # notifications
 exec --no-startup-id blueman-applet       # Bluetooth Manager
+exec swayidle -w \
+	timeout 300 'gtklock -M DP-2' \
+	timeout 600 'swaymsg "output * power off"' \
+		resume 'swaymsg "output * power on"' \
+	before-sleep 'gtklock -M DP-2'
+
 
 # allows for sudo in programs that are running as user process
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &

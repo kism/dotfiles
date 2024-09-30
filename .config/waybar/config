@@ -84,6 +84,7 @@
 			"warning": 70,
 			"critical": 90
 		},
+		"on-click": "~/.local/bin/sway-floating foot htop",
 		"tooltip": false
 	},
 
