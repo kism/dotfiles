@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# If not root user, exit
+if [ "$EUID" -ne 0 ]; then
+  echo "This script must be run as root"
+  exit 1
+fi
+
+pacman-key --init
+pacman-key --populate
+pacman-key --refresh-keys
+pacman -Sy archlinux-keyring
