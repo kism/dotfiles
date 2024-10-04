@@ -1,25 +1,28 @@
 --- Plug Init
 local vim = vim
 
+--- Ensure colours
+vim.cmd('set termguicolors')
+
 --- Set transparent background
 vim.cmd [[
   highlight Normal guibg=none
   highlight NonText guibg=none
-  highlight Normal ctermbg=none
-  highlight NonText ctermbg=none
 ]]
 
 --- Cursorline
 vim.cmd('set cursorline') --- highlight current cursorline
-vim.cmd('highlight CursorLine cterm=NONE') --- remove underline
-vim.cmd('highlight CursorLine ctermbg=238') --- vim.cmd('set cursorline to dark grey
+vim.cmd [[
+    highlight CursorLine guifg=#FFFFFF guibg=#444444
+]]
 
 --- Number
-vim.cmd('set number')
-vim.cmd('highlight LineNr       ctermfg=250') --- vim.cmd('set linenumber colour
-vim.cmd('highlight CursorLineNr cterm=NONE') --- remove underline
-vim.cmd('highlight CursorLineNr ctermbg=234') --- vim.cmd('set linenumber bg
-vim.cmd('highlight CursorLineNr ctermfg=255') --- vim.cmd('set linenumber fg
+vim.cmd('set number') --- show line numbers
+vim.cmd [[
+    highlight LineNr guifg=#808080 guibg=None
+    highlight CursorLineNr guifg=#FFFFFF guibg=#444444
+    highlight NonText guifg=#808080 guibg=None
+]]
 
 --- List
 vim.cmd('set list')
@@ -140,8 +143,8 @@ end
 Statusline = {}
 
 Statusline.active = function()
-    return table.concat {"%#Statusline#", update_mode_colors(), mode(), "%#StatusLineRegularBG# ", filepath(), filename(),
-                         "%#StatusLineRegularBG#", "%=%#StatusLineExtra#", filetype(), lineinfo()}
+    return table.concat {"%#Statusline#", update_mode_colors(), mode(), "%#StatusLineRegularBG# ", filepath(),
+                         filename(), "%#StatusLineRegularBG#", "%=%#StatusLineExtra#", filetype(), lineinfo()}
 end
 
 function Statusline.inactive()
