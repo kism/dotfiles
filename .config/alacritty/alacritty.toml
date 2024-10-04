@@ -7,7 +7,7 @@ dynamic_title = true
 opacity = 0.90
 
 [font]
-normal = { family = "CaskaydiaCove NFM" }
+normal = { family = "Hasklug Nerd Font Mono" }
 size = 12
 
 [colors]
@@ -16,6 +16,7 @@ primary = { foreground = "#ffffff", background = "#170000" }
 
 [cursor]
 style = { shape = "Underline", blinking = "On" }
+thickness = 0.2
 
 [mouse]
 hide_when_typing = true
