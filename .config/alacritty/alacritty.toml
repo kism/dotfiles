@@ -10,9 +10,39 @@ opacity = 0.90
 normal = { family = "Hasklug Nerd Font Mono" }
 size = 12
 
-[colors]
-cursor = { text = "#803333", cursor = "#803333" }
-primary = { foreground = "#ffffff", background = "#170000" }
+
+
+[colors.cursor]
+text = '#242424'
+cursor = '#E95420'
+
+[colors.primary]
+background = '#242424'
+foreground = '#ffffff'
+
+[colors.normal]
+black   = '#242424'
+red     = '#f62b5a'
+green   = '#47b413'
+yellow  = '#e3c401'
+blue    = '#24acd4'
+magenta = '#f2affd'
+cyan    = '#13c299'
+white   = '#e6e6e6'
+
+[colors.bright]
+black   = '#616161'
+red     = '#ff4d51'
+green   = '#35d450'
+yellow  = '#e9e836'
+blue    = '#5dc5f8'
+magenta = '#feabf2'
+cyan    = '#24dfc4'
+white   = '#ffffff'
+
+
+
+
 
 [cursor]
 style = { shape = "Underline", blinking = "On" }

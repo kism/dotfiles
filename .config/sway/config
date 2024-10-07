@@ -10,7 +10,7 @@ include $HOME/.config/sway/config.d/`hostname`.conf
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec foot
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill

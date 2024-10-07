@@ -136,7 +136,7 @@ if [[ -o interactive ]]; then
     fi
     echo -e "$(uname -s -r), \c"
 
-    if [[ "$TERM" == xterm* || "$TERM" == rxvt* || "$TERM" == urxvt* ]]; then
+    if [[ "$TERM" == xterm* || "$TERM" == rxvt* || "$TERM" == urxvt* || "$TERM" == alacritty || "$TERM" == foot ]]; then
         echo -e "🗝️$SPACING$(get_ssh_keys_loaded),$SPACING2\c"
         get_mercury_retrograde
     else
