@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if file ~/.config/waybar/config_$(hostname) ; then
+    echo "Using custom waybar config for $(hostname)"
+    waybar -c $HOME/.config/waybar/config_$(hostname)
+else
+    echo "Using default waybar config"
+    waybar -c $HOME/.config/waybar/config
+fi
