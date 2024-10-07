@@ -1,0 +1,8 @@
+swaymsg focus output DP-1 && windowtolayer -l top -i keyboard -z 1 -- foot asciiquarium &
+swaymsg focus output DP-1 && windowtolayer -l bottom -i keyboard -z 1 -- foot asciiquarium &
+
+# swaymsg focus output DP-2 && windowtolayer -l overlay -i keyboard -z 2 -- foot asciiquarium &
+
+# swaymsg focus output DP-3 && windowtolayer -l overlay -i keyboard -z 3 -- foot asciiquarium &
+
+jobs
