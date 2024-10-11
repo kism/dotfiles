@@ -221,18 +221,6 @@ else
     h3 "zsh not found, skipping"
 fi
 
-# NEOVIM
-if type nvim >/dev/null; then
-    h1 "Setting up neovim"
-    h2 "Installing Plug:"
-    curl -s -fLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --create-dirs
-    nvim --headless +PlugInstall +qa
-    h2 "Running neovim PlugInstall:"
-    nvim --headless +PlugInstall +qa
-else
-    echo "no nvim"
-fi
-
 # Git
 if type git >/dev/null; then
     h1 "Setting up git"
