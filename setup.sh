@@ -97,11 +97,13 @@ function set_shell() {
         h1 "Setting zsh as user's shell"
         h2 "Setting your default shell:"
         myshell=$(cat /etc/shells | grep -m 1 "zsh")
+        set +e
         if type chsh >/dev/null; then
             sudo chsh -s $myshell $USER
         else
             sudo usermod --shell $myshell $USER
         fi
+        set -e
     else
         echo "User $USER is already using zsh as their shell"
     fi
