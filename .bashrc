@@ -27,7 +27,7 @@ fi
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
+xterm*|rxvt*|alacritty|foot)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 *)
@@ -62,3 +62,8 @@ fi
 
 export EDITOR=vim
 export VISUAL=vim
+
+# Get rust aliases and functions
+if [ -f ~/.cargo/env ]; then
+  source "$HOME/.cargo/env"
+fi

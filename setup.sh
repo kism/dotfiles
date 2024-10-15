@@ -9,6 +9,7 @@ install_base="zsh git htop tmux curl wget tree ncdu stow"
 install_apt_brew_dnf_pacman="neovim"
 install_pkg="vim-console"
 install_brew="coreutils"
+install_apt="software-properties-common"
 
 function setup_brew() {
     install_base="$install_base $install_brew $install_apt_brew_dnf_pacman"
@@ -63,6 +64,7 @@ function setup_apt() {
     h1 "Updating $PRETTY_NAME"
     h2 "apt update"
     sudo apt-get update
+    sudo apt-get install --no-install-recommends -y $install_apt
     h2 "add-apt-repository -y ppa:neovim-ppa/stable"
     sudo add-apt-repository -y ppa:neovim-ppa/stable
     h2 "apt upgrade"
@@ -203,6 +205,10 @@ if [[ $1 != --no-install ]]; then
         ;;
     esac
 fi
+
+# Stow
+h1 "Stowing dotfiles"
+stow --no-folding --adopt --target=$HOME --stow .
 
 # ZSH
 if type zsh >/dev/null; then
