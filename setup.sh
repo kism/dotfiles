@@ -9,7 +9,7 @@ install_base="zsh git htop tmux curl wget tree ncdu stow"
 install_apt_brew_dnf_pacman="neovim"
 install_pkg="vim-console"
 install_brew="coreutils"
-install_apt="software-properties-common"
+install_apt="software-properties-common gnupg2"
 
 function setup_brew() {
     install_base="$install_base $install_brew $install_apt_brew_dnf_pacman"
