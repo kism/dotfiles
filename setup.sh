@@ -222,7 +222,7 @@ if type zsh >/dev/null; then
     curl -s -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh >~/.antigen/antigen.zsh
 
     h2 "Updating Antigen Bundles:"
-    zsh -c "source ~/.zshrc; antigen update; antigen reset"
+    zsh -c "source ~/.antigen/antigen.zsh; antigen update; antigen reset"
 else
     h3 "zsh not found, skipping"
 fi
