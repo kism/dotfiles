@@ -47,6 +47,7 @@ if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
         ("mkvtoolnix"),
         ("mpv.install"),
         ("msiafterburner"),
+        ("neovim"),
         ("nmap"),
         ("notepadplusplus.install"),
         ("obs-studio.install"),

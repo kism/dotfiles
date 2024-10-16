@@ -15,8 +15,9 @@ $sshKeyLoaded = ssh-add -l
 $funkey = " "
 if (!$sshKeyLoaded) {
     ssh-add ~/.ssh/id_ed25519
-} else {
-	$funkey = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F511",16))
+}
+else {
+    $funkey = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F511", 16))
 }
 
 $poshactive = " "
@@ -26,6 +27,12 @@ if (Test-Path env:POSH_PID) {
 
 # Alias
 New-Alias npp notepad++.exe
+if (Get-Command nvim -ErrorAction SilentlyContinue) {
+    # Check if Neovim is installed and alias vim to nvim
+    New-Alias vim nvim
+}
+
+
 # Startup Message
 $bootuptime = (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
 $CurrentDate = Get-Date
