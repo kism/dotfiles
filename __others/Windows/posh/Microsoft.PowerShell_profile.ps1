@@ -32,7 +32,6 @@ if (Get-Command nvim -ErrorAction SilentlyContinue) {
     New-Alias vim nvim
 }
 
-
 # Startup Message
 $bootuptime = (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
 $CurrentDate = Get-Date

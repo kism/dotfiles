@@ -130,6 +130,10 @@ end
 
 local function filetype()
     local out = string.format(" %s ", vim.bo.filetype):upper()
+    if vim.bo.filetype == "" then
+        out = " TEXT "
+    end
+
     return "%#StatusLineFileType#" .. out
 end
 
