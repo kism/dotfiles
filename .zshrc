@@ -4,7 +4,6 @@
 # shellcheck source=/dev/null
 
 # region Functions
-
 # Due to weirdness with emojis, we need these variables
 if [[ "$TERM_PROGRAM" == vscode ]]; then # Check if we are in a vscode terminal
     EXTRA_SPACING_EMOJI=" "
