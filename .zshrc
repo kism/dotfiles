@@ -1,4 +1,4 @@
-# shellcheck shell=bash # Technically incorrect but shellcheck doesn't support zsh
+# shellcheck shell=bash # Technically incorrect but shellcheck doesn't support zsh, it works decent
 # .zshrc
 # https://github.com/kism/dotfiles-simple/blob/main/.zshrc
 # shellcheck source=/dev/null
