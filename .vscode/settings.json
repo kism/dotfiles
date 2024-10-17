@@ -1,9 +1,12 @@
 {
+  "files.associations": {
+    ".stow-local-ignore": "plaintext"
+  },
   "[ini]": {
     "files.trimTrailingWhitespace": false
   },
-  "files.associations": {
-    ".stow-local-ignore": "plaintext"
+  "[viml]": {
+    "files.trimTrailingWhitespace": false
   },
   "cSpell.words": [
     "cvsignore",

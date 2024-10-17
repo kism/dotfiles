@@ -1,2 +1,2 @@
 generated.txt
-.local/share/nvim
+*.swp
