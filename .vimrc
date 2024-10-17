@@ -46,18 +46,18 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " https://pastebin.com/qWRQVzES
 " https://shapeshed.com/vim-statuslines/
 
-highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=8
+highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=7
 highlight StatusLineRegularBG guifg=#FFFFFF guibg=#444444 ctermfg=15 ctermbg=8
-highlight StatusLineFileType  guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=6
-highlight StatusLineLineInfo  guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=8
-highlight StatusLineExtra     guifg=#FFFFFF guibg=#FF0000 ctermfg=15 ctermbg=1
+" highlight StatusLineFileType  guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=8
+highlight StatusLineLineInfo  guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=7
+" highlight StatusLineExtra     guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=7
 
 function SetModeColour()
     let l:current_mode = mode()
     echo "Setting colour, current mode: " . current_mode
 
     if l:current_mode==#"n"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=8
+        highlight ModeIndicator guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=7
     elseif l:current_mode==#"i"
         highlight ModeIndicator guifg=#FFFFFF guibg=#00af00 ctermfg=15 ctermbg=2
     elseif l:current_mode==#"c"
@@ -93,11 +93,10 @@ set statusline+=%{GetNiceMode()}
 set statusline+=\ 
 set statusline+=%#StatusLineRegularBG#
 set statusline+=\ %f
-set statusline+=\ 
 set statusline+=%m\ 
 set statusline+=%=
 set statusline+=\ %y
-set statusline+=%#StatusLineExtra#
+set statusline+=%#StatusLineLineInfo#
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
@@ -107,4 +106,6 @@ set statusline+=\
 augroup SetStatusLineColour
     autocmd!
     autocmd BufEnter,WinEnter * call SetModeColour()
+    autocmd ColorScheme * call CreateHighlights()
 augroup END
+    
