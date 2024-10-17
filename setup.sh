@@ -145,8 +145,8 @@ cd "$(dirname "$0")"
 # Help
 if [[ $1 == --help ]]; then
     echo Kieran\'s Dotfiles installer
-    echo bash setup.sh --allow-root \# If you want to allow this to setup on the root account
-    echo bash setup.sh --no-install \# Don\'t install packages with the package manager, useful for re-running
+    echo "bash setup.sh --allow-root         # If you want to allow this to setup on the root account"
+    echo "bash setup.sh --no-package-install # Don't install packages with the package manager, useful for re-running"
     exit 0
 fi
 
@@ -166,7 +166,7 @@ fi
 h2 "Detecting OS:"
 unameresult=$(uname)
 
-if [[ $1 != --no-install ]]; then
+if [[ $1 != --no-package-install ]]; then
     case $unameresult in
     Darwin)
         echo "MacOS"

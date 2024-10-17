@@ -38,7 +38,6 @@ magenta = '#feabf2'
 cyan = '#24dfc4'
 white = '#ffffff'
 
-
 [cursor]
 style = { shape = "Underline", blinking = "On" }
 thickness = 0.2
@@ -49,3 +48,6 @@ bindings = [{ mouse = "Right", action = "Paste" }]
 
 [selection]
 save_to_clipboard = true
+
+[env]
+TERM = "alacritty"

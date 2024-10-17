@@ -8,6 +8,7 @@ on:
       - "setup.sh"
       - "setup_simple.sh"
       - "setup_simple_generate.sh"
+      - ".bash*"
       - '.github/workflows/check.yml'
 
 jobs:

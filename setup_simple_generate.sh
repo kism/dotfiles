@@ -4,14 +4,20 @@ echo > generated.txt
 
 echo "echo --- Start ---" >> generated.txt
 
+echo 'cat > ~/.bash_profile << "EOF"' >> generated.txt
+cat .bash_profile >> generated.txt
+echo "EOF" >> generated.txt
+
+echo >> generated.txt
+
 echo 'cat > ~/.bashrc << "EOF"' >> generated.txt
 cat .bashrc >> generated.txt
 echo "EOF" >> generated.txt
 
 echo >> generated.txt
 
-echo 'cat > ~/.bash_profile << "EOF"' >> generated.txt
-cat .bash_profile >> generated.txt
+echo 'cat > ~/.bash_aliases << "EOF"' >> generated.txt
+cat .bash_aliases >> generated.txt
 echo "EOF" >> generated.txt
 
 echo >> generated.txt

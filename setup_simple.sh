@@ -6,8 +6,9 @@ set -e
 
 # Bash
 echo Setting up bash...
-curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.bash_profile >~/.bash_profile
 curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.bashrc >~/.bashrc
+curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.bash_profile >~/.bash_profile
+curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.bash_aliases >~/.bash_aliases
 curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.inputrc >~/.inputrc
 
 # Tmux
