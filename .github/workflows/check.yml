@@ -26,5 +26,5 @@ jobs:
             .config
             .local
             .ssh
-        # env:
-        #   SHELLCHECK_OPTS: -e SC2129 # Manually match .shellcheckrc
+        env:
+          SHELLCHECK_OPTS: -e SC1091 # Happy for it to not be able to follow everything
