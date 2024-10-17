@@ -1,0 +1,22 @@
+---
+name: test-deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Test Deploy Dotfiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run setup script simple generate
+        run: bash setup_simple_generate.sh
+
+      - name: Run setup script simple
+        run: bash setup_simple.sh
+
+      - name: Run setup script
+        run: bash setup.sh
