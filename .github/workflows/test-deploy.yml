@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - main
-
+    paths-ignore:
+      - '**/README*'
+      - '**/LICENSE*'
+      - '__others/**'
 jobs:
   build:
     name: Test Deploy Dotfiles
@@ -18,7 +21,7 @@ jobs:
       - name: Run setup script simple
         run: bash setup_simple.sh
 
-      - name: Temp
+      - name: Remove apt apt upgrade to save two minutes
         run: sed -i '/sudo apt-get upgrade -y/d' setup.sh && cat setup.sh
 
       - name: Run setup script
