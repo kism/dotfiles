@@ -24,8 +24,10 @@ jobs:
       - name: Run setup script simple
         run: bash setup_simple.sh
 
-      - name: Remove apt apt upgrade to save two minutes
-        run: sed -i '/sudo apt-get upgrade -y/d' setup.sh && cat setup.sh
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: zsh stow git
+          version: 1.0
 
       - name: Run setup script
-        run: bash setup.sh
+        run: bash setup.sh --no-package-install
