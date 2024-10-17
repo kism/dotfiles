@@ -9,6 +9,7 @@ on:
       - 'setup_simple.sh'
       - 'setup_simple_generate.sh'
       - '.stow-local-ignore'
+      - '.github/workflows/test-deploy.yml'
 
 jobs:
   build:

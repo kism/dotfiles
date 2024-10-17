@@ -1,4 +1,5 @@
 ---
+name: check
 on:
   push:
     branches:
@@ -7,6 +8,7 @@ on:
       - "setup.sh"
       - "setup_simple.sh"
       - "setup_simple_generate.sh"
+      - '.github/workflows/check.yml'
 
 jobs:
   shellcheck:
