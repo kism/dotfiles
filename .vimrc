@@ -43,6 +43,8 @@ let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " Statusline
+" https://pastebin.com/qWRQVzES
+" https://shapeshed.com/vim-statuslines/
 
 highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=8
 highlight StatusLineRegularBG guifg=#FFFFFF guibg=#444444 ctermfg=15 ctermbg=8
@@ -52,6 +54,7 @@ highlight StatusLineExtra     guifg=#FFFFFF guibg=#FF0000 ctermfg=15 ctermbg=1
 
 function SetModeColour()
     let l:current_mode = mode()
+    echo "Setting colour, current mode: " . current_mode
 
     if l:current_mode==#"n"
         highlight ModeIndicator guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=8
@@ -80,7 +83,6 @@ function! GetNiceMode()
     return get(l:mode_map, l:current_mode, '')
 endfunction
 
-au InsertLeave,InsertEnter,BufWritePost   * call SetModeColour()
 set noshowmode
 set laststatus=2
 
@@ -101,3 +103,8 @@ set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
+
+augroup SetStatusLineColour
+    autocmd!
+    autocmd BufEnter,WinEnter * call SetModeColour()
+augroup END
