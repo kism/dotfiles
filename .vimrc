@@ -19,7 +19,7 @@ set smarttab
 set softtabstop=4
 
 " Keymaps
-map q <Nop>
+map q <Nop> " Prevent myself from entering macro mode
 
 " Misc preferences
 set mouse-=a                   " Mouse off
@@ -31,6 +31,7 @@ set backspace=indent,eol,start " Allow backspacing over everything in insert mod
 set showmatch                  " Show matching brackets
 set visualbell                 " No beeping
 set nonumber                   " No line numbers
+set syntax=on
 
 " Speed up responsiveness
 set ttimeout
@@ -86,6 +87,7 @@ endfunction
 set noshowmode
 set laststatus=2
 
+function SetStatusLine()
 set statusline=
 set statusline+=%#ModeIndicator#
 set statusline+=\ 
@@ -102,10 +104,12 @@ set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
+endfunction
 
 augroup SetStatusLineColour
     autocmd!
     autocmd BufEnter,WinEnter * call SetModeColour()
     autocmd ColorScheme * call CreateHighlights()
+    autocmd BufEnter,WinEnter * call SetStatusLine()
 augroup END
-    
+
