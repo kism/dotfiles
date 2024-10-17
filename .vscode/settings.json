@@ -4,5 +4,11 @@
   },
   "files.associations": {
     ".stow-local-ignore": "plaintext",
-  }
+  },
+  "cSpell.words": [
+    "cvsignore",
+    "darcs",
+    "gitmodules",
+    "shellcheckrc"
+  ]
 }

@@ -1,0 +1,2 @@
+# Sourcing doesnt seem to work for shellcheck
+disable=SC1091
