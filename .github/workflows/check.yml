@@ -7,6 +7,7 @@ on:
       - "setup.sh"
       - "setup_simple.sh"
       - "setup_simple_generate.sh"
+
 jobs:
   shellcheck:
     name: Shellcheck
@@ -16,3 +17,8 @@ jobs:
 
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
+        with:
+          ignore_paths: >-
+            .config
+            .local
+            .ssh
