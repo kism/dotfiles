@@ -20,6 +20,7 @@ _darcs
 # CI and friends
 \.github
 \.vscode
+\.shellcheckrc
 
 # This repo
 __others

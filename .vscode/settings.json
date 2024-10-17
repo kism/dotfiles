@@ -1,5 +1,8 @@
 {
   "[ini]": {
     "files.trimTrailingWhitespace": false
+  },
+  "files.associations": {
+    ".stow-local-ignore": "plaintext",
   }
 }
