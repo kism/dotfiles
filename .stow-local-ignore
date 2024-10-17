@@ -15,6 +15,7 @@ _darcs
 \.gitignore
 \.gitmodules
 \.gitattributes
+\generated.txt
 
 \.vscode
 
