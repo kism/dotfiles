@@ -31,3 +31,4 @@ jobs:
 
       - name: Run setup script
         run: bash setup.sh --no-package-install
+        timeout-minutes: 1
