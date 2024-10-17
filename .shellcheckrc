@@ -1,2 +1,5 @@
-# Sourcing doesnt seem to work for shellcheck
-disable=SC1091
+# Needed for source /etc/os-release
+external-sources=true
+
+# Much more readable to format setup_simple_generate.sh with many echo commands
+disable=SC2129

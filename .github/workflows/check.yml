@@ -9,6 +9,7 @@ on:
       - "setup_simple.sh"
       - "setup_simple_generate.sh"
       - ".bash*"
+      - ".zshrc"
       - '.github/workflows/check.yml'
 
 jobs:
@@ -25,3 +26,5 @@ jobs:
             .config
             .local
             .ssh
+        # env:
+        #   SHELLCHECK_OPTS: -e SC2129 # Manually match .shellcheckrc

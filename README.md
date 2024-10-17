@@ -1,6 +1,6 @@
 # Kieran's Dotfiles
 
-Only for Kieran reallly
+Only for Kieran really
 
 ## Simple, just curl the basics (bash, tmux, vim)
 

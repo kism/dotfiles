@@ -5,7 +5,14 @@
   "files.associations": {
     ".stow-local-ignore": "plaintext"
   },
-  "cSpell.words": ["cvsignore", "darcs", "gitmodules", "shellcheckrc"],
+  "cSpell.words": [
+    "cvsignore",
+    "darcs",
+    "Dotfiles",
+    "gitmodules",
+    "inputrc",
+    "shellcheckrc"
+  ],
   "shellcheck.ignorePatterns": {
     "**/*.csh": false,
     "**/*.cshrc": false,
