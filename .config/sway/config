@@ -21,6 +21,8 @@ bindsym $mod+Tab exec rofi -show window
 # start rofi (a program launcher that isn't dmenu)
 bindsym $mod+d exec rofi -show drun
 bindsym $mod+Shift+d exec rofi -show run
+# Clipboard since wltype has some wild issues
+bindsym $mod+Period exec bemoji -c -n
 
 # Bring up logout menu
 bindsym $mod+Shift+e exec wlogout
