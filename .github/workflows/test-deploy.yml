@@ -26,7 +26,7 @@ jobs:
 
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: zsh stow git
+          packages: zsh git htop tmux curl wget tree ncdu stow software-properties-common gnupg2
           version: 1.0
 
       - name: Comment out apt-get update and upgrade to speed up the process
