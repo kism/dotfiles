@@ -88,19 +88,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-## Startup
-exec mako                                 # notifications
-#exec --no-startup-id blueman-applet       # Bluetooth Manager
-exec swayidle -w \
-	timeout 300 'gtklock -M DP-2' \
-	timeout 600 'swaymsg "output * power off"' \
-		resume 'swaymsg "output * power on"' \
-	before-sleep 'gtklock -M DP-2'
-
-
-# allows for sudo in programs that are running as user process
-#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
-
 ## Colours
 set $FOCUS   #FFFFFF
 set $UNFOCUS #808080
@@ -142,9 +129,25 @@ seat seat xcursor_theme Breeze 20
 seat seat0 xcursor_theme Breeze 20
 # exec gsettings set org.gnome.desktop.interface cursor-size '20'
 
+## Startup
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 # bar {
 #      swaybar_command $HOME/.local/bin/waybar_config_dpshub
 # }
 exec $HOME/.local/bin/waybar_config_custom
+
+exec mako                                 # notifications
+#exec --no-startup-id blueman-applet       # Bluetooth Manager
+#exec swayidle -w \
+#	timeout 300 'gtklock -M DP-2' \
+#	timeout 600 'swaymsg "output * power off"' \
+#		resume 'swaymsg "output * power on"' \
+#	before-sleep 'gtklock -M DP-2'
+
+
+# allows for sudo in programs that are running as user process
+exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+exec_always autotiling --limit 4
