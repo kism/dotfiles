@@ -31,8 +31,8 @@ jobs:
 
       - name: Comment out apt-get update and upgrade to speed up the process
         run: |
-          sed -i 's/^sudo apt-get update.*$/d' setup.sh
-          sed -i 's/^sudo apt-get upgrade.*$/d' setup.sh
+          sed -i '/^sudo apt-get update.*$/d' setup.sh
+          sed -i '/^sudo apt-get upgrade.*$/d' setup.sh
 
       - name: Run setup script
         run: bash setup.sh
