@@ -68,8 +68,8 @@ function setup_apt() {
     sudo apt-get update
     # shellcheck disable=SC2086 # Required here to split the package list
     sudo apt-get install --no-install-recommends -y $install_apt
-    h2 "add-apt-repository -y ppa:neovim-ppa/stable"
-    sudo add-apt-repository -y ppa:neovim-ppa/stable
+    h2 "add-apt-repository -y ppa:neovim-ppa/unstable"
+    sudo add-apt-repository -y ppa:neovim-ppa/unstable
     h2 "apt upgrade"
     sudo apt-get upgrade -y
     h2 "Installing Packages"
