@@ -144,6 +144,7 @@ for_window [shell="xwayland"] title_format "[XWayland] %title"
 # Use nwg-look to change other themes
 
 seat seat xcursor_theme Breeze 20
+seat seat0 xcursor_theme Breeze 20
 # exec gsettings set org.gnome.desktop.interface cursor-size '20'
 
 # Start i3bar to display a workspace bar (plus the system information i3status
