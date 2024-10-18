@@ -27,13 +27,13 @@ bindsym $mod+Period exec bemoji -c -n
 # Bring up logout menu
 bindsym $mod+Shift+e exec wlogout
 
-# alternatively, you can use the cursor keys:
+# Move focus between windows:
 bindsym $mod+Left  focus left
 bindsym $mod+Down  focus down
 bindsym $mod+Up    focus up
 bindsym $mod+Right focus right
 
-# alternatively, you can use the cursor keys:
+# Move focused window:
 bindsym $mod+Shift+Left  move left
 bindsym $mod+Shift+Down  move down
 bindsym $mod+Shift+Up    move up
@@ -58,11 +58,10 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+# bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
-
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -131,17 +130,6 @@ for_window [window_type="menu"]        floating enable
 for_window [shell="xwayland"] title_format "[XWayland] %title"
 
 # set $gnome-schema org.gnome.desktop.interface
-
-# exec_always {
-#     gsettings set $gnome-schema gtk-theme 'Arc-Dark-solid'
-#     # gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
-#     # gsettings set $gnome-schema gtk-theme 'Adwaita:Dark'
-#     # gsettings set $gnome-schema gtk-theme 'Numix:Dark'
-#     gsettings set $gnome-schema color-scheme 'prefer-dark'
-#     gsettings set $gnome-schema icon-theme 'Numix'
-#     gsettings set $gnome-schema cursor-theme 'Breeze'
-#     gsettings set $gnome-schema font-name 'Cantarell'
-# }
 
 # Use nwg-look to change other themes
 

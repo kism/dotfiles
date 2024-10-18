@@ -37,6 +37,7 @@
     "**/zlogout": false,
     "**/*.zshenv": false,
     "**/zshenv": false,
-    "**/*.zsh-theme": false
+    "**/*.zsh-theme": false,
+    "**/config": true
   }
 }
