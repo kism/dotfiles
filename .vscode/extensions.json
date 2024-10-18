@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "yinfei.luahelper",
-        "xadillax.viml"
+        "xadillax.viml",
+        "timonwong.shellcheck"
     ]
 }

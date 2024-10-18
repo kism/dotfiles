@@ -39,7 +39,8 @@ function setup_pkg() {
     h2 "pkg upgrade"
     yes | sudo pkg upgrade
     h2 "Installing Packages"
-    yes | sudo pkg install "$to_install"
+    # shellcheck disable=SC2086 # Required here to split the package list
+    yes | sudo pkg install $to_install
 
     h3 "Remember to set zsh as your default shell!"
 }
@@ -52,7 +53,8 @@ function setup_pacman() {
     h2 "pacman -Syyu"
     sudo pacman -Syyu --noconfirm
     h2 "Installing Packages"
-    sudo pacman -S --noconfirm --needed "$to_install"
+    # shellcheck disable=SC2086 # Required here to split the package list
+    sudo pacman -S --noconfirm --needed $to_install
 
     set_shell
 }
@@ -64,13 +66,15 @@ function setup_apt() {
     h1 "Updating $PRETTY_NAME"
     h2 "apt update"
     sudo apt-get update
-    sudo apt-get install --no-install-recommends -y "$install_apt"
+    # shellcheck disable=SC2086 # Required here to split the package list
+    sudo apt-get install --no-install-recommends -y $install_apt
     h2 "add-apt-repository -y ppa:neovim-ppa/stable"
     sudo add-apt-repository -y ppa:neovim-ppa/stable
     h2 "apt upgrade"
     sudo apt-get upgrade -y
     h2 "Installing Packages"
-    sudo apt-get install --no-install-recommends -y "$to_install"
+    # shellcheck disable=SC2086 # Required here to split the package list
+    sudo apt-get install --no-install-recommends -y $to_install
 
     set_shell
 }
@@ -86,7 +90,8 @@ function setup_dnf() {
     sudo dnf upgrade -y
     sudo dnf install -y epel-release
     h2 "Installing Packages"
-    sudo dnf --setopt=install_weak_deps=False --best install -y "$to_install"
+    # shellcheck disable=SC2086 # Required here to split the package list
+    sudo dnf --setopt=install_weak_deps=False --best install -y $to_install
 
     set_shell
 }
