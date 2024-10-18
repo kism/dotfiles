@@ -24,6 +24,11 @@ bindsym $mod+Shift+d exec rofi -show run
 # Clipboard since wltype has some wild issues
 bindsym $mod+Period exec bemoji -c -n
 
+# Screenshot
+bindsym $mod+Shift+s exec /usr/share/sway-contrib/grimshot --cursor copy area
+bindsym Alt+Print exec /usr/share/sway-contrib/grimshot copy active
+bindsym Print exec /usr/share/sway-contrib/grimshot copy output
+
 # Bring up logout menu
 bindsym $mod+Shift+e exec wlogout
 
