@@ -1,22 +1,22 @@
 " .vimrc
 
 " Wrapping
-set nowrap
-set showbreak=+++
-set textwidth=100
+set nowrap        " Don't wrap lines
+set showbreak=+++ " Show a break line when wrapping
+set textwidth=100 " Wrap lines at 100 characters
 
 " Search
-set hlsearch
-set smartcase
-set ignorecase
-set incsearch
+set hlsearch    " Highlight search results
+set smartcase   " Override ignorecase if the search pattern contains uppercase characters
+set ignorecase  " Ignore case when searching
+set incsearch   " Incremental search
 
 " Indent
-set autoindent
-set shiftwidth=4
-set smartindent
-set smarttab
-set softtabstop=4
+set autoindent     " Copy indent from current line when starting a new line
+set shiftwidth=4   " Number of spaces to use for autoindent
+set smartindent    " Do smart autoindenting when starting a new line
+set smarttab       " Use shiftwidth for tabstop
+set softtabstop=4  " Number of spaces that a <Tab> in the file counts for
 
 " Keymaps
 map q <Nop> " Prevent myself from entering macro mode
@@ -31,7 +31,7 @@ set backspace=indent,eol,start " Allow backspacing over everything in insert mod
 set showmatch                  " Show matching brackets
 set visualbell                 " No beeping
 set nonumber                   " No line numbers
-set syntax=on
+syntax on                      " Syntax highlighting
 
 " Speed up responsiveness
 set ttimeout
@@ -47,18 +47,18 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " https://pastebin.com/qWRQVzES
 " https://shapeshed.com/vim-statuslines/
 
-highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=7
+" Default matches normal mode
+highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=0 ctermbg=7
+" These are constants
 highlight StatusLineRegularBG guifg=#FFFFFF guibg=#444444 ctermfg=15 ctermbg=8
-" highlight StatusLineFileType  guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=8
-highlight StatusLineLineInfo  guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=7
-" highlight StatusLineExtra     guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=7
+highlight StatusLineLineInfo  guifg=#FFFFFF guibg=#808080 ctermfg=0 ctermbg=7
+highlight StatusLineFileType  guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=6
 
-function SetModeColour()
+function! SetModeColour()
     let l:current_mode = mode()
-    echo "Setting colour, current mode: " . current_mode
 
     if l:current_mode==#"n"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#808080 ctermfg=15 ctermbg=7
+        highlight ModeIndicator guifg=#FFFFFF guibg=#808080 ctermfg=0 ctermbg=7
     elseif l:current_mode==#"i"
         highlight ModeIndicator guifg=#FFFFFF guibg=#00af00 ctermfg=15 ctermbg=2
     elseif l:current_mode==#"c"
@@ -71,14 +71,13 @@ function SetModeColour()
         highlight ModeIndicator guifg=#FFFFFF guibg=#800080 ctermfg=15 ctermbg=5
     elseif l:current_mode==#"R"
         highlight ModeIndicator guifg=#FFFFFF guibg=#808000 ctermfg=15 ctermbg=3    
-    elseif l:current_mode==#"s"
-           
     elseif l:current_mode==#"t"
         highlight ModeIndicator guifg=#FFFFFF guibg=#808000 ctermfg=15 ctermbg=3
     endif
 endfunction
 
 function! GetNiceMode()
+    call SetModeColour()
     let l:current_mode = mode()
     let l:mode_map = {'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK', 'c': 'COMMAND', 's': 'SELECT', 'S': 'S-LINE', "\<C-s>": 'S-BLOCK', 't': 'TERMINAL'}
     return get(l:mode_map, l:current_mode, '')
@@ -88,28 +87,30 @@ set noshowmode
 set laststatus=2
 
 function SetStatusLine()
-set statusline=
-set statusline+=%#ModeIndicator#
-set statusline+=\ 
-set statusline+=%{GetNiceMode()}
-set statusline+=\ 
-set statusline+=%#StatusLineRegularBG#
-set statusline+=\ %f
-set statusline+=%m\ 
-set statusline+=%=
-set statusline+=\ %y
-set statusline+=%#StatusLineLineInfo#
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
-set statusline+=\ 
+    set statusline=
+    set statusline+=%#ModeIndicator#
+    set statusline+=\ 
+    set statusline+=%{GetNiceMode()}
+    set statusline+=\ 
+    set statusline+=%#StatusLineRegularBG#
+    set statusline+=\ %f
+    set statusline+=%m\ 
+    set statusline+=%=
+    set statusline+=%#StatusLineFileType#
+    set statusline+=\ 
+    set statusline+=%{&filetype}
+    set statusline+=\ 
+    set statusline+=%#StatusLineLineInfo#
+    set statusline+=\ 
+    set statusline+=%{&fileencoding?&fileencoding:&encoding}
+    set statusline+=\     
+    set statusline+=\[%{&fileformat}\]
+    set statusline+=\ %p%%
+    set statusline+=\ %l:%c
+    set statusline+=\ 
 endfunction
 
 augroup SetStatusLineColour
     autocmd!
-    autocmd BufEnter,WinEnter * call SetModeColour()
-    autocmd ColorScheme * call CreateHighlights()
     autocmd BufEnter,WinEnter * call SetStatusLine()
 augroup END
-
