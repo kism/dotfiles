@@ -389,7 +389,7 @@
       "angle": 0.0
     },
     "clock": {
-      "format": "\"%Y-%m-%dT%H:%M:%S%z",
+      "format": "%Y-%m-%d %H:%M",
       "tooltip-text": "%a, %d. %b  %H:%M",
       "on-left-click": "",
       "on-middle-click": "",
