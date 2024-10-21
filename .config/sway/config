@@ -17,7 +17,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 # Super + Tab
-bindsym $mod+Tab exec rofi -show window
+bindsym $mod+Tab exec rofi -show window -show-icons
 
 # start rofi (a program launcher that isn't dmenu)
 bindsym $mod+d exec rofi -show drun
@@ -136,7 +136,8 @@ seat seat0 xcursor_theme Breeze 20
 # bar {
 #      swaybar_command $HOME/.local/bin/waybar_config_dpshub
 # }
-exec $HOME/.local/bin/waybar_config_custom
+#exec $HOME/.local/bin/waybar_config_custom
+exec_always nwg-panel
 
 exec mako                                 # notifications
 #exec --no-startup-id blueman-applet       # Bluetooth Manager
@@ -151,4 +152,4 @@ exec mako                                 # notifications
 exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-exec_always autotiling --limit 4
+#exec_always autotiling --limit 4
