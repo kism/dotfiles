@@ -20,15 +20,6 @@ button {
 
 /***** MODIFY TO YOUR TASTE *****/
 
-
-/* Top panel in sample config uses this name */
-#panel-top {
-  /* background: #101010; */
-  background: #202020;
-  /* opacity: 0.8; */
-  color: #eeeeee;
-}
-
 /* Controls window in sample config uses this name */
 #controls-window {
   border-radius: 15px;
@@ -65,72 +56,37 @@ button {
   font-size: 16px;
 }
 
-/* dwl-tags module */
-#dwl-tag-box {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#dwl-tag-occupied {
-  font-family: monospace;
-  color: #eee;
-  background-color: #006699;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-#dwl-tag-free {
-  font-family: monospace;
-  color: #eee;
-  background-color: rgba (32, 50, 90, 1);
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-#dwl-tag-urgent {
-  font-family: monospace;
-  color: #eee;
-  background-color: #ee6600;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-#dwl-tag-selected {
-  border: solid 2px;
-  border-color: #81a1c1;
-}
-
 /* Panel top */
-
-#panel-top:hover {
-  border-color: #008080;
-  border-width: 2px;
-  border-radius: 2px;
-  outline: olivedrab;
-  outline-width: 2px;
+#panel-top {
+  /* background: #101010; */
+  background: #202020;
+  /* opacity: 0.8; */
+  color: #eeeeee;
+  font-weight: bold;
+  padding: 2px;
 }
 
 #panel-top #sway-workspaces-item {
+  /* workspaces that don't have windows */
   color: #404040;
 }
 
 #panel-top #workspace-occupied {
+  /* workspace that has windows */
   color: #ffffff;
-  padding: 2px;
 }
 
 #panel-top #sway-workspaces-name {
+  /* window name */
   color: #ffffff;
-  font-weight: bold;
-  padding: 2px;
 }
 
 /* Panel bottom */
 #panel-bottom {
-  /* background: #101010; */
-  background: #ffffff;
-  color: #000000;
+  background: #000000;
+  color: #ffffff;
   font-weight: bold;
+  padding: 2px;
 }
 
 #panel-bottom #task-box {
@@ -144,12 +100,14 @@ button {
   color: #000000;
 }
 
+#panel-bottom button {
+  padding: 2px;
+}
 
 /* Playerctl */
 #playerctl-text {
   font-weight: bold;
 }
-
 
 #playerctl-button {
   background-color: #000000;
