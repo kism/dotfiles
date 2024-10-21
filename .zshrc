@@ -41,8 +41,15 @@ function get_mercury_retrograde() {
 
 function get_ssh_keys_loaded() {
     KEYS_LOADED="0"
+    # This also fixes vscode
+    SSH_AGENT_FOLDERS=$(compgen -G "/tmp/ssh-*" | xargs)
+    if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
+        SSH_AUTH_SOCK=$(find /tmp/ssh-* -type s -print0 2>/dev/null)
+        export SSH_AUTH_SOCK
+    fi
+
     if type keychain >/dev/null; then # If keychain is installed we check if we have keys loaded
-        KEYS_LOADED=$(keychain -l | grep -c "The agent has no identities." | xargs)
+        KEYS_LOADED=$(keychain -l 2>/dev/null | grep -c "The agent has no identities." | xargs)
     fi
     if [[ ! "$SSH_AUTH_SOCK" == "" ]]; then # If we have an SSH_AUTH_SOCK we have a key loaded
         KEYS_LOADED=$((KEYS_LOADED + 1))
@@ -127,8 +134,6 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 fi
-SSH_AUTH_SOCK=$(find /tmp/ssh-* -type s -print0 2>/dev/null | xargs -0 ls -t | head -1) # VSCode Fix
-export SSH_AUTH_SOCK
 # endregion
 
 # region keybinds
@@ -176,6 +181,7 @@ fi
 
 # Kernel version
 echo -e "$(uname -s -r), \c"
+
 
 # Ssh keys loaded, mercury retrograde
 if check_modern_terminal; then
