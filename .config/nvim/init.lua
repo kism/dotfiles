@@ -88,6 +88,11 @@ local modes = {
 
 local function mode()
     local current_mode = vim.api.nvim_get_mode().mode
+    local paste = vim.o.paste and "PASTE" or ""
+    if paste ~= "" then
+        return string.format(" %s %s ", modes[current_mode], paste):upper()
+    end
+
     return string.format(" %s ", modes[current_mode]):upper()
 end
 
@@ -129,9 +134,9 @@ local function filename()
 end
 
 local function filetype()
-    local out = string.format(" %s ", vim.bo.filetype):upper()
+    local out = string.format(" %s ", vim.bo.filetype):lower()
     if vim.bo.filetype == "" then
-        out = " TEXT "
+        out = " text "
     end
 
     return "%#StatusLineFileType#" .. out

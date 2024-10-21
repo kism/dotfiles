@@ -80,7 +80,20 @@ function! GetNiceMode()
     call SetModeColour()
     let l:current_mode = mode()
     let l:mode_map = {'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK', 'c': 'COMMAND', 's': 'SELECT', 'S': 'S-LINE', "\<C-s>": 'S-BLOCK', 't': 'TERMINAL'}
-    return get(l:mode_map, l:current_mode, '')
+    let l:mode_str = get(l:mode_map, l:current_mode, '')
+    if &paste
+        let l:mode_str = l:mode_str . ' PASTE'
+    endif
+
+    return l:mode_str
+endfunction
+
+function! GetNiceFileType()
+    let l:filetype = &filetype
+    if l:filetype ==# ''
+        return 'text'
+    endif
+    return l:filetype
 endfunction
 
 set noshowmode
@@ -98,7 +111,7 @@ function SetStatusLine()
     set statusline+=%=
     set statusline+=%#StatusLineFileType#
     set statusline+=\ 
-    set statusline+=%{&filetype}
+    set statusline+=%{GetNiceFileType()}
     set statusline+=\ 
     set statusline+=%#StatusLineLineInfo#
     set statusline+=\ 
