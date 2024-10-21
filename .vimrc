@@ -106,8 +106,10 @@ function SetStatusLine()
     set statusline+=%{GetNiceMode()}
     set statusline+=\ 
     set statusline+=%#StatusLineRegularBG#
+    set statusline+=\ 
     set statusline+=\ %f
-    set statusline+=%m\ 
+    set statusline+=%m
+    set statusline+=\ 
     set statusline+=%=
     set statusline+=%#StatusLineFileType#
     set statusline+=\ 

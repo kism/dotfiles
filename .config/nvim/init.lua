@@ -146,14 +146,18 @@ local function lineinfo()
     if vim.bo.filetype == "alpha" then
         return ""
     end
-    return "%#StatusLineLineInfo#" .. " %P %l:%c "
+    return " %P %l:%c "
+end
+
+local function encoding()
+    return "%#StatusLineLineInfo#" .. " %{&fileencoding?&fileencoding:&encoding} [%{&fileformat}] "
 end
 
 Statusline = {}
 
 Statusline.active = function()
     return table.concat {"%#Statusline#", update_mode_colors(), mode(), "%#StatusLineRegularBG# ", filepath(),
-                         filename(), "%#StatusLineRegularBG#", "%=%#StatusLineExtra#", filetype(), lineinfo()}
+                         filename(), "%#StatusLineRegularBG#", "%=%#StatusLineExtra#", filetype(), encoding(), lineinfo()}
 end
 
 function Statusline.inactive()
