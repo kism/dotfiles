@@ -39,14 +39,32 @@ function get_mercury_retrograde() {
     echo -e " $RESULT"
 }
 
-function get_ssh_keys_loaded() {
-    KEYS_LOADED="0"
+function load_ssh_keys() {
     # This also fixes vscode
     SSH_AGENT_FOLDERS=$(compgen -G "/tmp/ssh-*" | xargs)
     if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
         SSH_AUTH_SOCK=$(find /tmp/ssh-* -type s -print0 2>/dev/null)
         export SSH_AUTH_SOCK
     fi
+
+    # Load up ssh keys into keychain if it is on this system
+    if type keychain >/dev/null; then
+        sshkeylist=('id_rsa' 'id_ed25519')
+
+        # shellcheck disable=SC2128 # This is fine in zsh
+        for i in $sshkeylist; do
+            if [[ -e ~/.ssh/$i ]]; then
+                if ! eval "$(keychain -q --eval --agents ssh "$i")"; then
+                    echo "Keychain failed to load $i"
+                    echo "run 'ssh-agent -s', kill the pid listed 'kill -9 PID' and try again"
+                fi
+            fi
+        done
+    fi
+}
+
+function get_ssh_keys_loaded() {
+    KEYS_LOADED="0"
 
     if type keychain >/dev/null; then # If keychain is installed we check if we have keys loaded
         KEYS_LOADED=$(keychain -l 2>/dev/null | grep -c "The agent has no identities." | xargs)
@@ -59,7 +77,7 @@ function get_ssh_keys_loaded() {
 
 function check_modern_terminal() {
     if [[ "$TERM" != vt* && "$TERM" != linux && "$TERM" != linux && "$TERM" != dumb ]]; then # Easier to check if it not a legacy terminal
-        return 0 # Zero is success/true
+        return 0                                                                             # Zero is success/true
     else
         return 1
     fi
@@ -134,6 +152,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 fi
+load_ssh_keys
 # endregion
 
 # region keybinds
@@ -158,18 +177,6 @@ bindkey "\e[3;6~" kill-line
 bindkey "\e[3@" kill-line
 # endregion
 
-# Load up ssh keys into keychain if it is on this system
-if type keychain >/dev/null; then
-    sshkeylist=('id_rsa' 'id_ed25519')
-
-    # shellcheck disable=SC2128 # This is fine in zsh
-    for i in $sshkeylist; do
-        if [[ -e ~/.ssh/$i ]]; then
-            eval "$(keychain -q --eval --agents ssh "$i")"
-        fi
-    done
-fi
-
 # region: startup message
 # Operating system
 if test -f /etc/os-release; then # Linux
@@ -181,7 +188,6 @@ fi
 
 # Kernel version
 echo -e "$(uname -s -r), \c"
-
 
 # Ssh keys loaded, mercury retrograde
 if check_modern_terminal; then
