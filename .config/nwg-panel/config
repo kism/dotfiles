@@ -495,7 +495,7 @@
     "padding-vertical": 0,
     "spacing": 0,
     "icons": "",
-    "css-name": "panel-bottom",
+    "css-name": "panel-top",
     "modules-left": [
       "sway-workspaces"
     ],
