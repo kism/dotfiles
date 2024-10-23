@@ -155,7 +155,7 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "H
 if ($windowsMajorVersion -eq "Windows Server") {
     Write-Host "This the rest of the script is not required for Windows Server."
     Write-Host "Success!"
-    exit 0
+    return
 }
 
 # Check if the current session is elevated
@@ -164,7 +164,7 @@ $isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.Windows
 # If not elevated, exit with an error message
 if (-not $isElevated) {
     Write-Host "The rest of this script requires elevated privileges. Please run it as an administrator."
-    exit 1
+    return
 }
 
 # Firewall
