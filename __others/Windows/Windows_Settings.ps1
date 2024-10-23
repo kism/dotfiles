@@ -257,4 +257,3 @@ $ContextMenuRegPaths = @(
 ForEach ($RegPath in $ContextMenuRegPaths) {
     Remove-Item -Path $RegPath -Recurse -Confirm -ErrorAction SilentlyContinue
 }
-
