@@ -1,4 +1,3 @@
-
 # Get the operating system version
 $windowsMajorVersion = (Get-WmiObject Win32_OperatingSystem).Caption
 if ($windowsMajorVersion -contains "Windows 10") {
@@ -6,6 +5,13 @@ if ($windowsMajorVersion -contains "Windows 10") {
 }
 elseif ($windowsMajorVersion -contains "Windows 11") {
     $windowsMajorVersion = "Windows 11"
+}
+elseif ($windowsMajorVersion -contains "Windows Server") {
+    $windowsMajorVersion = "Windows Server"
+}
+else {
+    $windowsMajorVersion = "Unknown Windows"
+    Write-Error "Unknown Windows Version"
 }
 
 
@@ -144,6 +150,13 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "H
 ################################################################################################################################################################
 #### ELEVATED SECTION
 ################################################################################################################################################################
+
+# Not required for windows server
+if ($windowsMajorVersion -eq "Windows Server") {
+    Write-Host "This the rest of the script is not required for Windows Server."
+    Write-Host "Success!"
+    exit 0
+}
 
 # Check if the current session is elevated
 $isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
