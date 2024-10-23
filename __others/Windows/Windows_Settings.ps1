@@ -3,13 +3,13 @@ Write-Host "Setting up Windows with a bunch of PowerShell commands editing the r
 # Get the operating system version
 $windowsMajorVersion = (Get-WmiObject Win32_OperatingSystem).Caption
 Write-Host "Operating System Caption: $windowsMajorVersion"
-if ($windowsMajorVersion -contains "Windows 10") {
+if ($windowsMajorVersion -match "Windows 10") {
     $windowsMajorVersion = "Windows 10"
 }
-elseif ($windowsMajorVersion -contains "Windows 11") {
+elseif ($windowsMajorVersion -match "Windows 11") {
     $windowsMajorVersion = "Windows 11"
 }
-elseif ($windowsMajorVersion -contains "Windows Server") {
+elseif ($windowsMajorVersion -match "Windows Server") {
     $windowsMajorVersion = "Windows Server"
 }
 else {
