@@ -97,10 +97,6 @@ Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sLongDate" -V
 Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sShortDate" -Value "yyyy-MM-dd"
 Set-ItemProperty -Path "HKCU:\Control Panel\International\" -Name "sShortTime" -Value "HH:mm"
 
-# Windows Time Settings, "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
-Write-Host "RTC..."
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Value 1 -Force
-
 # Keyboard, "HKEY_CURRENT_USER\Control Panel\Accessibility"
 Write-Host "Keyboard..."
 ## Turn off Stickey Keys shortcuts
@@ -122,7 +118,7 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideIcons" -Value 1
 ## Disable suggested/recent documents/files in jump lists
 Set-ItemProperty -Path "HKCU:HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_TrackDocs" -Value 0
-## For Windows 10 version 2004 or later, "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer"
+## For Windows 10 version 2004 or later Policies may not exist, "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer"
 if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
     New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Explorer"
 }
@@ -225,6 +221,9 @@ if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
 
+# Windows Time Settings, "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
+Write-Host "RTC..."
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Value 1 -Force
 
 ## Context Menu
 Write-Host "Context Menu..."
