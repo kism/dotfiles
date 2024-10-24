@@ -286,14 +286,29 @@
       "css-name": "controls-window",
       "custom-items": [
         {
+          "name": "Audio Settings",
+          "icon": "nwg-icon-picker",
+          "cmd": "pwvucontrol"
+        },
+        {
           "name": "Panel settings",
           "icon": "nwg-panel",
           "cmd": "nwg-panel-config"
         },
         {
-          "name": "Audio Settings",
-          "icon": "A",
-          "cmd": "pwvucontrol"
+          "name": "GTK settings",
+          "icon": "nwg-look",
+          "cmd": "nwg-look"
+        },
+        {
+          "name": "Displays",
+          "icon": "nwg-displays",
+          "cmd": "nwg-displays"
+        },
+        {
+          "name": "Shell settings",
+          "icon": "nwg-shell-config",
+          "cmd": "nwg-shell-config"
         }
       ],
       "menu": {
