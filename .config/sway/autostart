@@ -5,7 +5,7 @@ exec nm-applet --indicator
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 exec_always nwg-autotiling
-exec_always nwg-dock -r -p left -l overlay -f -a start -i 26 -hd 20 -x
+exec_always nwg-dock -r -p left -l overlay -f -a start -i 26 -hd 20 -x -lp start
 exec_always nwg-panel
 exec swayidle timeout 1200 nwg-lock timeout 1800 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' after-resume 'swaymsg "output * enable"' 
 exec nwg-update-indicator
