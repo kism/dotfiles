@@ -181,7 +181,7 @@
       "calendar-margin-vertical": 0,
       "calendar-icon-size": 24,
       "calendar-interval": 60,
-      "calendar-on": true
+      "calendar-on": false
     },
     "playerctl": {
       "buttons-position": "left",
