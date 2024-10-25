@@ -261,7 +261,7 @@
     "controls": "off",
     "menu-start": "off",
     "width": "auto",
-    "height": 16,
+    "height": 30,
     "margin-top": 0,
     "margin-bottom": 0,
     "padding-horizontal": 0,
@@ -273,9 +273,7 @@
       "sway-workspaces"
     ],
     "modules-center": [],
-    "modules-right": [
-      "sway-taskbar"
-    ],
+    "modules-right": [],
     "controls-settings": {
       "components": [
         "brightness",
