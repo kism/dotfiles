@@ -1,5 +1,5 @@
 window {
-    background-color: rgba (36, 47, 79, 0.95);
+    background-color: #202020;
     color: #eeeeee
 }
 
@@ -29,6 +29,6 @@ button:hover {
 
 #files-box {
     padding: 5px;
-    border: 1px dotted gray;
+    border: 2px dotted #202020;
     border-radius: 15px
 }
