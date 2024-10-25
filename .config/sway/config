@@ -100,6 +100,9 @@ bindsym $mod+r mode "resize"
 set $FOCUS   #FFFFFF
 set $UNFOCUS #808080
 
+titlebar_border_thickness 0
+default_border pixel 3px
+
 # Layout colours        border   bg       text     indicator (split)
 client.focused          $FOCUS   $FOCUS   $FOCUS   $FOCUS
 client.focused_inactive $UNFOCUS $UNFOCUS $UNFOCUS $UNFOCUS
