@@ -41,6 +41,7 @@
     "**/zshenv": false,
     "**/*.zsh-theme": false,
     "**/config": true,
-    ".config/sway/*": false
+    ".config/sway/*": true,
+    "**/.config/sway/*": true
   }
 }
