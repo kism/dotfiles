@@ -19,9 +19,7 @@
     "modules-left": [
       "sway-workspaces"
     ],
-    "modules-center": [
-      "playerctl"
-    ],
+    "modules-center": [],
     "modules-right": [
       "sway-mode",
       "scratchpad",
@@ -272,7 +270,9 @@
     "modules-left": [
       "sway-workspaces"
     ],
-    "modules-center": [],
+    "modules-center": [
+      "playerctl"
+    ],
     "modules-right": [],
     "controls-settings": {
       "components": [

@@ -7,7 +7,7 @@ window {
 
 #box {
     /* Define attributes of the box surrounding icons here */
-    padding: 5px
+    padding: 1px
 }
 
 button, image {
@@ -18,7 +18,7 @@ button, image {
 }
 
 button {
-    padding: 4px;
+    padding: 1px;
     margin-left: 0px;
     margin-right: 0px;
     color: #eee;
@@ -27,9 +27,9 @@ button {
 
 button:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 2px;
+    border-radius: 1px;
 }
 
 button:focus {
-    box-shadow: 0 0 2px;
+    box-shadow: 0 0 1px;
 }
