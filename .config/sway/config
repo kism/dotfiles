@@ -7,7 +7,6 @@ include outputs
 include touchpad
 include workspaces
 
-
 # Set the mod key to super, this needs to be done before the include
 set $mod Mod4
 
