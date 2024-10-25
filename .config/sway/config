@@ -1,11 +1,15 @@
 ### Kieran's Config for Sway
 
+include variables
+include autostart
+include keyboard
+include outputs
+include touchpad
+include workspaces
+
+
 # Set the mod key to super, this needs to be done before the include
 set $mod Mod4
-
-# Host specific configuration
-include $HOME/.config/sway/config.d/hosts/`hostname`.conf
-include $HOME/.config/sway/config.d/users/`whoami`.conf
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -132,27 +136,3 @@ for_window [shell="xwayland"] title_format "[XWayland] %title"
 seat seat xcursor_theme Breeze 20
 seat seat0 xcursor_theme Breeze 20
 # exec gsettings set org.gnome.desktop.interface cursor-size '20'
-
-## Startup
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#      swaybar_command $HOME/.local/bin/waybar_config_dpshub
-# }
-#exec $HOME/.local/bin/waybar_config_custom
-exec_always nwg-panel
-
-exec mako                                 # notifications
-#exec --no-startup-id blueman-applet       # Bluetooth Manager
-#exec swayidle -w \
-#	timeout 300 'gtklock -M DP-2' \
-#	timeout 600 'swaymsg "output * power off"' \
-#		resume 'swaymsg "output * power on"' \
-#	before-sleep 'gtklock -M DP-2'
-
-
-# allows for sudo in programs that are running as user process
-exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-exec_always autotiling --limit 4

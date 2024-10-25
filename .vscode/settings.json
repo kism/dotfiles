@@ -1,7 +1,9 @@
 {
   "files.associations": {
-    ".stow-local-ignore": "plaintext"
+    ".stow-local-ignore": "plaintext",
+    "**/.config/sway/*": "shellscript"
   },
+
   "[ini]": {
     "files.trimTrailingWhitespace": false
   },
@@ -38,6 +40,7 @@
     "**/*.zshenv": false,
     "**/zshenv": false,
     "**/*.zsh-theme": false,
-    "**/config": true
+    "**/config": true,
+    ".config/sway/*": false
   }
 }
