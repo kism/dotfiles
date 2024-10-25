@@ -174,7 +174,7 @@
       "angle": 0.0,
       "calendar-path": "",
       "calendar-css-name": "calendar-window",
-      "calendar-placement": "top",
+      "calendar-placement": "top-right",
       "calendar-margin-horizontal": 0,
       "calendar-margin-vertical": 0,
       "calendar-icon-size": 24,
