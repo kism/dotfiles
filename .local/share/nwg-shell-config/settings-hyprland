@@ -31,7 +31,7 @@
   "gen-col-inactive_border-end": "",
   "gen-col-inactive_border-deg": 0,
   "gen-cursor_inactive_timeout": 0,
-  "gen-layout": "master",
+  "gen-layout": "dwindle",
   "gen-no_cursor_warps": false,
   "gen-no_focus_fallback": false,
   "gen-resize_on_border": false,

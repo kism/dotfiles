@@ -23,7 +23,7 @@
   "dock-permanent": true,
   "dock-exclusive": false,
   "dock-alignment": "center",
-  "dock-margin": 1,
+  "dock-margin": 0,
   "dock-icon-size": 22,
   "dock-hotspot-delay": 20,
   "dock-css": "",
