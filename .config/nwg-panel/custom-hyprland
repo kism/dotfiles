@@ -18,12 +18,11 @@
     "modules-left": [
       "hyprland-workspaces"
     ],
-    "modules-center": [
-      "clock"
-    ],
+    "modules-center": [],
     "modules-right": [
       "executor-cpuav",
       "executor-cpubar",
+      "clock",
       "scratchpad",
       "tray",
       "button-clipman"
