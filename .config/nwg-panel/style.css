@@ -71,6 +71,13 @@ button {
   color: #404040;
 }
 
+#panel-top #hyprland-workspaces-item {
+  /* workspaces that don't have windows */
+  color: #404040;
+}
+
+
+
 #panel-top #workspace-occupied {
   /* workspace that has windows */
   color: #ffffff;
