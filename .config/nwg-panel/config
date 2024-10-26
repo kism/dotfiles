@@ -154,7 +154,7 @@
       "show-name": true,
       "name-length": 60,
       "mark-autotiling": true,
-      "mark-content": false,
+      "mark-content": true,
       "hide-empty": false,
       "show-layout": true,
       "angle": 0.0
