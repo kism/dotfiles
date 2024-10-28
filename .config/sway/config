@@ -114,6 +114,7 @@ set $UNFOCUS #808080
 
 titlebar_border_thickness 0
 default_border pixel 3px
+default_floating_border none
 
 # Layout colours        border   bg       text     indicator (split)
 client.focused          $FOCUS   $FOCUS   $FOCUS   $FOCUS
@@ -156,19 +157,5 @@ popup_during_fullscreen smart
 seat seat xcursor_theme Breeze 20
 seat seat0 xcursor_theme Breeze 20
 
-
 # swayfx
-### Appearance
-# window corner radius in px
-corner_radius 10
-
-# Window background blur
-blur off
-blur_xray off
-blur_passes 2
-blur_radius 5
-
-shadows off
-shadows_on_csd off
-shadow_blur_radius 20
-shadow_color #0000007F
+include swayfx

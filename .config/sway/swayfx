@@ -1,0 +1,21 @@
+### Appearance
+# window corner radius in px
+corner_radius 0
+
+# Window background blur
+blur enable
+blur_xray off
+blur_passes 2
+blur_radius 3
+
+blur_noise 0.1
+blur_brightness 1
+blur_contrast 0.8
+blur_saturation 1
+
+
+shadows off
+shadows_on_csd off
+shadow_blur_radius 20
+shadow_color #0000007F
+scratchpad_minimize enable
