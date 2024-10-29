@@ -1,6 +1,6 @@
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
-if (Get-Command "chocolatey.exe" -ErrorAction SilentlyContinue) {
+if (Get-Command "choco.exe" -ErrorAction SilentlyContinue) {
     Write-Host "✔️ Chocolatey is installed!"
 
     if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
