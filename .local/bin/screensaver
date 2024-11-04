@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 swaymsg focus output DP-1 && windowtolayer -l top -i keyboard -z 1 -- foot asciiquarium &
 swaymsg focus output DP-1 && windowtolayer -l bottom -i keyboard -z 1 -- foot asciiquarium &
 

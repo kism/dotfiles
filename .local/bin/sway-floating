@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-$@ &
+"$@" &
 pid=$!
 
 swaymsg -t subscribe -m '[ "window" ]' \

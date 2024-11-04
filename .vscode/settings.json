@@ -11,13 +11,16 @@
     "files.trimTrailingWhitespace": false
   },
   "cSpell.words": [
+    "asciiquarium",
     "cvsignore",
     "darcs",
     "Dotfiles",
     "gitmodules",
     "hyprland",
     "inputrc",
-    "shellcheckrc"
+    "shellcheckrc",
+    "swaymsg",
+    "windowtolayer"
   ],
   "shellcheck.ignorePatterns": {
     "**/*.csh": false,
