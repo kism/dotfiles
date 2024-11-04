@@ -29,7 +29,6 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # Exports
-export SYSTEMD_PAGER= # Uncomment this line if you don't like systemctl's auto-paging feature:
 export EDITOR=vim
 export VISUAL=vim
 
