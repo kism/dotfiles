@@ -69,11 +69,9 @@
   "sleep-timeout": 1800,
   "resume-cmd": "swaymsg \"output * dpms on\"",
   "before-sleep": "",
-  "backgrounds-custom-path": "",
-  "backgrounds-use-custom-path": false,
-  "background-dirs": [
-    "/usr/share/backgrounds/sway"
-  ],
+  "backgrounds-custom-path": "/home/kism/Pictures/Wikimedia",
+  "backgrounds-use-custom-path": true,
+  "background-dirs": [],
   "background-dirs-once-set": true,
   "unsplash-width": 1920,
   "unsplash-height": 1080,

@@ -2,13 +2,11 @@
 
 exec swaync -s /home/kism/.config/swaync/style.css
 exec nm-applet --indicator
-exec blueman-applet
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 exec_always nwg-autotiling
 exec_always nwg-dock -r -p top -l overlay -a center -i 22 -hd 20 -lp start
 exec_always nwg-panel
-exec swayidle timeout 1200 nwg-lock timeout 1800 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' after-resume 'swaymsg "output * enable"'
+exec swayidle timeout 1200 nwg-lock timeout 1800 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' after-resume 'swaymsg "output * enable"' 
 exec nwg-update-indicator
 exec_always nwg-screenshot-applet
-exec_always ~/.azotebg
