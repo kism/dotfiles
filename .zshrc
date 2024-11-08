@@ -41,7 +41,10 @@ function get_mercury_retrograde() {
 
 function load_ssh_keys() {
     # This also fixes vscode
-    SSH_AGENT_FOLDERS=$(compgen -G "/tmp/ssh-*" | xargs)
+    # shellcheck disable=SC2206 # zsh
+    # shellcheck disable=SC2296 # zsh
+    SSH_AGENT_FOLDERS=(${(f)$(ls /tmp/ssh-*)})
+    # shellcheck disable=SC2128 # zsh
     if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
         SSH_AUTH_SOCK=$(find /tmp/ssh-* -type s -print0 2>/dev/null)
         export SSH_AUTH_SOCK
@@ -127,7 +130,22 @@ antigen apply
 # endregion
 
 # region: aliases
-source ~/.bash_aliases
+alias please='sudo $(fc -ln -1)'
+alias sudp='sudo'
+alias tmux='tmux -u'
+alias sl='ls'
+alias nano='vim'
+alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
+alias screen='echo no #'
+alias cgrep='grep --color=always -e "^" -e'
+alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
+alias whom=who
+
+if type nvim >/dev/null; then
+    alias vi=nvim
+    alias vim=nvim
+    alias view="nvim -R"
+fi
 # endregion
 
 # region: exports
@@ -190,3 +208,4 @@ if [[ $0 = *".zshrc" ]]; then
     source ~/.antigen/bundles/kism/zsh-bira-mod/bira-mod.zsh-theme
 fi
 # endregion
+export ANSIBLE_AD_USERNAME=kgee
