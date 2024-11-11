@@ -7,7 +7,7 @@ Only for Kieran really
 With curl
 
 ```bash
-curl --silent https://raw.githubusercontent.com/kism/dotfiles-simple/main/setup.sh | bash && . ~/.bashrc && bind -f ~/.inputrc
+curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/setup_simple.sh | bash && . ~/.bashrc && bind -f ~/.inputrc
 ```
 
 ## Simple, setup the basics (bash, tmux, vim), for an air-gapped system
