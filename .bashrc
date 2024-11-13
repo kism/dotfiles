@@ -7,6 +7,11 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # User specific aliases and functions
 # Prompt
 if [ $EUID -eq 0 ]; then
