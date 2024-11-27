@@ -127,7 +127,9 @@ client.background       $UNFOCUS
 for_window [app_id="steam"]       floating enable
 for_window [app_id="vlc"]         floating enable
 for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="pavucontrol"] border none
 for_window [app_id="pwvucontrol"] floating enable
+for_window [app_id="pwvucontrol"] border none
 for_window [app_id="mpv"]         floating enable
 
 # focus, floating, & sticky
