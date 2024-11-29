@@ -17,8 +17,34 @@ config.font = wezterm.font_with_fallback {
 config.font_size = 15.0
 
 -- Window
-config.window_decorations = "INTEGRATED_BUTTONS"
+-- config.window_decorations = "INTEGRATED_BUTTONS"
 config.use_fancy_tab_bar = false
+
+-- Mouse
+local act = wezterm.action
+
+config.mouse_bindings = {
+  {
+    event = { Up = { streak = 1, button = 'Right' } },
+    mods = 'NONE',
+    action = act.PasteFrom("PrimarySelection"),
+  },
+
+
+  -- Scrolling up while holding CTRL increases the font size
+  {
+    event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+    mods = 'CTRL',
+    action = act.IncreaseFontSize,
+  },
+
+  -- Scrolling down while holding CTRL decreases the font size
+  {
+    event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+    mods = 'CTRL',
+    action = act.DecreaseFontSize,
+  },
+}
 
 -- and finally, return the configuration to wezterm
 return config
