@@ -43,10 +43,10 @@ function load_ssh_keys() {
     # This also fixes vscode
     # shellcheck disable=SC2206 # zsh
     # shellcheck disable=SC2296 # zsh
-    SSH_AGENT_FOLDERS=(${(f)$(ls /tmp/ssh-*)})
+    SSH_AGENT_FOLDERS=(${(f)$(ls -1 /tmp | grep ssh)})
     # shellcheck disable=SC2128 # zsh
     if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
-        SSH_AUTH_SOCK=$(find /tmp/ssh-* -type s -print0 2>/dev/null)
+        SSH_AUTH_SOCK=$(find "/tmp/ssh-*" -type s -print0 2>/dev/null)
         export SSH_AUTH_SOCK
     fi
 
