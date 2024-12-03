@@ -8,7 +8,7 @@ set -e
 install_base="zsh git htop tmux curl wget tree ncdu stow"
 install_apt_brew_dnf_pacman="neovim"
 install_pkg="vim-console"
-install_brew="coreutils"
+install_brew="htop tmux wget tree ncdu stow coreutils neovim"
 install_apt="software-properties-common gnupg2"
 
 function setup_brew() {
@@ -27,7 +27,7 @@ function setup_brew() {
 
     h2 "Installing Packages"
     echo
-    brew install "$install_base"
+    brew install $install_brew
 }
 
 function setup_pkg() {
