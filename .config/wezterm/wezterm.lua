@@ -15,6 +15,8 @@ config.font = wezterm.font_with_fallback {
   'Noto Color Emoji',
 }
 config.font_size = 15.0
+-- Font, turn off ligs
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 -- Window
 -- config.window_decorations = "INTEGRATED_BUTTONS"
