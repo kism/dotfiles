@@ -100,6 +100,10 @@ if [[ ! -o interactive ]]; then
 fi
 # endregion
 
+# ZSH_DISABLE_COMPFIX="true"
+
+
+
 # region: antigen
 source ~/.antigen/antigen.zsh
 
@@ -153,6 +157,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
+    ZSH_DISABLE_COMPFIX="true" # Brew multiuser
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 fi
 load_ssh_keys
