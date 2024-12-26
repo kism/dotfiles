@@ -1,5 +1,13 @@
 #!/usr/bin/env zsh
 
+# Preflight checks
+if [[ $EUID -eq 0 ]]; then
+  echo "You are running as root, good!"
+else
+  echo "You are NOT running as root, exiting"
+  exit 1
+fi
+
 pvematt_mounts=("Amarant" "Freya" "Garnet" "Vivi")
 pvewill_mounts=("Beatrix" "Blank" "Quina" "Steiner")
 all_mounts=("${pvewill_mounts[@]}" "${pvematt_mounts[@]}")
@@ -31,3 +39,7 @@ for item in $pvematt_mounts; do
    echo Mounting $nfs_server export $item to $mount_path
    mount -t nfs -o resvport,tcp,vers=3,soft,timeo=60 $nfs_server:/srv/$item $mount_path
 done
+
+echo
+echo "df -h -t nfs"
+df -h -t nfs
