@@ -11,14 +11,13 @@ shell-integration = zsh
 shell-integration-features = no-cursor
 
 window-width = 100
-window-height = 45
+window-height = 36
 
 window-padding-x = 4
 window-padding-y = 4
 
-
 confirm-close-surface = false
-clipboard-paste-protection = false
+clipboard-paste-protection = true
 unfocused-split-opacity = 1.0
 
 theme = Afterglow
