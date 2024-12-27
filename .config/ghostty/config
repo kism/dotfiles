@@ -1,0 +1,25 @@
+font-family = Fira Code
+font-style = Medium
+font-size = 14
+font-thicken = false
+
+cursor-style = underline
+cursor-style-blink = false
+cursor-color = #E95420
+
+shell-integration = zsh
+shell-integration-features = no-cursor
+
+window-width = 100
+window-height = 45
+
+window-padding-x = 4
+window-padding-y = 4
+
+
+confirm-close-surface = false
+clipboard-paste-protection = false
+unfocused-split-opacity = 1.0
+
+theme = Afterglow
+
