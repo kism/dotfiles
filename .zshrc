@@ -218,6 +218,10 @@ export ANSIBLE_AD_USERNAME=kgee
 # Hopefully fix double characters
 export LC_CTYPE=en_US.UTF-8
 
+# Fix while I work out the setting
+if [ $TERM = "xterm-ghostty" ]; then
+    export TERM=xterm-256color
+fi
 
 
 if [ -d "$HOME/.nvm" ]; then
