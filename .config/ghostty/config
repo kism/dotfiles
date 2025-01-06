@@ -19,3 +19,8 @@ confirm-close-surface = false
 clipboard-paste-protection = true
 
 theme = Afterglow
+
+macos-icon = custom-style
+macos-icon-frame = plastic
+macos-icon-ghost-color = #ffffff
+macos-icon-screen-color = #aaaaaa
