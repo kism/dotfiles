@@ -20,7 +20,7 @@ clipboard-paste-protection = true
 
 theme = Afterglow
 
-macos-icon = custom-style
-macos-icon-frame = plastic
-macos-icon-ghost-color = #ffffff
-macos-icon-screen-color = #aaaaaa
+#macos-icon = custom-style
+#macos-icon-frame = aluminum
+#macos-icon-ghost-color = #0000bb
+#macos-icon-screen-color = #8888dd
