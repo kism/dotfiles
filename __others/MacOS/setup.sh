@@ -6,6 +6,10 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 # Make holding characters behave normally
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Mouse
+defaults write .GlobalPreferences com.apple.mouse.scaling -1
+defaults write .GlobalPreferences com.apple.mouse.linear 1
+
 if [ ! -d "/Applications/CotEditor.app" ]; then
     echo "CotEditor is not installed."
     echo "Please install CotEditor from the App Store / mas"
