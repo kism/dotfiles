@@ -8,5 +8,5 @@ brew install stats
 brew install secretive
 brew install jordanbaird-ice
 brew install --cask ghostty
-brew install --cask mpv
+
 
