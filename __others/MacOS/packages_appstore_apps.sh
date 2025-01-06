@@ -1,10 +1,23 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-mas lucky "CotEditor"
-mas lucky "Hex Fiend"
-mas lucky "The Unarchiver"
-mas lucky "DaisyDisk"
-mas lucky "Whisper Transcription"
-mas lucky "Magnet"
-mas lucky "Bitwarden"
-mas lucky "WireGuard"
+apps=(
+    "CotEditor"
+    "Hex Fiend"
+    "The Unarchiver"
+    "DaisyDisk"
+    "Whisper Transcription"
+    "Magnet"
+    "Bitwarden"
+    "WireGuard"
+)
+
+echo "Installing apps from the App Store using mas"
+
+for app in "${apps[@]}"; do
+    echo
+    echo "Installing $app"
+    mas lucky "$app"
+done
+
+echo
+echo "Done"
