@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
-# Don't write .DS_Store files on network drives
+# Don't write .DS_Store files on network drives, external drives
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
-
-# Make holding characters behave normally
-defaults write -g ApplePressAndHoldEnabled -bool false
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool TRUE
 
 # Mouse
-defaults write .GlobalPreferences com.apple.mouse.scaling -1
-defaults write .GlobalPreferences com.apple.mouse.linear 1
+defaults write -g com.apple.mouse.scaling -1 @ # Acceleration
+defaults write -g com.apple.mouse.linear 1 # Acceleration
+defaults write -g com.apple.swipescrolldirection -bool FALSE # Natural scrolling
+
+# Keyboard
+defaults write -g InitialKeyRepeat -int 25 # Key repeat
+defaults write -g KeyRepeat -int 2 # Key repeat
+defaults write -g ApplePressAndHoldEnabled -bool TRUE # Make holding characters behave normally
+
+# Interface
+defaults write -g AppleInterfaceStyle Dark # Dark mode
+
 
 if [ ! -d "/Applications/CotEditor.app" ]; then
     echo "CotEditor is not installed."
