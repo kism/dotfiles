@@ -5,7 +5,7 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool TRUE
 
 # Mouse
-defaults write -g com.apple.mouse.scaling -1 @ # Acceleration
+defaults write -g com.apple.mouse.scaling -1 # Acceleration
 defaults write -g com.apple.mouse.linear 1 # Acceleration
 defaults write -g com.apple.swipescrolldirection -bool FALSE # Natural scrolling
 
