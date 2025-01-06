@@ -43,6 +43,7 @@ function load_ssh_keys() {
     # This also fixes vscode
     # shellcheck disable=SC2206 # zsh
     # shellcheck disable=SC2296 # zsh
+    # shellcheck disable=SC2010 # use ls to prevent unwanted printing
     SSH_AGENT_FOLDERS=(${(f)$(ls -1 /tmp | grep ssh)})
     # shellcheck disable=SC2128 # zsh
     if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
@@ -219,7 +220,7 @@ export ANSIBLE_AD_USERNAME=kgee
 export LC_CTYPE=en_US.UTF-8
 
 # Fix while I work out the setting
-if [ $TERM = "xterm-ghostty" ]; then
+if [ "$TERM" = "xterm-ghostty" ]; then
     export TERM=xterm-256color
 fi
 
