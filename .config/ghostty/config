@@ -2,6 +2,7 @@ font-family = Fira Code
 font-style = Medium
 font-size = 14
 font-thicken = false
+font-feature = -calt
 
 cursor-style = underline
 cursor-style-blink = false
