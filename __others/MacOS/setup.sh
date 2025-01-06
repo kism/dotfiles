@@ -44,5 +44,5 @@ if [ ! -d "/Applications/CotEditor.app" ]; then
     echo "Please install CotEditor from the App Store / mas"
 else
     echo "Adding cot to /usr/local/bin"
-    ln -s /Applications/CotEditor.app/Contents/SharedSupport/bin/cot /usr/local/bin/cot
+    sudo ln -s /Applications/CotEditor.app/Contents/SharedSupport/bin/cot /usr/local/bin/cot
 fi
