@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Don't write .DS_Store files on network drives
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
