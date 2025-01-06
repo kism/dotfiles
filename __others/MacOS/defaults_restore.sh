@@ -11,6 +11,7 @@ done
 echo "Backing up defaults..."
 for i in "${DEFAULTS_TO_MANAGE[@]}"
 do
+  echo "Backing up $i"
   defaults export $i > "defaults/$i.json"
 done
 
