@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
 brew install --cask betterdisplay
 brew install --cask domzilla-caffeine
@@ -7,8 +7,6 @@ brew install --cask easy-move-plus-resize
 brew install stats
 brew install secretive
 brew install jordanbaird-ice
-brew install --cask wezterm
+brew install --cask ghostty
 brew install --cask mpv
 
-brew install ffmpeg
-brew install yt-dlp
