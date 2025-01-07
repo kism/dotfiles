@@ -371,16 +371,16 @@
 		<key>modifiers</key>
 		<dict>
 			<key>horizontal</key>
-			<integer>131072</integer>
+			<integer>0</integer>
 			<key>precise</key>
-			<integer>524288</integer>
+			<integer>0</integer>
 			<key>swift</key>
-			<integer>262144</integer>
+			<integer>0</integer>
 			<key>zoom</key>
-			<integer>1048576</integer>
+			<integer>0</integer>
 		</dict>
 		<key>precise</key>
-		<false/>
+		<true/>
 		<key>reverseDirection</key>
 		<false/>
 		<key>smooth</key>
@@ -393,13 +393,13 @@
 	<key>State</key>
 	<dict>
 		<key>autosave_tabID</key>
-		<string>buttons</string>
+		<string>scrolling</string>
 		<key>lastLaunchedBundleVersion</key>
 		<integer>22854</integer>
 		<key>launchesOfCurrentBundleVersion</key>
-		<integer>5</integer>
+		<integer>10</integer>
 		<key>launchesOverall</key>
-		<integer>5</integer>
+		<integer>10</integer>
 		<key>remapsAreInitialized</key>
 		<true/>
 	</dict>
