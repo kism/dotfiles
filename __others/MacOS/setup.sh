@@ -15,37 +15,49 @@ defaults write -g KeyRepeat -int 2                       # Key repeat
 defaults write -g ApplePressAndHoldEnabled -bool "false" # Make holding characters behave normally
 
 # Interface
-defaults write -g AppleInterfaceStyle Dark              # Dark mode
+defaults write -g AppleInterfaceStyle Dark # Dark mode
 
 # Dock
-defaults write com.apple.dock "orientation" -string "left"         # Dock position
-defaults write com.apple.dock "tilesize" -int "46"                 # Set Dock icon size
-defaults write com.apple.dock "autohide-delay" -float "0"          # Remove Dock show/hide delay
-defaults write com.apple.dock "autohide-time-modifier" -float "0"  # Remove Dock show/hide animation
-defaults write com.apple.dock "mineffect" -string "scale"          # Scale effect
-defaults write com.apple.dock "show-recents" -bool "true"          # Enable show recent apps (Just for the divider)
-defaults write com.apple.dock "show-recent-count" -int "0"         # Show no recent apps
+defaults write com.apple.dock "orientation" -string "left"        # Dock position
+defaults write com.apple.dock "tilesize" -int "46"                # Set Dock icon size
+defaults write com.apple.dock "autohide-delay" -float "0"         # Remove Dock show/hide delay
+defaults write com.apple.dock "autohide-time-modifier" -float "0" # Remove Dock show/hide animation
+defaults write com.apple.dock "mineffect" -string "scale"         # Scale effect
+defaults write com.apple.dock "show-recents" -bool "true"         # Enable show recent apps (Just for the divider)
+defaults write com.apple.dock "show-recent-count" -int "0"        # Show no recent apps
 killall Dock
 
 # Finder
-defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"              # Show all file extensions
-defaults write com.apple.finder "ShowPathbar" -bool "true"                       # Show path bar
-defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv"            # Use list view in all Finder windows
-defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"               # Keep folders on top when sorting by name
-defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf"            # Search the current folder by default
-defaults write com.apple.finder "FXRemoveOldTrashItems" -bool "true"             # Remove items from the Trash after 30 days
-defaults write NSGlobalDomain "NSDocumentSaveNewDocumentsToCloud" -bool "false"  # Save to disk by default
+defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"             # Show all file extensions
+defaults write com.apple.finder "ShowPathbar" -bool "true"                      # Show path bar
+defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv"           # Use list view in all Finder windows
+defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"              # Keep folders on top when sorting by name
+defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf"           # Search the current folder by default
+defaults write com.apple.finder "FXRemoveOldTrashItems" -bool "true"            # Remove items from the Trash after 30 days
+defaults write NSGlobalDomain "NSDocumentSaveNewDocumentsToCloud" -bool "false" # Save to disk by default
 killall Finder
 
 # Menu Bar
-defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm\""      # Show date and time in the menu bar
+defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm\"" # Show date and time in the menu bar
 
 # TextEdit
-defaults write com.apple.TextEdit "RichText" -bool "false" && killall TextEdit            # Use plain text mode by default
+defaults write com.apple.TextEdit "RichText" -bool "false" && killall TextEdit # Use plain text mode by default
 
-# Firefox Policies
+# Firefox Policies https://github.com/mozilla/policy-templates/blob/master/mac/org.mozilla.firefox.plist
 defaults write org.mozilla.firefox "DisablePocket" -bool "true"
 defaults write org.mozilla.firefox "PasswordManagerEnabled" -bool "false"
+defaults write org.mozilla.firefox "NoDefaultBookmarks" -bool "true"
+defaults write org.mozilla.firefox "FirefoxHome" -dict \
+    Search -bool "true" \
+    TopSites -bool "false" \
+    SponsoredTopSites -bool "false" \
+    Highlights -bool "false" \
+    Pocket -bool "false" \
+    SponsoredPocket -bool "false" \
+    WebSuggestions -bool "false" \
+    SponsoredSuggestions -bool "false" \
+    ImproveSuggest -bool "false" \
+    Locked -bool "false"
 
 # Symlinks
 
