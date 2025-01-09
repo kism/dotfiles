@@ -32,3 +32,9 @@ curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.config/nv
 echo Setting up htop...
 mkdir -p ~/.config/htop/
 curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/htop/htoprc >~/.config/htop/htoprc
+
+if [ "$1" == "--gui" ]; then
+    echo Setting up ghostty
+    mkdir -p ~/.config/ghostty/
+    curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/ghostty/config >~/.config/ghostty/config
+fi
