@@ -59,7 +59,6 @@ defaults write org.mozilla.firefox "FirefoxHome" -dict \
     ImproveSuggest -bool "false" \
     Locked -bool "false"
 
-
 # Edge Policies https://github.com/TommyTran732/Microsoft-Edge-Policies/blob/main/macOS/Managed%20Preferences/com.microsoft.Edge.plist
 defaults write com.microsoft.Edge "DefaultSearchProviderEnabled" -bool "true"
 defaults write com.microsoft.Edge "DefaultSearchProviderName" -string "Google"
