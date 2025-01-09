@@ -215,7 +215,12 @@ fi
 
 # Stow
 h1 "Stowing dotfiles"
-stow --no-folding --adopt --target="$HOME" --stow .
+if type stow >/dev/null; then
+    h2 "Stowing dotfiles"
+    stow --no-folding --adopt --target="$HOME" --stow .
+else
+    h3 "stow not found, skipping"
+fi
 
 # ZSH
 if type zsh >/dev/null; then
