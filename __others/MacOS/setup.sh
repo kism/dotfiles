@@ -59,6 +59,22 @@ defaults write org.mozilla.firefox "FirefoxHome" -dict \
     ImproveSuggest -bool "false" \
     Locked -bool "false"
 
+
+# Edge Policies https://github.com/TommyTran732/Microsoft-Edge-Policies/blob/main/macOS/Managed%20Preferences/com.microsoft.Edge.plist
+defaults write com.microsoft.Edge "DefaultSearchProviderEnabled" -bool "true"
+defaults write com.microsoft.Edge "DefaultSearchProviderName" -string "Google"
+defaults write com.microsoft.Edge "DefaultSearchProviderSearchURL" -string "https://www.google.com/search\?q\=\{searchTerms\}"
+defaults write com.microsoft.Edge "DefaultSearchProviderSuggestURL" -string "https://www.google.com/complete/search\?output\=toolbar\&q\=\{searchTerms\}"
+defaults write com.microsoft.Edge "DefaultSearchProviderIconURL" -string "https://www.google.com/favicon.ico"
+
+defaults write com.microsoft.Edge "PasswordManagerEnabled" -bool "false"
+
+defaults write com.microsoft.Edge "WalletDonationEnabled" -bool "false"
+defaults write com.microsoft.Edge "EdgeWalletCheckoutEnabled" -bool "false"
+defaults write com.microsoft.Edge "EdgeWalletEtreeEnabled" -bool "false"
+defaults write com.microsoft.Edge "ShowMicrosoftRewards" -bool "false"
+defaults write com.microsoft.Edge "EdgeShoppingAssistantEnabled" -bool "false"
+
 # Symlinks
 
 if [ ! -d "/Applications/CotEditor.app" ]; then
