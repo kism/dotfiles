@@ -67,6 +67,8 @@ plutil -insert Extensions -dictionary ~/Library/Preferences/org.mozilla.firefox.
 plutil -insert Extensions.Install -array ~/Library/Preferences/org.mozilla.firefox.plist
 plutil -insert Extensions.Install.0 -string "https://addons.mozilla.org/firefox/downloads/file/4407804/bitwarden_password_manager-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
 plutil -insert Extensions.Install.1 -string "https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
+plutil -insert Extensions.Install.2 -string "https://addons.mozilla.org/firefox/downloads/file/3938344/scroll_anywhere-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
+
 
 # Edge Policies https://github.com/TommyTran732/Microsoft-Edge-Policies/blob/main/macOS/Managed%20Preferences/com.microsoft.Edge.plist
 defaults write com.microsoft.Edge "DefaultSearchProviderEnabled" -bool "true"
