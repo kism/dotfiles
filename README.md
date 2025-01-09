@@ -45,4 +45,3 @@ If you have run before and don't need to install packages and update all
 ```bash
 bash setup.sh --no-package-install
 ```
-
