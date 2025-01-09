@@ -27,6 +27,10 @@ defaults write com.apple.dock "show-recents" -bool "true"         # Enable show 
 defaults write com.apple.dock "show-recent-count" -int "0"        # Show no recent apps
 killall Dock
 
+# Mission Control / Expose / Space
+defaults write com.apple.dock "mru-spaces" -bool "true"        # Automatically rearrange spaces based on most recent use
+defaults write com.apple.dock "expose-group-apps" -bool "true" # Group windows by application
+
 # Finder
 defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"             # Show all file extensions
 defaults write com.apple.finder "ShowPathbar" -bool "true"                      # Show path bar
