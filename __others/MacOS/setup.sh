@@ -43,6 +43,10 @@ defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm
 # TextEdit
 defaults write com.apple.TextEdit "RichText" -bool "false" && killall TextEdit            # Use plain text mode by default
 
+# Firefox Policies
+defaults write org.mozilla.firefox "DisablePocket" -bool "true"
+defaults write org.mozilla.firefox "PasswordManagerEnabled" -bool "false"
+
 # Symlinks
 
 if [ ! -d "/Applications/CotEditor.app" ]; then
