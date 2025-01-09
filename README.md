@@ -10,7 +10,7 @@ With curl, assuming bash is your shell
 curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/setup_simple.sh | bash && . ~/.bashrc && bind -f ~/.inputrc
 ```
 
-Gui systems, assuming zsh is your shell
+Gui systems, Assumes you have zsh and git installed
 
 ```bash
 curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/setup_simple.sh | bash -s -- --gui
