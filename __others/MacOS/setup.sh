@@ -45,7 +45,7 @@ killall Finder
 defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm\"" # Show date and time in the menu bar
 
 # TextEdit
-defaults write com.apple.TextEdit "RichText" -bool "false" && killall TextEdit # Use plain text mode by default
+defaults write com.apple.TextEdit "RichText" -bool "false"
 
 # Firefox Policies https://github.com/mozilla/policy-templates/blob/master/mac/org.mozilla.firefox.plist
 defaults write org.mozilla.firefox "DisablePocket" -bool "true"
