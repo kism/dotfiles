@@ -48,6 +48,7 @@ defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm
 defaults write com.apple.TextEdit "RichText" -bool "false"
 
 # Firefox Policies https://github.com/mozilla/policy-templates/blob/master/mac/org.mozilla.firefox.plist
+defaults write org.mozilla.firefox "EnterprisePoliciesEnabled" -bool "true"
 defaults write org.mozilla.firefox "DisablePocket" -bool "true"
 defaults write org.mozilla.firefox "PasswordManagerEnabled" -bool "false"
 defaults write org.mozilla.firefox "NoDefaultBookmarks" -bool "true"
@@ -70,16 +71,18 @@ plutil -insert Extensions.Install.0 -string "https://addons.mozilla.org/firefox/
 plutil -insert Extensions.Install.1 -string "https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
 plutil -insert Extensions.Install.2 -string "https://addons.mozilla.org/firefox/downloads/file/3938344/scroll_anywhere-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
 
-
 # Edge Policies https://github.com/TommyTran732/Microsoft-Edge-Policies/blob/main/macOS/Managed%20Preferences/com.microsoft.Edge.plist
+## Search
 defaults write com.microsoft.Edge "DefaultSearchProviderEnabled" -bool "true"
 defaults write com.microsoft.Edge "DefaultSearchProviderName" -string "Google"
-defaults write com.microsoft.Edge "DefaultSearchProviderSearchURL" -string "https://www.google.com/search\?q\=\{searchTerms\}"
-defaults write com.microsoft.Edge "DefaultSearchProviderSuggestURL" -string "https://www.google.com/complete/search\?output\=toolbar\&q\=\{searchTerms\}"
+defaults write com.microsoft.Edge "DefaultSearchProviderSearchURL" -string "{google:baseURL}search?q={searchTerms}&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:searchClient}{google:sourceId}ie={inputEncoding}'"
+# defaults write com.microsoft.Edge "DefaultSearchProviderSuggestURL" -string "https://www.google.com/complete/search\?output\=toolbar\&q\=\{searchTerms\}"
 defaults write com.microsoft.Edge "DefaultSearchProviderIconURL" -string "https://www.google.com/favicon.ico"
 
+# Password Manager
 defaults write com.microsoft.Edge "PasswordManagerEnabled" -bool "false"
 
+# Gross Microsoft stuff
 defaults write com.microsoft.Edge "WalletDonationEnabled" -bool "false"
 defaults write com.microsoft.Edge "EdgeWalletCheckoutEnabled" -bool "false"
 defaults write com.microsoft.Edge "EdgeWalletEtreeEnabled" -bool "false"

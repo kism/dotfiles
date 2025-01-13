@@ -261,6 +261,9 @@ if type git >/dev/null; then
     git config --global core.editor vim
     h2 "New repo default branch name"
     git config --global init.defaultBranch main
+    h2 "Global git ignore: ~/.gitignore_global"
+    echo .DS_Store >> ~/.gitignore_global
+    git config --global core.excludesfile ~/.gitignore_global
 else
     h3 "ssh not found, skipping"
 fi
