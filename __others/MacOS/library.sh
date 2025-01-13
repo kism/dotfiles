@@ -11,6 +11,9 @@ if [ "$1" != "backup" ] && [ "$1" != "restore" ]; then
   exit 1
 fi
 
+# Set working dir
+cd "$(dirname "$0")" || exit
+
 # Section, Application Support
 mkdir -p Library/Application\ Support
 
