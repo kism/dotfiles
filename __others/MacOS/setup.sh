@@ -82,7 +82,6 @@ plutil -insert Extensions.Install.2 -string "https://addons.mozilla.org/firefox/
 defaults write com.microsoft.Edge "DefaultSearchProviderEnabled" -bool "true"
 defaults write com.microsoft.Edge "DefaultSearchProviderName" -string "Google"
 defaults write com.microsoft.Edge "DefaultSearchProviderSearchURL" -string "{google:baseURL}search?q={searchTerms}&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:searchClient}{google:sourceId}ie={inputEncoding}'"
-# defaults write com.microsoft.Edge "DefaultSearchProviderSuggestURL" -string "https://www.google.com/complete/search\?output\=toolbar\&q\=\{searchTerms\}"
 defaults write com.microsoft.Edge "DefaultSearchProviderIconURL" -string "https://www.google.com/favicon.ico"
 
 # Password Manager
