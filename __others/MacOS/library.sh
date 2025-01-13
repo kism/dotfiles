@@ -27,10 +27,10 @@ APP_NAME="com.nuebling.mac-mouse-fix"
 if [ "$1" == "backup" ]; then
   echo "$1 $APP_NAME"
   mkdir -p Library/Application\ Support/$APP_NAME
-  defaults export "$HOME/Library/Application\ Support/$APP_NAME/config.plist" - >"Library/Application Support/$APP_NAME/config.plist"
+  defaults export "$HOME/Library/Application Support/$APP_NAME/config.plist" - >"Library/Application Support/$APP_NAME/config.plist"
 else
   echo "$1 $APP_NAME"
-  defaults import "$HOME/Library/Application\ Support/$APP_NAME/config.plist" "Library/Application Support/$APP_NAME/config.plist"
+  defaults import "$HOME/Library/Application Support/$APP_NAME/config.plist" "Library/Application Support/$APP_NAME/config.plist"
 fi
 
 # Section, Preferences
