@@ -41,6 +41,7 @@ defaults write com.apple.dock "expose-group-apps" -bool "true" # Group windows b
 defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"             # Show all file extensions
 defaults write com.apple.finder "ShowPathbar" -bool "true"                      # Show path bar
 defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv"           # Use list view in all Finder windows
+defaults write com.apple.finder "FXPreferredSearchViewStyle" -string "Nlsv"     # Use list view for search
 defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"              # Keep folders on top when sorting by name
 defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf"           # Search the current folder by default
 defaults write com.apple.finder "FXRemoveOldTrashItems" -bool "true"            # Remove items from the Trash after 30 days
