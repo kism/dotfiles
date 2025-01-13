@@ -97,10 +97,15 @@ defaults write com.microsoft.Edge "EdgeShoppingAssistantEnabled" -bool "false"
 
 # Symlinks
 
-if [ ! -d "/Applications/CotEditor.app" ]; then
-    echo "CotEditor is not installed."
-    echo "Please install CotEditor from the App Store / mas"
-else
+if [ -d "/Applications/CotEditor.app" ]; then
+    echo "Found CotEditor in /Applications"
     echo "Adding cot to /usr/local/bin"
     sudo ln -s /Applications/CotEditor.app/Contents/SharedSupport/bin/cot /usr/local/bin/cot
+elif [ -d "$HOME/Applications/CotEditor.app" ]; then
+    echo "Found CotEditor in $HOME/Applications"
+    echo "Adding cot to /usr/local/bin"
+    sudo ln -s "$HOME/Applications/CotEditor.app/Contents/SharedSupport/bin/cot" /usr/local/bin/cot
+else
+    echo "CotEditor is not installed."
+    echo "Please install CotEditor from the App Store / mas"
 fi
