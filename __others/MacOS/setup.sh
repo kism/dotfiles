@@ -30,7 +30,7 @@ defaults write com.apple.dock "autohide-time-modifier" -float "0" # Remove Dock 
 defaults write com.apple.dock "mineffect" -string "scale"         # Scale effect
 defaults write com.apple.dock "show-recents" -bool "true"         # Enable show recent apps (Just for the divider)
 # defaults write com.apple.dock "show-recent-count" -int "0"        # Show no recent apps
-defaults write com.apple.dock "show-recent-count" -int "1"        # Show no recent apps
+defaults write com.apple.dock "show-recent-count" -int "1" # Show no recent apps
 killall Dock
 
 # Mission Control / Expose / Space
@@ -97,7 +97,9 @@ defaults write com.microsoft.Edge "EdgeShoppingAssistantEnabled" -bool "false"
 
 # Symlinks
 
-if [ -d "/Applications/CotEditor.app" ]; then
+if [ -f "/usr/local/bin/cot" ]; then
+    echo "cot is already symlinked."
+elif [ -d "/Applications/CotEditor.app" ]; then
     echo "Found CotEditor in /Applications"
     echo "Adding cot to /usr/local/bin"
     sudo ln -s /Applications/CotEditor.app/Contents/SharedSupport/bin/cot /usr/local/bin/cot
