@@ -19,8 +19,20 @@ APP_NAME="com.nuebling.mac-mouse-fix"
 if [ "$1" == "backup" ]; then
   echo "$1 $APP_NAME"
   mkdir -p Library/Application\ Support/$APP_NAME
-  defaults export $HOME/Library/Application\ Support/$APP_NAME/config.plist - >Library/Application\ Support/$APP_NAME/config.plist
+  defaults export "$HOME/Library/Application\ Support/$APP_NAME/config.plist" - >"Library/Application Support/$APP_NAME/config.plist"
 else
   echo "$1 $APP_NAME"
-  defaults import $HOME/Library/Application\ Support/$APP_NAME/config.plist Library/Application\ Support/$APP_NAME/config.plist
+  defaults import "$HOME/Library/Application\ Support/$APP_NAME/config.plist" "Library/Application Support/$APP_NAME/config.plist"
+fi
+
+# Section, Preferences
+mkdir -p Library/Preferences
+APP_NAME="com.crowdcafe.windowmagnet"
+if [ "$1" == "backup" ]; then
+  echo "$1 $APP_NAME"
+  mkdir -p Library/Preferences/$APP_NAME
+  defaults export "$HOME/Library/Preferences/$APP_NAME.plist" - >"Library/Preferences/$APP_NAME.plist"
+else
+  echo "$1 $APP_NAME"
+  defaults import "$HOME/Library/Preferences/$APP_NAME.plist" "Library/Preferences/$APP_NAME.plist"
 fi
