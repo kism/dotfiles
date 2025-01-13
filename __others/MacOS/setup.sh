@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ "$(uname)" != "Darwin" ]; then
+    echo "This script is for MacOS only."
+    exit 1
+fi
+
 # Don't write .DS_Store files on network drives, external drives
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool "true"
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool "true"
