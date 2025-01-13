@@ -24,7 +24,8 @@ defaults write com.apple.dock "autohide-delay" -float "0"         # Remove Dock 
 defaults write com.apple.dock "autohide-time-modifier" -float "0" # Remove Dock show/hide animation
 defaults write com.apple.dock "mineffect" -string "scale"         # Scale effect
 defaults write com.apple.dock "show-recents" -bool "true"         # Enable show recent apps (Just for the divider)
-defaults write com.apple.dock "show-recent-count" -int "0"        # Show no recent apps
+# defaults write com.apple.dock "show-recent-count" -int "0"        # Show no recent apps
+defaults write com.apple.dock "show-recent-count" -int "1"        # Show no recent apps
 killall Dock
 
 # Mission Control / Expose / Space
