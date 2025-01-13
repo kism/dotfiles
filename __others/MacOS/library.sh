@@ -20,7 +20,7 @@ fi
 cd "$(dirname "$0")" || exit
 
 # Section, Application Support
-mkdir -p Library/Application\ Support
+mkdir -p "Library/Application Support"
 
 # Section, mac-mouse-fix
 APP_NAME="com.nuebling.mac-mouse-fix"
