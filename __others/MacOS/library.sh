@@ -33,7 +33,6 @@ mkdir -p Library/Preferences
 APP_NAME="com.crowdcafe.windowmagnet"
 if [ "$1" == "backup" ]; then
   echo "$1 $APP_NAME"
-  mkdir -p Library/Preferences/$APP_NAME
   defaults export "$HOME/Library/Preferences/$APP_NAME.plist" - >"Library/Preferences/$APP_NAME.plist"
 else
   echo "$1 $APP_NAME"
