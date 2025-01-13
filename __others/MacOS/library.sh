@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ "$(uname)" != "Darwin" ]; then
+    echo "This script is for MacOS only."
+    exit 1
+fi
+
 if [ $# -eq 0 ]; then
   echo "Usage: $0 [backup|restore]"
   echo "No arguments provided. Exiting."
