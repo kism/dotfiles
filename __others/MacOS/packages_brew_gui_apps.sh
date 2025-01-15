@@ -14,4 +14,5 @@ brew install secretive
 brew install jordanbaird-ice
 brew install --cask ghostty
 
-
+brew tap netdcy/flowvision
+brew install flowvision --no-quarantine
