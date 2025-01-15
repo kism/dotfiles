@@ -8,7 +8,7 @@ fi
 apps=(
     "CotEditor"
     "Hex Fiend"
-    "The Unarchiver"
+    "The Unarchiver" # Keka?
     "DaisyDisk"
     "Whisper Transcription"
     "Magnet"
