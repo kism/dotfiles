@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo
+echo jamf recon
+sudo jamf recon
+
+echo
+echo jamf policy
+sudo jamf policy
+
+echo
+echo jamf manage
+sudo jamf manage
