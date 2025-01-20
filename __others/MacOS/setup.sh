@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+
 if [ "$(uname)" != "Darwin" ]; then
     echo "This script is for MacOS only."
     exit 1
@@ -112,3 +114,7 @@ else
     echo "CotEditor is not installed."
     echo "Please install CotEditor from the App Store / mas"
 fi
+
+# Copy Scheduled Tasks
+ln -s AppleScript/detectdisplays.applescript "$HOME/.local/bin/detectdisplays.applescript"
+cp AppleScript/au.kierangee.detectdisplays/plist "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
