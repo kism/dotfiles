@@ -11,7 +11,7 @@ log "Internal Display Active: " & (internalDisplayActive as string) & ", Ice Bar
 
 if iceBarStatus is not equal to internalDisplayActive then -- If internal display: on, If external display: off
 	set desiredBool to "false"
-	if internalDisplayActive is equal to 1 then
+	if internalDisplayActive is equal to "1" then
 		set desiredBool to "true"
 	end if
 
