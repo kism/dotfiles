@@ -11,55 +11,10 @@
             <string>/usr/local/etc/detectdisplays.applescript</string>
         </array>
         <key>StartCalendarInterval</key>
-        <array>
-            <dict>
-                <key>Second</key>
-                <integer>0</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>5</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>10</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>15</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>20</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>25</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>30</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>35</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>40</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>45</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>50</integer>
-            </dict>
-            <dict>
-                <key>Second</key>
-                <integer>55</integer>
-            </dict>
-        </array>
+        <dict>
+            <!-- Every minute at the five second mark. -->
+            <key>Second</key>
+            <integer>5</integer>
+        </dict>
     </dict>
 </plist>
