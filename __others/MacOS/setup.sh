@@ -121,6 +121,8 @@ fi
 sudo ln -Fs "$PWD/AppleScript/detectdisplays.applescript" "/usr/local/bin/detectdisplays.applescript"
 ln -Fs  "$PWD/AppleScript/au.kierangee.detectdisplays.plist" "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
 echo "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+set +e
 launchctl unload "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+set -e
 launchctl load "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
 launchctl start "au.kierangee.detectdisplays"
