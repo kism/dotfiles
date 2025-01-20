@@ -5,11 +5,7 @@
         <key>Label</key>
         <string>au.kierangee.detectdisplays</string>
         <key>Program</key>
-        <string>/usr/bin/osascript</string>
-        <key>ProgramArguments</key>
-        <array>
-            <string>/usr/local/bin/detectdisplays.applescript</string>
-        </array>
+        <string>/usr/local/bin/detectdisplays.applescript</string>
         <key>RunAtLoad</key>
         <true />
         <key>StandardErrorPath</key>
