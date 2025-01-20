@@ -117,4 +117,4 @@ fi
 
 # Copy Scheduled Tasks
 ln -s AppleScript/detectdisplays.applescript "$HOME/.local/bin/detectdisplays.applescript"
-cp AppleScript/au.kierangee.detectdisplays/plist "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+cp AppleScript/au.kierangee.detectdisplays.plist "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
