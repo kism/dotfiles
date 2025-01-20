@@ -2,6 +2,8 @@
 
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit
 
+set -e
+
 if [ "$(uname)" != "Darwin" ]; then
     echo "This script is for MacOS only."
     exit 1
@@ -117,4 +119,5 @@ fi
 
 # Copy Scheduled Tasks
 ln -s AppleScript/detectdisplays.applescript "$HOME/.local/bin/detectdisplays.applescript"
+cat AppleScript/au.kierangee.detectdisplays.plist
 cp AppleScript/au.kierangee.detectdisplays.plist "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
