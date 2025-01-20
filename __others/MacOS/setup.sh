@@ -118,7 +118,8 @@ else
 fi
 
 # Copy Scheduled Tasks
-ln -Fs "$PWD/AppleScript/detectdisplays.applescript" "$HOME/.local/bin/detectdisplays.applescript"
+sudo ln -Fs "$PWD/AppleScript/detectdisplays.applescript" "/usr/local/bin/detectdisplays.applescript"
 ln -Fs  "$PWD/AppleScript/au.kierangee.detectdisplays.plist" "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
-echo "$PWD/AppleScript/au.kierangee.detectdisplays.plist"
-launchctl load "$PWD/AppleScript/au.kierangee.detectdisplays.plist"
+echo "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+launchctl unload "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+launchctl load "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
