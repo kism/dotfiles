@@ -123,3 +123,4 @@ ln -Fs  "$PWD/AppleScript/au.kierangee.detectdisplays.plist" "$HOME/Library/Laun
 echo "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
 launchctl unload "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
 launchctl load "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+launchctl start "au.kierangee.detectdisplays"
