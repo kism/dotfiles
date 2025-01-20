@@ -375,7 +375,7 @@
 			<key>precise</key>
 			<integer>0</integer>
 			<key>swift</key>
-			<integer>0</integer>
+			<integer>524288</integer>
 			<key>zoom</key>
 			<integer>0</integer>
 		</dict>
@@ -397,9 +397,9 @@
 		<key>lastLaunchedBundleVersion</key>
 		<integer>22854</integer>
 		<key>launchesOfCurrentBundleVersion</key>
-		<integer>13</integer>
+		<integer>14</integer>
 		<key>launchesOverall</key>
-		<integer>13</integer>
+		<integer>14</integer>
 		<key>remapsAreInitialized</key>
 		<true/>
 	</dict>
