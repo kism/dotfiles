@@ -103,35 +103,46 @@ fi
 
 # ZSH_DISABLE_COMPFIX="true"
 
-
-
 # region: antigen
-source ~/.antigen/antigen.zsh
+if [[ $EUID -eq 0 ]]; then
+    autoload -U compinit; compinit
+    zstyle ':completion:*' menu select
+    export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
+%{%F{196}%}#%{%f%} "
+else
+    source ~/.antigen/antigen.zsh
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+    # Load the oh-my-zsh's library.
+    antigen use oh-my-zsh
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle pip
-antigen bundle virtualenv
-antigen bundle command-not-found
+    # Bundles from the default repo (robbyrussell's oh-my-zsh).
+    antigen bundle git
+    antigen bundle pip
+    antigen bundle virtualenv
+    antigen bundle command-not-found
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+    # Syntax highlighting bundle.
+    antigen bundle zsh-users/zsh-syntax-highlighting
 
-# Poetry
-antigen bundle darvid/zsh-poetry
+    # Poetry
+    antigen bundle darvid/zsh-poetry
 
-# fish like completion
-# antigen bundle zsh-users/zsh-completions
-# antigen bundle zsh-users/zsh-autosuggestions
+    # fish like completion
+    # antigen bundle zsh-users/zsh-completions
+    # antigen bundle zsh-users/zsh-autosuggestions
 
-# Load the theme.
-antigen theme kism/zsh-bira-mod
+    # Load the theme.
+    antigen theme kism/zsh-bira-mod
 
-# Tell Antigen that you're done.
-antigen apply
+    # Tell Antigen that you're done.
+    antigen apply
+
+    # For some reason the theme doesn't get applied when sourcing manually, this checks if we are sourcing the file and applies the theme if so
+    if [[ $0 = *".zshrc" ]]; then
+        echo -e "\033[0;32mFinished sourcing .zshrc!\033[0m"
+        source ~/.antigen/bundles/kism/zsh-bira-mod/bira-mod.zsh-theme
+    fi
+fi
 # endregion
 
 # region: aliases
@@ -207,13 +218,6 @@ else
 fi
 # endregion
 
-# region: cleanup
-# For some reason the theme doesn't get applied when sourcing manually, this checks if we are sourcing the file and applies the theme if so
-if [[ $0 = *".zshrc" ]]; then
-    echo -e "\033[0;32mFinished sourcing .zshrc!\033[0m"
-    source ~/.antigen/bundles/kism/zsh-bira-mod/bira-mod.zsh-theme
-fi
-# endregion
 export ANSIBLE_AD_USERNAME=kgee
 
 # Hopefully fix double characters
