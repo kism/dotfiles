@@ -109,7 +109,7 @@ if [[ $EUID -eq 0 ]]; then
     zstyle ':completion:*' menu select
     export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
 %{%F{196}%}#%{%f%} "
-else
+elif [ -f ~/.antigen/antigen.zsh ]; then
     source ~/.antigen/antigen.zsh
 
     # Load the oh-my-zsh's library.
@@ -142,6 +142,11 @@ else
         echo -e "\033[0;32mFinished sourcing .zshrc!\033[0m"
         source ~/.antigen/bundles/kism/zsh-bira-mod/bira-mod.zsh-theme
     fi
+else
+    autoload -U compinit; compinit
+    zstyle ':completion:*' menu select
+        export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
+%{%F{196}%}#%{%f%} "
 fi
 # endregion
 

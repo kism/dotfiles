@@ -38,3 +38,7 @@ if [ "$1" == "--gui" ]; then
     mkdir -p ~/.config/ghostty/
     curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/ghostty/config >~/.config/ghostty/config
 fi
+
+# Zsh
+echo Setting up zsh...
+curl --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.zshrc >~/.zshrc
