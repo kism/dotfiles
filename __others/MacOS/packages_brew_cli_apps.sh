@@ -12,3 +12,4 @@ brew install coreutils
 brew install htop
 brew install fastfetch
 brew install cmatrix
+brew install nload
