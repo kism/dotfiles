@@ -27,12 +27,13 @@ function setup_brew() {
 
     h2 "Installing Packages"
     echo
+    # shellcheck disable=SC2086 # Required here to split the package list
     brew install $install_brew
 }
 
 function setup_pkg() {
     to_install="$install_base $install_pkg"
-    prepsudo
+    prep_sudo
 
     h2 "pkg update"
     yes | sudo pkg update
@@ -47,7 +48,7 @@ function setup_pkg() {
 
 function setup_pacman() {
     to_install="$install_base $install_apt_brew_dnf_pacman"
-    prepsudo
+    prep_sudo
 
     h1 "Updating $PRETTY_NAME"
     h2 "pacman -Syyu"
@@ -61,7 +62,7 @@ function setup_pacman() {
 
 function setup_apt() {
     to_install="$install_base $install_apt_brew_dnf_pacman"
-    prepsudo
+    prep_sudo
 
     h1 "Updating $PRETTY_NAME"
     h2 "apt update"
@@ -81,7 +82,7 @@ function setup_apt() {
 
 function setup_dnf() {
     to_install="$install_base $install_apt_brew_dnf_pacman"
-    prepsudo
+    prep_sudo
 
     h1 "Updating $PRETTY_NAME"
     h2 "dnf clean all"
@@ -114,7 +115,7 @@ function set_shell() {
     fi
 }
 
-function prepsudo() {
+function prep_sudo() {
     h3 "Installing packages will require sudo, checking if sudo is installed:"
     type sudo >/dev/null 2>/dev/null
     sudo echo "Starting install!"
