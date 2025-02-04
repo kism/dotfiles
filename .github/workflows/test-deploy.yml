@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'setup.sh'
-      - 'setup_simple.sh'
-      - 'setup_simple_generate.sh'
-      - '.stow-local-ignore'
-      - '.github/workflows/test-deploy.yml'
+      - "setup.sh"
+      - "setup_simple.sh"
+      - "setup_simple_generate.sh"
+      - ".stow-local-ignore"
+      - ".github/workflows/test-deploy.yml"
 
 jobs:
   build:
@@ -29,13 +29,6 @@ jobs:
           packages: zsh git htop tmux curl wget tree ncdu stow software-properties-common gnupg2
           version: 1.0
 
-      - name: Comment out apt-get update and upgrade to speed up the process
-        run: |
-          sed -i 's/^.*sudo apt-get update.*$/echo REPLACED BY CI/' setup.sh
-          sed -i 's/^.*sudo apt-get upgrade.*$/echo REPLACED BY CI/' setup.sh
-          sed -i 's/^.*sudo add-apt-repository.*$/echo REPLACED BY CI/' setup.sh
-          cat setup.sh
-
       - name: Run setup script
-        run: bash setup.sh
+        run: bash setup.sh --no-package-install
         timeout-minutes: 1
