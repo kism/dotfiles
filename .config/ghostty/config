@@ -7,6 +7,9 @@ font-feature = -calt
 cursor-style = underline
 cursor-style-blink = false
 cursor-color = #E95420
+adjust-cursor-thickness = 100%
+adjust-underline-thickness = 200%
+adjust-box-thickness = 100%
 
 term = xterm-256color
 
