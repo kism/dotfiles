@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # shellcheck shell=bash # Technically incorrect but shellcheck doesn't support zsh, it works decent
 # .zshrc
 # https://github.com/kism/dotfiles-simple/blob/main/.zshrc
@@ -28,7 +35,7 @@ function get_mercury_retrograde() {
     fi
     if type curl >/dev/null; then
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            curl -s https://mercuryretrogradeapi.com >$RETROGRADETEMPFILE 2>/dev/null
+            curl -s https://mercuryretrogradeapi.com >|$RETROGRADETEMPFILE 2>/dev/null
         fi
         if cat $RETROGRADETEMPFILE | grep false >/dev/null; then
             RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
@@ -118,6 +125,8 @@ else
         export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
 %{%F{196}%}#%{%f%} "
 fi
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # endregion
 
 # region: aliases
@@ -186,10 +195,10 @@ echo -e "$(uname -s -r), \c"
 
 # Ssh keys loaded, mercury retrograde
 if check_modern_terminal; then
-    echo -e "🗝️$EXTRA_SPACING_EMOJI$(get_ssh_keys_loaded),$SPACING_SYMBOLS_BEFORE\c"
+    # echo -e "🗝️$EXTRA_SPACING_EMOJI$(get_ssh_keys_loaded),$SPACING_SYMBOLS_BEFORE\c"
     get_mercury_retrograde
-else
-    echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
+# else
+    # echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
 fi
 # endregion
 
@@ -209,3 +218,6 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion:wq
 fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
