@@ -1,3 +1,8 @@
+# shellcheck shell=bash # Technically incorrect but shellcheck doesn't support zsh, it works decent
+# .zshrc
+# https://github.com/kism/dotfiles-simple/blob/main/.zshrc
+# shellcheck source=/dev/null
+
 # region Functions
 # Due to weirdness with emojis, we need these variables
 if [[ "$TERM_PROGRAM" == vscode ]]; then # Check if we are in a vscode terminal
@@ -23,7 +28,7 @@ function get_mercury_retrograde() {
     fi
     if type curl >/dev/null; then
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            curl -s https://mercuryretrogradeapi.com >|$RETROGRADETEMPFILE 2>/dev/null
+            curl -s https://mercuryretrogradeapi.com >$RETROGRADETEMPFILE 2>/dev/null
         fi
         if cat $RETROGRADETEMPFILE | grep false >/dev/null; then
             RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
@@ -31,7 +36,7 @@ function get_mercury_retrograde() {
             RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;31mRetrograde\033[0m"
         fi
     fi
-    echo -e "$RESULT"
+    echo -e " $RESULT"
 }
 
 function load_ssh_keys() {
@@ -84,37 +89,6 @@ function check_modern_terminal() {
 
 # endregion
 
-# region: startup message
-# Operating system
-if test -f /etc/os-release; then # Linux
-    source /etc/os-release
-    echo -e "$PRETTY_NAME, \c"
-elif type sw_vers >/dev/null; then # MacOS
-    echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
-fi
-
-# Kernel version
-echo -e "$(uname -s -r), \c"
-
-# Ssh keys loaded, mercury retrograde
-if check_modern_terminal; then
-    # echo -e "🗝️$EXTRA_SPACING_EMOJI$(get_ssh_keys_loaded),$SPACING_SYMBOLS_BEFORE\c"
-    get_mercury_retrograde
-# else
-    # echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
-fi
-# endregion
-
-# region: instant prompt
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-# endregion
-
-
 # region: non-interactive
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
@@ -135,17 +109,45 @@ if [[ $EUID -eq 0 ]]; then
     zstyle ':completion:*' menu select
     export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
 %{%F{196}%}#%{%f%} "
-elif [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-    # Load Presto
-    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+elif [ -f ~/.antigen/antigen.zsh ]; then
+    source ~/.antigen/antigen.zsh
+
+    # Load the oh-my-zsh's library.
+    antigen use oh-my-zsh
+
+    # Bundles from the default repo (robbyrussell's oh-my-zsh).
+    antigen bundle git
+    antigen bundle pip
+    antigen bundle virtualenv
+    antigen bundle command-not-found
+
+    # Syntax highlighting bundle.
+    antigen bundle zsh-users/zsh-syntax-highlighting
+
+    # Poetry
+    antigen bundle darvid/zsh-poetry
+
+    # fish like completion
+    # antigen bundle zsh-users/zsh-completions
+    # antigen bundle zsh-users/zsh-autosuggestions
+
+    # Load the theme.
+    antigen theme kism/zsh-bira-mod
+
+    # Tell Antigen that you're done.
+    antigen apply
+
+    # For some reason the theme doesn't get applied when sourcing manually, this checks if we are sourcing the file and applies the theme if so
+    if [[ $0 = *".zshrc" ]]; then
+        echo -e "\033[0;32mFinished sourcing .zshrc!\033[0m"
+        source ~/.antigen/bundles/kism/zsh-bira-mod/bira-mod.zsh-theme
+    fi
 else
     autoload -U compinit; compinit
     zstyle ':completion:*' menu select
         export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
 %{%F{196}%}#%{%f%} "
 fi
-
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # endregion
 
 # region: aliases
@@ -200,6 +202,27 @@ bindkey "\e[3;6~" kill-line
 bindkey "\e[3@" kill-line
 # endregion
 
+# region: startup message
+# Operating system
+if test -f /etc/os-release; then # Linux
+    source /etc/os-release
+    echo -e "$PRETTY_NAME, \c"
+elif type sw_vers >/dev/null; then # MacOS
+    echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
+fi
+
+# Kernel version
+echo -e "$(uname -s -r), \c"
+
+# Ssh keys loaded, mercury retrograde
+if check_modern_terminal; then
+    echo -e "🗝️$EXTRA_SPACING_EMOJI$(get_ssh_keys_loaded),$SPACING_SYMBOLS_BEFORE\c"
+    get_mercury_retrograde
+else
+    echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
+fi
+# endregion
+
 export ANSIBLE_AD_USERNAME=kgee
 
 # Hopefully fix double characters
@@ -216,6 +239,3 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion:wq
 fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
