@@ -3,8 +3,15 @@ add_newline = false
 [container]
 disabled = true
 
+[username]
+style_user = 'white bold'
+style_root = 'red bold'
+format = '[$user]($style)'
+disabled = false
+show_always = true
+
 [hostname]
 ssh_only = false
 ssh_symbol = ""
-format = '@[$hostname](bold red) '
+format = '@[$hostname](white bold) '
 disabled = false
