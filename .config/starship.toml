@@ -13,5 +13,17 @@ show_always = true
 [hostname]
 ssh_only = false
 ssh_symbol = ""
-format = '@[$hostname](white bold) '
+format = '[@](cyan bold)[$hostname](white bold) '
 disabled = false
+
+[git_status]
+conflicted = '🏳'
+up_to_date = '✓'
+modified = '*'
+staged = '[++\($count\)](green)'
+ahead = '⇡${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+
+[package]
+disabled = true
