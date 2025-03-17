@@ -1,15 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# shellcheck shell=bash # Technically incorrect but shellcheck doesn't support zsh, it works decent
-# .zshrc
-# https://github.com/kism/dotfiles-simple/blob/main/.zshrc
-# shellcheck source=/dev/null
-
 # region Functions
 # Due to weirdness with emojis, we need these variables
 if [[ "$TERM_PROGRAM" == vscode ]]; then # Check if we are in a vscode terminal
@@ -43,7 +31,7 @@ function get_mercury_retrograde() {
             RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;31mRetrograde\033[0m"
         fi
     fi
-    echo -e " $RESULT"
+    echo -e "$RESULT"
 }
 
 function load_ssh_keys() {
@@ -95,6 +83,37 @@ function check_modern_terminal() {
 }
 
 # endregion
+
+# region: startup message
+# Operating system
+if test -f /etc/os-release; then # Linux
+    source /etc/os-release
+    echo -e "$PRETTY_NAME, \c"
+elif type sw_vers >/dev/null; then # MacOS
+    echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
+fi
+
+# Kernel version
+echo -e "$(uname -s -r), \c"
+
+# Ssh keys loaded, mercury retrograde
+if check_modern_terminal; then
+    # echo -e "🗝️$EXTRA_SPACING_EMOJI$(get_ssh_keys_loaded),$SPACING_SYMBOLS_BEFORE\c"
+    get_mercury_retrograde
+# else
+    # echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
+fi
+# endregion
+
+# region: instant prompt
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+# endregion
+
 
 # region: non-interactive
 # set PATH so it includes user's private bin if it exists
@@ -179,27 +198,6 @@ bindkey '^H' backward-kill-word
 bindkey "\e[3;6~" kill-line
 ### urxvt
 bindkey "\e[3@" kill-line
-# endregion
-
-# region: startup message
-# Operating system
-if test -f /etc/os-release; then # Linux
-    source /etc/os-release
-    echo -e "$PRETTY_NAME, \c"
-elif type sw_vers >/dev/null; then # MacOS
-    echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
-fi
-
-# Kernel version
-echo -e "$(uname -s -r), \c"
-
-# Ssh keys loaded, mercury retrograde
-if check_modern_terminal; then
-    # echo -e "🗝️$EXTRA_SPACING_EMOJI$(get_ssh_keys_loaded),$SPACING_SYMBOLS_BEFORE\c"
-    get_mercury_retrograde
-# else
-    # echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
-fi
 # endregion
 
 export ANSIBLE_AD_USERNAME=kgee
