@@ -207,4 +207,7 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion:wq
 fi
 
-eval "$(starship init zsh)"
+# Check if starship is installed, and load if possible
+if type starship >/dev/null; then
+    eval "$(starship init zsh)"
+fi
