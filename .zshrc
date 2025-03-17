@@ -103,15 +103,11 @@ fi
 
 # ZSH_DISABLE_COMPFIX="true"
 
-# region: antigen
+# region: non-starship prompt
 if [[ $EUID -eq 0 ]]; then
-    autoload -U compinit; compinit
-    zstyle ':completion:*' menu select
     export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
 %{%F{196}%}#%{%f%} "
 else
-    autoload -U compinit; compinit
-    zstyle ':completion:*' menu select
         export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
 %{%F{196}%}#%{%f%} "
 fi
@@ -144,10 +140,17 @@ if [[ "$OSTYPE" == darwin* ]]; then
     export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 fi
+if [ "$TERM" = "xterm-ghostty" ]; then # Fix while I work out the setting
+    export TERM=xterm-256color
+fi
 load_ssh_keys
 # endregion
 
 # region keybinds
+# Search with up and down arrows
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+
 ## ctrl+arrows
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
@@ -190,24 +193,28 @@ else
 fi
 # endregion
 
-export ANSIBLE_AD_USERNAME=kgee
-
-# Hopefully fix double characters
-export LC_CTYPE=en_US.UTF-8
-
-# Fix while I work out the setting
-if [ "$TERM" = "xterm-ghostty" ]; then
-    export TERM=xterm-256color
-fi
-
-
+# region: nvm
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion:wq
 fi
+# endregion
 
+# region: history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+# endregion
+
+# region: zsh settings
+autoload -U compinit; compinit
+zstyle ':completion:*' menu select
+# export LC_CTYPE=en_US.UTF-8 # Hopefully fix double characters
+# endregion
+
+# region: starship
 # Check if starship is installed, and load if possible
 if type starship >/dev/null; then
     eval "$(starship init zsh)"
 fi
+# endregion
