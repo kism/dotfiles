@@ -135,6 +135,8 @@ load_ssh_keys
 # endregion
 
 # region: history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
 setopt BANG_HIST              # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY       # Write the history file in the ':start:elapsed;command' format.
 setopt SHARE_HISTORY          # Share history between all sessions.
@@ -146,8 +148,6 @@ setopt HIST_IGNORE_SPACE      # Do not record an event starting with a space.
 setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
 setopt HIST_VERIFY            # Do not execute immediately upon history expansion.
 setopt HIST_BEEP              # Beep when accessing non-existent history.
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
 # endregion
 
 # region keybinds
