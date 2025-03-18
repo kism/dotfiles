@@ -219,27 +219,23 @@ autoload -Uz _zinit
 # zinit packages, mostly use Pretzo plugins
 zi snippet PZTM::environment
 zi snippet PZTM::terminal
-zi snippet PZTM::editor
-zi snippet PZTM::history
+# zi snippet PZTM::editor # I do this myself instead, can't get history-substring-search to work
+# zi snippet PZTM::history # I do this myself instead
 zi snippet PZTM::directory
 zi snippet PZTM::utility
 zi snippet PZTM::completion
 zi light zdharma-continuum/fast-syntax-highlighting
 
 zi load 'zsh-users/zsh-history-substring-search'
-# zi light zsh-users/zsh-autosuggestions
-zi ice wait atload'_history_substring_search_config'
-
-# zstyle ':prezto:module:editor' key-bindings 'vi'
-
+# zi light zsh-users/zsh-autosuggestions # Naa
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
+zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
 
-
-# # Starship handles the prompt
-# zi ice as"command" from"gh-r" \
-#           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-#           atpull"%atclone" src"init.zsh"
-# zi light starship/starship
+# Starship handles the prompt
+zi ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zi light starship/starship
