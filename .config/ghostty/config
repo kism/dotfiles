@@ -24,6 +24,7 @@ clipboard-paste-protection = true
 
 theme = Afterglow
 
+window-inherit-working-directory = false
 working-directory = home
 
 #macos-icon = custom-style
