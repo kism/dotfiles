@@ -137,17 +137,13 @@ load_ssh_keys
 # region: history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
-setopt BANG_HIST              # Treat the '!' character specially during expansion.
-setopt EXTENDED_HISTORY       # Write the history file in the ':start:elapsed;command' format.
-setopt SHARE_HISTORY          # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
-setopt HIST_IGNORE_DUPS       # Do not record an event that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS   # Delete an old recorded event if a new event is a duplicate.
-setopt HIST_FIND_NO_DUPS      # Do not display a previously found event.
-setopt HIST_IGNORE_SPACE      # Do not record an event starting with a space.
-setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
-setopt HIST_VERIFY            # Do not execute immediately upon history expansion.
-setopt HIST_BEEP              # Beep when accessing non-existent history.
+## History command configuration, from oh-my-zsh
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
 # endregion
 
 # region keybinds
