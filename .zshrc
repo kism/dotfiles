@@ -8,7 +8,7 @@
 if [[ "$TERM_PROGRAM" == vscode ]]; then # Check if we are in a vscode terminal
     EXTRA_SPACING_EMOJI=" "
     SPACING_SYMBOLS_AFTER=" "
-    SPACING_SYMBOLS_BEFORE=""
+    SPACING_SYMBOLS_BEFORE=" "
 elif [[ "$TERM" == alacritty ]]; then
     EXTRA_SPACING_EMOJI=" "
     SPACING_SYMBOLS_AFTER=""
@@ -47,8 +47,7 @@ function load_ssh_keys() {
     SSH_AGENT_FOLDERS=(${(f)$(ls -1 /tmp | grep ssh)})
     # shellcheck disable=SC2128 # zsh
     if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
-        SSH_AUTH_SOCK=$(find "/tmp/ssh-*" -type s -print0 2>/dev/null)
-        export SSH_AUTH_SOCK
+        export SSH_AUTH_SOCK=$(ls -t /tmp/ssh-**/* | head -1)
     fi
 
     # Load up ssh keys into keychain if it is on this system
