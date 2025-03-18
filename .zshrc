@@ -101,18 +101,6 @@ if [[ ! -o interactive ]]; then
 fi
 # endregion
 
-# ZSH_DISABLE_COMPFIX="true"
-
-# region: non-starship prompt
-if [[ $EUID -eq 0 ]]; then
-    export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
-%{%F{196}%}#%{%f%} "
-else
-        export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
-%{%F{196}%}#%{%f%} "
-fi
-# endregion
-
 # region: aliases
 alias please='sudo $(fc -ln -1)'
 alias sudp='sudo'
@@ -146,31 +134,44 @@ fi
 load_ssh_keys
 # endregion
 
+# region: history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+# endregion
+
 # region keybinds
 # Search with up and down arrows
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
 
 ## ctrl+arrows
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
-### urxvt
-bindkey "\eOc" forward-word
-bindkey "\eOd" backward-word
+
+# delete
+bindkey "\e[3~" delete-char
 
 ## ctrl+delete
 bindkey "\e[3;5~" kill-word
-### urxvt
-bindkey "\e[3^" kill-word
 
 ## ctrl+backspace
 bindkey '^H' backward-kill-word
 
 ## ctrl+shift+delete
 bindkey "\e[3;6~" kill-line
-### urxvt
-bindkey "\e[3@" kill-line
 # endregion
+
+# region: root user
+if [[ $EUID -eq 0 ]]; then
+    export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
+%{%F{196}%}#%{%f%} "
+    autoload -U compinit; compinit
+    zstyle ':completion:*' menu select
+    bindkey '^[[A' up-line-or-search
+    bindkey '^[[B' down-line-or-search
+    return # End early since nothing following matters for root
+fi
+
 
 # region: startup message
 # Operating system
@@ -193,28 +194,52 @@ else
 fi
 # endregion
 
-# region: nvm
-if [ -d "$HOME/.nvm" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion:wq
-fi
-# endregion
+# region: zsh settings, handled by zinit
 
-# region: history
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-# endregion
-
-# region: zsh settings
-autoload -U compinit; compinit
-zstyle ':completion:*' menu select
 # export LC_CTYPE=en_US.UTF-8 # Hopefully fix double characters
-# endregion
 
-# region: starship
-# Check if starship is installed, and load if possible
-if type starship >/dev/null; then
-    eval "$(starship init zsh)"
+# Fallback
+export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
+%{%F{39}%}$%{%f%} "
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
 fi
-# endregion
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+## End of Zinit's installer chunk
+
+# zinit packages, mostly use Pretzo plugins
+zi snippet PZTM::environment
+zi snippet PZTM::terminal
+zi snippet PZTM::editor
+zi snippet PZTM::history
+zi snippet PZTM::directory
+zi snippet PZTM::utility
+zi snippet PZTM::completion
+zi light zdharma-continuum/fast-syntax-highlighting
+
+zi load 'zsh-users/zsh-history-substring-search'
+# zi light zsh-users/zsh-autosuggestions
+zi ice wait atload'_history_substring_search_config'
+
+# zstyle ':prezto:module:editor' key-bindings 'vi'
+
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+
+
+# # Starship handles the prompt
+# zi ice as"command" from"gh-r" \
+#           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+#           atpull"%atclone" src"init.zsh"
+# zi light starship/starship
