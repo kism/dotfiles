@@ -43,36 +43,43 @@ let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
+
+" Set colour mode depending on terminal type
+if $TERM !~? '^\(vt\|linux\|ansi\)'
+    set termguicolors
+endif
+
 " Statusline
 " https://pastebin.com/qWRQVzES
 " https://shapeshed.com/vim-statuslines/
+"red, yellow, green, blue, magenta, cyan, white, black, gray
 
 " Default matches normal mode
-highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=0 ctermbg=7
+highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=black ctermbg=white
 " These are constants
-highlight StatusLineRegularBG guifg=#FFFFFF guibg=#444444 ctermfg=15 ctermbg=8
-highlight StatusLineLineInfo  guifg=#FFFFFF guibg=#808080 ctermfg=0 ctermbg=7
-highlight StatusLineFileType  guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=6
+highlight StatusLineRegularBG guifg=#FFFFFF guibg=#444444 ctermfg=black ctermbg=gray
+highlight StatusLineLineInfo  guifg=#FFFFFF guibg=#808080 ctermfg=white ctermbg=black
+highlight StatusLineFileType  guifg=#FFFFFF guibg=#008080 ctermfg=black ctermbg=white
 
 function! SetModeColour()
     let l:current_mode = mode()
 
     if l:current_mode==#"n"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#808080 ctermfg=0 ctermbg=7
+        highlight ModeIndicator guifg=#FFFFFF guibg=#808080 ctermfg=white ctermbg=black
     elseif l:current_mode==#"i"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#00af00 ctermfg=15 ctermbg=2
+        highlight ModeIndicator guifg=#FFFFFF guibg=#00af00 ctermfg=black ctermbg=green
     elseif l:current_mode==#"c"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#008080 ctermfg=15 ctermbg=6
+        highlight ModeIndicator guifg=#FFFFFF guibg=#008080 ctermfg=black ctermbg=green
     elseif l:current_mode==#"v"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#800080 ctermfg=15 ctermbg=5
+        highlight ModeIndicator guifg=#FFFFFF guibg=#800080 ctermfg=black ctermbg=magenta
     elseif l:current_mode==#"V"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#800080 ctermfg=15 ctermbg=5
+        highlight ModeIndicator guifg=#FFFFFF guibg=#800080 ctermfg=black ctermbg=magenta
     elseif l:current_mode==#"\<C-v>"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#800080 ctermfg=15 ctermbg=5
+        highlight ModeIndicator guifg=#FFFFFF guibg=#800080 ctermfg=black ctermbg=magenta
     elseif l:current_mode==#"R"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#808000 ctermfg=15 ctermbg=3    
+        highlight ModeIndicator guifg=#FFFFFF guibg=#808000 ctermfg=black ctermbg=yellow    
     elseif l:current_mode==#"t"
-        highlight ModeIndicator guifg=#FFFFFF guibg=#808000 ctermfg=15 ctermbg=3
+        highlight ModeIndicator guifg=#FFFFFF guibg=#808000 ctermfg=black ctermbg=yellow
     endif
 endfunction
 
