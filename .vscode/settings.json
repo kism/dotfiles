@@ -1,7 +1,8 @@
 {
   "files.associations": {
     ".stow-local-ignore": "plaintext",
-    "**/.config/sway/*": "shellscript"
+    "**/.config/sway/*": "shellscript",
+    ".vimrc": "viml",
   },
 
   "[ini]": {
