@@ -1,7 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 * text eol=lf
-
 # Handle Windows nonsense ;)
 *.ps1    text  eol=crlf
 *.psm1   text  eol=crlf
@@ -10,3 +9,6 @@
 *.ps1xml text  eol=crlf
 *.clixml text  eol=crlf
 *.xml    text  eol=crlf
+
+# LFS
+.terminfo/* filter=lfs diff=lfs merge=lfs -text
