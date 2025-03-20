@@ -127,9 +127,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
     export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 fi
-if [ "$TERM" = "xterm-ghostty" ]; then # Fix while I work out the setting
-    export TERM=xterm-256color
-fi
 load_ssh_keys
 # endregion
 
