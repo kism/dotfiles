@@ -9,6 +9,6 @@
 *.ps1xml text  eol=crlf
 *.clixml text  eol=crlf
 *.xml    text  eol=crlf
-
 # LFS
-.terminfo/* filter=lfs diff=lfs merge=lfs -text
+.terminfo/x/xterm-ghostty filter=lfs diff=lfs merge=lfs -text
+.terminfo/g/ghostty filter=lfs diff=lfs merge=lfs -text
