@@ -1,4 +1,4 @@
 generated.txt
 *.swp
-
 .DS_Store
+.vimrc.swo
