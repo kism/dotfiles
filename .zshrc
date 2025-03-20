@@ -235,8 +235,11 @@ zi light zdharma-continuum/fast-syntax-highlighting
 zi load 'zsh-users/zsh-history-substring-search'
 # zi light zsh-users/zsh-autosuggestions # Naa
 
+# Yes all of these are needed
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
 
 zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
 
