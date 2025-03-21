@@ -1,7 +1,5 @@
-# shellcheck shell=bash # Technically incorrect but shellcheck doesn't support zsh, it works decent
 # .zshrc
 # https://github.com/kism/dotfiles-simple/blob/main/.zshrc
-# shellcheck source=/dev/null
 
 # region Functions
 # Due to weirdness with emojis, we need these variables
@@ -41,11 +39,7 @@ function get_mercury_retrograde() {
 
 function load_ssh_keys() {
     # This also fixes vscode
-    # shellcheck disable=SC2206 # zsh
-    # shellcheck disable=SC2296 # zsh
-    # shellcheck disable=SC2010 # use ls to prevent unwanted printing
     SSH_AGENT_FOLDERS=(${(f)$(ls -1 /tmp | grep ssh)})
-    # shellcheck disable=SC2128 # zsh
     if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
         export SSH_AUTH_SOCK=$(ls -t /tmp/ssh-**/* | head -1)
     fi
@@ -54,7 +48,6 @@ function load_ssh_keys() {
     if type keychain >/dev/null; then
         sshkeylist=('id_rsa' 'id_ed25519')
 
-        # shellcheck disable=SC2128 # This is fine in zsh
         for i in $sshkeylist; do
             if [[ -e ~/.ssh/$i ]]; then
                 if ! eval "$(keychain -q --eval --agents ssh "$i")"; then
