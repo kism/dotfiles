@@ -226,16 +226,7 @@ fi
 # ZSH
 if type zsh >/dev/null; then
     h1 "Setting up zsh"
-    antigenlocation=~/.antigen
-    if ! test -d $antigenlocation; then
-        h2 "Creating $antigenlocation"
-        mkdir $antigenlocation
-    fi
-    h2 "Downloading Antigen:"
-    curl -s -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh >~/.antigen/antigen.zsh
-
-    h2 "Updating Antigen Bundles:"
-    zsh -c "source ~/.antigen/antigen.zsh; antigen update; antigen reset"
+    echo "Will install zinit when you open a new shell"
 else
     h3 "zsh not found, skipping"
 fi
