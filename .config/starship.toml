@@ -33,3 +33,6 @@ disabled = true
 
 [nodejs]
 disabled = true
+
+[crystal]
+disabled = true
