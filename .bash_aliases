@@ -14,9 +14,12 @@ alias sl='ls'
 alias nano='vim'
 alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
 alias screen='echo no #'
+# Colour grep, Print whole file, colour the matches
 alias cgrep='grep --color=always -e "^" -e'
 alias whom=who
 alias yay_noconfirm='yay --noconfirm --needed --cleanafter'
+alias jctl=journalctl
+alias sctl=systemctl
 
 if type nvim >/dev/null 2>&1; then
     alias vi=nvim
