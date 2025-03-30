@@ -12,6 +12,7 @@ alias sudp='sudo'
 alias tmux='tmux -u'
 alias sl='ls'
 alias nano='vim'
+alias ip='ip --color=auto'
 alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
 alias screen='echo no #'
 # Colour grep, Print whole file, colour the matches

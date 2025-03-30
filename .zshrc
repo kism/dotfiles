@@ -94,6 +94,7 @@ fi
 # endregion
 
 # region: aliases
+alias ip='ip --color=auto'
 alias please='sudo $(fc -ln -1)'
 alias sudp='sudo'
 alias tmux='tmux -u'
