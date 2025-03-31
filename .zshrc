@@ -127,6 +127,7 @@ load_ssh_keys
 # region: history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
+SAVEHIST=10000
 ## History command configuration, from oh-my-zsh
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
