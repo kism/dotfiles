@@ -2,10 +2,10 @@
 # .bash_aliases
 # https://github.com/kism/dotfiles-simple/blob/main/.bash_aliases
 
-alias ls='ls --color=auto'
-alias ll='ls -lh --color=auto'
-alias la='ls -halal --color=auto'
-alias sl='ls --color=auto'
+alias ls='ls --color=auto --group-directories-first -F'
+alias ll='ls -lh --color=auto --group-directories-first'
+alias la='ls -halal --color=auto --group-directories-first'
+alias sl='ls --color=auto --group-directories-first'
 
 alias please='sudo $(fc -ln -1)'
 alias sudp='sudo'
