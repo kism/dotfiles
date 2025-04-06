@@ -153,6 +153,9 @@ bindkey "\e[1;5D" backward-word
 # delete
 bindkey "\e[3~" delete-char
 
+# backspace
+bindkey -v '^?' backward-delete-char
+
 ## ctrl+delete
 bindkey "\e[3;5~" kill-word
 
