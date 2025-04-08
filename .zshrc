@@ -109,21 +109,28 @@ alias screen='echo no #'
 alias cgrep='grep --color=always -e "^" -e'
 alias youtube-dl='yt-dlp -o "%(upload_date)s %(title)s [%(id)s].%(ext)s"'
 alias whom=who
+# endregion
 
+# region: editor
 if type nvim >/dev/null; then
     alias vi=nvim
     alias vim=nvim
     alias view="nvim -R"
+    export EDITOR=nvim
+    export VISUAL=nvim
+else
+    export EDITOR=vim
+    export VISUAL=vim
 fi
 # endregion
 
 # region: exports
-export EDITOR=nvim
-export VISUAL=nvim
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
     export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
+else
+    export SYSTEMD_COLORS=true
 fi
 load_ssh_keys
 # endregion
