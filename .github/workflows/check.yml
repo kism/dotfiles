@@ -25,8 +25,8 @@ jobs:
             .config
             .local/share
             .ssh
-            zzz_mount_nfs_macos
           ignore_names: >-
             .zshrc
+            zzz_mount_nfs_macos
         env:
           SHELLCHECK_OPTS: -e SC1091 # Happy for it to not be able to follow everything
