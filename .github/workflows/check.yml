@@ -23,8 +23,9 @@ jobs:
         with:
           ignore_paths: >-
             .config
-            .local
+            .local/share
             .ssh
+            zzz_mount_nfs_macos
           ignore_names: >-
             .zshrc
         env:
