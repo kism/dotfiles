@@ -25,6 +25,7 @@ jobs:
             .config
             .local
             .ssh
+          ignore_names: >-
             .zshrc
         env:
           SHELLCHECK_OPTS: -e SC1091 # Happy for it to not be able to follow everything
