@@ -99,9 +99,11 @@ alias please='sudo $(fc -ln -1)'
 alias sudp='sudo'
 alias tmux='tmux -u'
 alias sl='ls'
-alias ls='ls --color=auto --group-directories-first -F'
-if [[ "$OSTYPE" == darwin* ]] && type gls >/dev/null; then
-    alias ls='gls --color=auto --group-directories-first -F'
+
+if [[ "$OSTYPE" == darwin* ]] && [[ $(type gls >/dev/null) != 0 ]] ; then
+    alias ls='ls --color=auto -F'
+else
+    alias ls='ls --color=auto --group-directories-first -F'
 fi
 alias nano='vim'
 alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
