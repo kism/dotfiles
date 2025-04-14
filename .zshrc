@@ -100,7 +100,7 @@ alias sudp='sudo'
 alias tmux='tmux -u'
 alias sl='ls'
 alias ls='ls --color=auto --group-directories-first -F'
-if [[ "$OSTYPE" == darwin* ]]; then
+if [[ "$OSTYPE" == darwin* ]] && type gls >/dev/null; then
     alias ls='gls --color=auto --group-directories-first -F'
 fi
 alias nano='vim'
