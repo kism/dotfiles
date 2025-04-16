@@ -209,9 +209,21 @@ else
 fi
 # endregion
 
-# region: zsh settings, handled by zinit
+# Local Programming tools
+## Node Version Manager
+if [ -d "$HOME/.nvm" ]; then
+    autoload -U +X compinit && compinit # TODO FIXME?
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
 
-# export LC_CTYPE=en_US.UTF-8 # Hopefully fix double characters
+# Rust
+if [ -f ~/.cargo/env ]; then
+    source "$HOME/.cargo/env"
+fi
+
+# region: zsh settings, handled by zinit
 
 # Fallback
 export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
