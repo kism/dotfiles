@@ -48,4 +48,6 @@ bash setup.sh --no-package-install
 
 ## Todo
 
-- Override existing files with stow
+- Override existing files with stow?
+- NVM makes zsh error on load? `complete:13: command not found: compdef`
+
