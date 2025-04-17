@@ -41,7 +41,7 @@ function load_ssh_keys() {
     # This also fixes vscode
     SSH_AGENT_FOLDERS=(${(f)$(ls -1 /tmp | grep ssh)})
     if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
-        export SSH_AUTH_SOCK=$(ls -t /tmp/ssh-**/* | head -1)
+        export SSH_AUTH_SOCK=$(/bin/ls -t /tmp/ssh-**/* | head -1)
     fi
 
     # Load up ssh keys into keychain if it is on this system
