@@ -33,6 +33,12 @@ echo Setting up htop...
 mkdir -p ~/.config/htop/
 curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/htop/htoprc -o ~/.config/htop/htoprc
 
+# Btop
+echo Setting up btop...
+mkdir -p ~/.config/btop/
+curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/btop/btop.conf -o ~/.config/btop/btop.conf
+
+
 if [ "$1" == "--gui" ]; then
     echo Setting up ghostty
     mkdir -p ~/.config/ghostty/
