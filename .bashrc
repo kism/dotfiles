@@ -37,6 +37,7 @@ fi
 export EDITOR=vim
 export VISUAL=vim
 export SYSTEMD_COLORS=true
+export SYSTEMD_PAGER=
 
 # Get rust aliases and functions
 if [ -f ~/.cargo/env ]; then

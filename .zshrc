@@ -133,6 +133,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 else
     export SYSTEMD_COLORS=true
+    export SYSTEMD_PAGER=
 fi
 load_ssh_keys
 # endregion
