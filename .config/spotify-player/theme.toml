@@ -1,0 +1,38 @@
+[[themes]]
+name = "snazzy"
+[themes.palette]
+background = "#1e1f29"
+foreground = "#ebece6"
+black = "#000000"
+red = "#fc4346"
+green = "#50fb7c"
+yellow = "#f0fb8c"
+blue = "#49baff"
+magenta = "#fc4cb4"
+cyan = "#8be9fe"
+white = "#ededec"
+bright_black = "#555555"
+bright_red = "#fc4346"
+bright_green = "#50fb7c"
+bright_yellow = "#f0fb8c"
+bright_blue = "#49baff"
+bright_magenta = "#fc4cb4"
+bright_cyan = "#8be9fe"
+bright_white = "#ededec"
+[themes.component_style]
+block_title = { fg = "Magenta"  }
+border = {}
+playback_status = { fg = "White", modifiers = ["Bold"] }
+playback_track = { fg = "Magenta", modifiers = ["Bold"] }
+playback_artists = { fg = "Cyan", modifiers = ["Bold"] }
+playback_album = { fg = "Yellow" }
+playback_metadata = { fg = "BrightBlack" }
+playback_progress_bar = { bg = "BrightBlack", fg = "Magenta" }
+current_playing = { fg = "Green", modifiers = ["Bold"] }
+page_desc = { fg = "Cyan", modifiers = ["Bold"] }
+playlist_desc = { fg = "BrightBlack", modifiers = ["Dim"] }
+table_header = { fg = "Blue" }
+secondary_row = {}
+like = {}
+lyrics_played = { modifiers = ["Dim"] }
+
