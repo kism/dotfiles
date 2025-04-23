@@ -24,7 +24,7 @@ enable_cover_image_cache = true
 default_device = "spotify-player"
 seek_duration_secs = 5
 cover_img_width = 7
-cover_img_length = 15
+cover_img_length = 14
 
 [layout]
 playback_window_position = "Top"
