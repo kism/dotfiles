@@ -45,9 +45,3 @@ If you have run before and don't need to install packages and update all
 ```bash
 bash setup.sh --no-package-install
 ```
-
-## Todo
-
-- Override existing files with stow?
-- NVM makes zsh error on load? `complete:13: command not found: compdef`
-
