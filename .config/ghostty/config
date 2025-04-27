@@ -11,7 +11,7 @@ adjust-cursor-thickness = 100%
 adjust-underline-thickness = 200%
 adjust-box-thickness = 100%
 
-term = xterm-256color
+#term = xterm-256color
 
 window-width = 100
 window-height = 36
