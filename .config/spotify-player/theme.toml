@@ -35,4 +35,3 @@ table_header = { fg = "Blue" }
 secondary_row = {}
 like = {}
 lyrics_played = { modifiers = ["Dim"] }
-

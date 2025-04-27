@@ -4,8 +4,8 @@ client_port = 8080
 login_redirect_uri = "http://127.0.0.1:8989/login"
 playback_format = """
 
-{status}
-{track}
+
+{status} {track}
 {artists}
 {album}
 {metadata}"""
@@ -25,6 +25,7 @@ default_device = "spotify-player"
 seek_duration_secs = 5
 cover_img_width = 7
 cover_img_length = 14
+cover_img_scale = 1
 
 [layout]
 playback_window_position = "Top"
@@ -42,4 +43,3 @@ bitrate = 320
 audio_cache = false
 normalization = false
 autoplay = false
-

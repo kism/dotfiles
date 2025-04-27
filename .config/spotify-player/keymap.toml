@@ -1,0 +1,9 @@
+[[keymaps]]
+command = "None"
+key_sequence = "q"
+[[keymaps]]
+command = "CurrentlyPlayingContextPage"
+key_sequence = "\\"
+[[keymaps]]
+command = "LibraryPage"
+key_sequence = "~"
