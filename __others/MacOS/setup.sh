@@ -36,6 +36,7 @@ defaults write com.apple.dock "show-recents" -bool "true"         # Enable show 
 defaults write com.apple.dock "show-recent-count" -int "1"        # Show only one recent app, zero doesn't work
 defaults write com.apple.dock "springboard-columns" -int "9"      # Set Launchpad icon columns
 defaults write com.apple.dock "springboard-rows" -int "9"         # Set Launchpad icon rows
+defaults write com.apple.dock "scroll-to-open" -bool "true"       # Scroll to show windows of the app
 killall Dock
 
 # Mission Control / Expose / Space
