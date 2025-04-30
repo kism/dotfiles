@@ -26,7 +26,7 @@ function get_mercury_retrograde() {
     fi
     if type curl >/dev/null; then
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            curl -s https://mercuryretrogradeapi.com >$RETROGRADETEMPFILE 2>/dev/null
+            curl --max-time 5 -s https://mercuryretrogradeapi.com >$RETROGRADETEMPFILE 2>/dev/null
         fi
         if cat $RETROGRADETEMPFILE | grep false >/dev/null; then
             RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
@@ -61,10 +61,9 @@ function load_ssh_keys() {
 
 function get_ssh_keys_loaded() {
     KEYS_LOADED="0"
-
-    if type keychain >/dev/null; then # If keychain is installed we check if we have keys loaded
-        KEYS_LOADED=$(keychain -l 2>/dev/null | grep -c "The agent has no identities." | xargs)
-    fi
+    # if type keychain >/dev/null; then # If keychain is installed we check if we have keys loaded
+    #     KEYS_LOADED=$(keychain -l 2>/dev/null | grep -c "The agent has no identities." | xargs)
+    # fi
     if [[ ! "$SSH_AUTH_SOCK" == "" ]]; then # If we have an SSH_AUTH_SOCK we have a key loaded
         KEYS_LOADED=$((KEYS_LOADED + 1))
     fi
