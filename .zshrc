@@ -126,6 +126,7 @@ fi
 # endregion
 
 # region: exports
+set -o emacs # Dispite being a vim user, I think emacs mode is correct for me
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
     export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
