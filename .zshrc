@@ -177,6 +177,7 @@ bindkey '^H' backward-kill-word
 bindkey "\e[3;6~" kill-line
 
 # Yes all of these are needed, https://unix.stackexchange.com/a/117162
+# This one needs the plugin to actually work
 #bindkey '^[[A' history-substring-search-up
 #bindkey '^[[B' history-substring-search-down
 #bindkey '^[OA' history-substring-search-up
