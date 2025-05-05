@@ -152,7 +152,7 @@ setopt share_history          # share command history data
 # endregion
 
 # region keybinds
-# Search with up and down arrows
+# Home, end
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 
