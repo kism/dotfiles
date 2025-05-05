@@ -152,6 +152,9 @@ setopt share_history          # share command history data
 # endregion
 
 # region keybinds
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+# https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+# https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/key-bindings.zsh
 # Home, end
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
