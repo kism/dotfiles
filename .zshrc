@@ -175,6 +175,17 @@ bindkey '^H' backward-kill-word
 
 ## ctrl+shift+delete
 bindkey "\e[3;6~" kill-line
+
+# Yes all of these are needed, https://unix.stackexchange.com/a/117162
+#bindkey '^[[A' history-substring-search-up
+#bindkey '^[[B' history-substring-search-down
+#bindkey '^[OA' history-substring-search-up
+#bindkey '^[OB' history-substring-search-down
+
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+bindkey '^[[OA' up-line-or-search
+bindkey '^[[OB' down-line-or-search
 # endregion
 
 # region: root user
@@ -187,6 +198,7 @@ if [[ $EUID -eq 0 ]]; then
     bindkey '^[[B' down-line-or-search
     return # End early since nothing following matters for root
 fi
+# endregion
 
 
 # region: startup message
@@ -256,12 +268,6 @@ zi light zdharma-continuum/fast-syntax-highlighting
 
 zi load 'zsh-users/zsh-history-substring-search'
 # zi light zsh-users/zsh-autosuggestions # Naa
-
-# Yes all of these are needed
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
 
 zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
 
