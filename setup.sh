@@ -254,6 +254,7 @@ if type git >/dev/null; then
     h2 "New repo default branch name"
     git config --global init.defaultBranch main
     h2 "Global git ignore: ~/.gitignore_global"
+    touch ~/.gitignore_global
     echo .DS_Store >> ~/.gitignore_global
     git config --global core.excludesfile ~/.gitignore_global
 else
