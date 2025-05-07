@@ -224,17 +224,10 @@ bindkey '^H' backward-kill-word
 ## ctrl+shift+delete
 bindkey "\e[3;6~" kill-line
 
-# Yes all of these are needed, https://unix.stackexchange.com/a/117162
-# This one needs the plugin to actually work
-#bindkey '^[[A' history-substring-search-up
-#bindkey '^[[B' history-substring-search-down
-#bindkey '^[OA' history-substring-search-up
-#bindkey '^[OB' history-substring-search-down
+# Up, down
+bindkey "${key[Up]}" up-line-or-beginning-search
+bindkey "${key[Down]}" up-line-or-beginning-search
 
-bindkey "${key[Up]}" up-line-or-search
-bindkey "${key[Down]}" down-line-or-search
-# bindkey '^[[OA' up-line-or-search
-# bindkey '^[[OB' down-line-or-search
 # endregion
 
 # region: root user
@@ -313,11 +306,7 @@ zi snippet PZTM::utility
 zi snippet PZTM::completion
 zi light zdharma-continuum/fast-syntax-highlighting
 
-zi load 'zsh-users/zsh-history-substring-search'
-
-bindkey "${key[Up]}" up-line-or-search
-bindkey "${key[Down]}" down-line-or-search
-
+# zi load 'zsh-users/zsh-history-substring-search' # Naa
 # zi light zsh-users/zsh-autosuggestions # Naa
 
 zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
