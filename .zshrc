@@ -239,10 +239,10 @@ bindkey "\e[3;6~" kill-line
 
 # Up, down
 bindkey "${key[Up]}" up-line-or-beginning-search
-bindkey "${key[Down]}" up-line-or-beginning-search
+bindkey "${key[Down]}" down-line-or-beginning-search
 ## Up, down, God know why, ghostty?
 bindkey "^[[A" up-line-or-beginning-search
-bindkey "^[[B" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
 
 # endregion
 
