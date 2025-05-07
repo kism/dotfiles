@@ -166,7 +166,6 @@ zle -N down-line-or-beginning-search
 # values from terminfo
 if [[ -r ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR} ]] ; then
     source ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}
-    echo yep
 else
     typeset -g -A key
     echo "nope: ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}"
