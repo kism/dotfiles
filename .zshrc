@@ -198,7 +198,7 @@ else
     [[ -n "$terminfo[kend]" ]] && key[End]=$terminfo[kend]
     [[ -n "$terminfo[kpp]" ]] && key[PageUp]=$terminfo[kpp]
     [[ -n "$terminfo[knp]" ]] && key[PageDown]=$terminfo[knp]
-    [[ -n "$terminfo[kcuu1]" ]] && key[Up]=$terminfo[kcuu1] && echo yep up
+    [[ -n "$terminfo[kcuu1]" ]] && key[Up]=$terminfo[kcuu1]
     [[ -n "$terminfo[kcub1]" ]] && key[Left]=$terminfo[kcub1]
     [[ -n "$terminfo[kcud1]" ]] && key[Down]=$terminfo[kcud1]
     [[ -n "$terminfo[kcuf1]" ]] && key[Right]=$terminfo[kcuf1]
