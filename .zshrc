@@ -126,7 +126,6 @@ fi
 # endregion
 
 # region: exports
-set -o emacs # Dispite being a vim user, I think emacs mode is correct for me
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
     export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
@@ -149,6 +148,12 @@ setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
+
+# Enable beginning-search
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 # endregion
 
 # region keybinds
@@ -306,7 +311,10 @@ zi snippet PZTM::utility
 zi snippet PZTM::completion
 zi light zdharma-continuum/fast-syntax-highlighting
 
-# zi load 'zsh-users/zsh-history-substring-search' # Naa
+zi load 'zsh-users/zsh-history-substring-search'
+bindkey "^[[5~" history-substring-search-up   # Page Up
+bindkey "^[[6~" history-substring-search-down # Page Down
+
 # zi light zsh-users/zsh-autosuggestions # Naa
 
 zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
