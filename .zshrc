@@ -156,29 +156,64 @@ setopt share_history          # share command history data
 # https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/key-bindings.zsh
 
-# Source the keybindings for the terminal
+# Thank you apple for this code
+# Use keycodes (generated via zkbd) if present, otherwise fallback on
+# values from terminfo
 if [[ -r ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR} ]] ; then
     source ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}
+    echo yep
 else
-    if [[ -r ${ZDOTDIR:-$HOME}/.zkbd/safe ]] ; then
-        source ${ZDOTDIR:-$HOME}/.zkbd/safe
-    fi
+    typeset -g -A key
+    echo "nope: ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}"
+
+    [[ -n "$terminfo[kf1]" ]] && key[F1]=$terminfo[kf1]
+    [[ -n "$terminfo[kf2]" ]] && key[F2]=$terminfo[kf2]
+    [[ -n "$terminfo[kf3]" ]] && key[F3]=$terminfo[kf3]
+    [[ -n "$terminfo[kf4]" ]] && key[F4]=$terminfo[kf4]
+    [[ -n "$terminfo[kf5]" ]] && key[F5]=$terminfo[kf5]
+    [[ -n "$terminfo[kf6]" ]] && key[F6]=$terminfo[kf6]
+    [[ -n "$terminfo[kf7]" ]] && key[F7]=$terminfo[kf7]
+    [[ -n "$terminfo[kf8]" ]] && key[F8]=$terminfo[kf8]
+    [[ -n "$terminfo[kf9]" ]] && key[F9]=$terminfo[kf9]
+    [[ -n "$terminfo[kf10]" ]] && key[F10]=$terminfo[kf10]
+    [[ -n "$terminfo[kf11]" ]] && key[F11]=$terminfo[kf11]
+    [[ -n "$terminfo[kf12]" ]] && key[F12]=$terminfo[kf12]
+    [[ -n "$terminfo[kf13]" ]] && key[F13]=$terminfo[kf13]
+    [[ -n "$terminfo[kf14]" ]] && key[F14]=$terminfo[kf14]
+    [[ -n "$terminfo[kf15]" ]] && key[F15]=$terminfo[kf15]
+    [[ -n "$terminfo[kf16]" ]] && key[F16]=$terminfo[kf16]
+    [[ -n "$terminfo[kf17]" ]] && key[F17]=$terminfo[kf17]
+    [[ -n "$terminfo[kf18]" ]] && key[F18]=$terminfo[kf18]
+    [[ -n "$terminfo[kf19]" ]] && key[F19]=$terminfo[kf19]
+    [[ -n "$terminfo[kf20]" ]] && key[F20]=$terminfo[kf20]
+    [[ -n "$terminfo[kbs]" ]] && key[Backspace]=$terminfo[kbs]
+    [[ -n "$terminfo[kich1]" ]] && key[Insert]=$terminfo[kich1]
+    [[ -n "$terminfo[kdch1]" ]] && key[Delete]=$terminfo[kdch1]
+    [[ -n "$terminfo[khome]" ]] && key[Home]=$terminfo[khome]
+    [[ -n "$terminfo[kend]" ]] && key[End]=$terminfo[kend]
+    [[ -n "$terminfo[kpp]" ]] && key[PageUp]=$terminfo[kpp]
+    [[ -n "$terminfo[knp]" ]] && key[PageDown]=$terminfo[knp]
+    [[ -n "$terminfo[kcuu1]" ]] && key[Up]=$terminfo[kcuu1]
+    [[ -n "$terminfo[kcub1]" ]] && key[Left]=$terminfo[kcub1]
+    [[ -n "$terminfo[kcud1]" ]] && key[Down]=$terminfo[kcud1]
+    [[ -n "$terminfo[kcuf1]" ]] && key[Right]=$terminfo[kcuf1]
 fi
 
 # Home, end
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
+# bindkey "${key[Home]}" beginning-of-line
+bindkey "${key[Home]}" beginning-of-line
+bindkey "${key[End]}" end-of-line
 
 ## ctrl+arrows
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
 
 # delete
-bindkey "\e[3~" delete-char
+bindkey "${key[Delete]}" delete-char
 
 # backspace
 # bindkey -v '^?' backward-delete-char
-bindkey '^?' backward-delete-char
+bindkey "${key[Backspace]}" backward-delete-char
 
 ## ctrl+delete
 bindkey "\e[3;5~" kill-word
@@ -196,10 +231,10 @@ bindkey "\e[3;6~" kill-line
 #bindkey '^[OA' history-substring-search-up
 #bindkey '^[OB' history-substring-search-down
 
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
-bindkey '^[[OA' up-line-or-search
-bindkey '^[[OB' down-line-or-search
+bindkey "${key[Up]}" up-line-or-search
+bindkey "${key[Down]}" down-line-or-search
+# bindkey '^[[OA' up-line-or-search
+# bindkey '^[[OB' down-line-or-search
 # endregion
 
 # region: root user
@@ -279,6 +314,10 @@ zi snippet PZTM::completion
 zi light zdharma-continuum/fast-syntax-highlighting
 
 zi load 'zsh-users/zsh-history-substring-search'
+
+bindkey "${key[Up]}" up-line-or-search
+bindkey "${key[Down]}" down-line-or-search
+
 # zi light zsh-users/zsh-autosuggestions # Naa
 
 zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
