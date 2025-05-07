@@ -198,7 +198,7 @@ else
     [[ -n "$terminfo[kend]" ]] && key[End]=$terminfo[kend]
     [[ -n "$terminfo[kpp]" ]] && key[PageUp]=$terminfo[kpp]
     [[ -n "$terminfo[knp]" ]] && key[PageDown]=$terminfo[knp]
-    [[ -n "$terminfo[kcuu1]" ]] && key[Up]=$terminfo[kcuu1]
+    [[ -n "$terminfo[kcuu1]" ]] && key[Up]=$terminfo[kcuu1] && echo yep up
     [[ -n "$terminfo[kcub1]" ]] && key[Left]=$terminfo[kcub1]
     [[ -n "$terminfo[kcud1]" ]] && key[Down]=$terminfo[kcud1]
     [[ -n "$terminfo[kcuf1]" ]] && key[Right]=$terminfo[kcuf1]
@@ -212,6 +212,14 @@ bindkey "${key[End]}" end-of-line
 ## ctrl+arrows
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
+
+## alt+arrows
+bindkey "^[f" forward-word
+bindkey "^[b" backward-word
+
+## Command+arrows
+bindkey -r "^E"
+bindkey -r "^A"
 
 # delete
 bindkey "${key[Delete]}" delete-char
@@ -232,6 +240,9 @@ bindkey "\e[3;6~" kill-line
 # Up, down
 bindkey "${key[Up]}" up-line-or-beginning-search
 bindkey "${key[Down]}" up-line-or-beginning-search
+## Up, down, God know why, ghostty?
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" up-line-or-beginning-search
 
 # endregion
 
