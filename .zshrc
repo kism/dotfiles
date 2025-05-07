@@ -155,6 +155,16 @@ setopt share_history          # share command history data
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 # https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/key-bindings.zsh
+
+# Source the keybindings for the terminal
+if [[ -r ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR} ]] ; then
+    source ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}
+else
+    if [[ -r ${ZDOTDIR:-$HOME}/.zkbd/safe ]] ; then
+        source ${ZDOTDIR:-$HOME}/.zkbd/safe
+    fi
+fi
+
 # Home, end
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
@@ -198,8 +208,6 @@ if [[ $EUID -eq 0 ]]; then
 %{%F{196}%}#%{%f%} "
     autoload -U compinit; compinit
     zstyle ':completion:*' menu select
-    bindkey '^[[A' up-line-or-search
-    bindkey '^[[B' down-line-or-search
     return # End early since nothing following matters for root
 fi
 # endregion
