@@ -162,6 +162,9 @@ zle -N down-line-or-beginning-search
 # https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/key-bindings.zsh
 # Honestly, if you want to know what a keybinding is, sleep 60 and just press the key
 
+# Unbind vi-cmd-mode, I think this is escape
+bindkey -r "^["
+
 # Home, end
 bindkey "${terminfo[khome]}" beginning-of-line
 bindkey "${terminfo[kend]}" end-of-line
