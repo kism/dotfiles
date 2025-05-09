@@ -168,6 +168,9 @@ bindkey -r "^["
 # Home, end
 bindkey "${terminfo[khome]}" beginning-of-line
 bindkey "${terminfo[kend]}" end-of-line
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+
 
 ## ctrl+arrows
 bindkey "\e[1;5C" forward-word
