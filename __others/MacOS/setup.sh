@@ -9,6 +9,9 @@ if [ "$(uname)" != "Darwin" ]; then
     exit 1
 fi
 
+# No power-on when lid opened or power plugged in
+sudo nvram BootPreference=%00
+
 # Don't write .DS_Store files on network drives, external drives
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool "true"
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool "true"
