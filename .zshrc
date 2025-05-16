@@ -114,7 +114,6 @@ alias whom=who
 
 # region: editor
 if type nvim >/dev/null; then
-    alias vi=nvim
     alias vim=nvim
     alias view="nvim -R"
 fi

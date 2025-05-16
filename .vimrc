@@ -51,7 +51,8 @@ endif
 
 
 " Set colour mode depending on terminal type
-if $TERM !~? '^\(vt\|linux\|ansi\)'
+if $TERM_PROGRAM == 'Apple_Terminal'
+elseif $TERM !~? '^\(vt\|linux\|ansi\)'
     set termguicolors
 endif
 
