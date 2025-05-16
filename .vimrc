@@ -34,8 +34,8 @@ set nonumber                   " No line numbers
 syntax on                      " Syntax highlighting
 
 " Speed up responsiveness
-set ttimeout
-set ttimeoutlen=1
+" set ttimeout        " Weird break
+" set ttimeoutlen=1   " Weird break
 set ttyfast
 
 " Set terminal cursor shape depending on terminal
