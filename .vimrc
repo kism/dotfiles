@@ -33,10 +33,10 @@ set visualbell                 " No beeping
 set nonumber                   " No line numbers
 syntax on                      " Syntax highlighting
 
-" Speed up responsiveness
-" set ttimeout        " Weird break
-" set ttimeoutlen=1   " Weird break
-set ttyfast
+" Speed up responsiveness, uncomment the first two if you get a weird g inserted when opening a file?
+set ttimeout        " Speed up changing modes
+set ttimeoutlen=10  " Speed up changing modes
+set ttyfast         " Break compatibility with serial terminals
 
 " Set terminal cursor shape depending on terminal
 if empty($TMUX)
