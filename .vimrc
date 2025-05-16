@@ -113,36 +113,21 @@ endfunction
 set noshowmode
 set laststatus=2
 
-
-function! Space() " I'm so sure that there is a better way
-  return ' '
-endfunction
-
 function SetStatusLine()
     " On god this is the best way to do this
+    " Seriously, look at github 'set statusline+=' in the code search
     " https://learnvimscriptthehardway.stevelosh.com/chapters/17.html
-    " Clear the statusline
-    set statusline= 
-    " Set the colour for the mode indication, print the mode per the GetNiceMode function
-    set statusline+=%#ModeIndicator#%{Space()}%{GetNiceMode()}%{Space()}
-    " Set the colour for the bulk of the statusline
-    set statusline+=%#StatusLineRegularBG#
-    " Two spaces and then print the file path, modified flag
-    set statusline+=%{Space()}%{Space()}%f%{Space()}%m
-    " Expand the next part of the statusline to the right
-    set statusline+=%=
-    " Set the colour for the file type, print the file type per the GetNiceFileType function
-    set statusline+=%#StatusLineFileType#%{Space()}%{GetNiceFileType()}%{Space()}
-    " Set the colour for the reset of the file info
-    set statusline+=%#StatusLineLineInfo#
-    " Print the file encoding (utf-8, utf-16, etc)
-    set statusline+=%{Space()}%{&fileencoding?&fileencoding:&encoding}%{Space()}
-    " In square brackets, print the file format (unix, dos, mac)
-    set statusline+=\[%{&fileformat}\]
-    " Print the percent through the file
-    set statusline+=%{Space()}%p%%
-    " Print the line number, column number
-    set statusline+=%{Space()}%l:%c%{Space()}
+    set statusline=                                     " Clear the statusline
+    set statusline+=%#ModeIndicator#\ %{GetNiceMode()}\ " Set the colour for the mode indication, print the mode per the GetNiceMode function
+    set statusline+=%#StatusLineRegularBG#              " Set the colour for the bulk of the statusline
+    set statusline+=\ \ %f\ %m                          " Two spaces and then print the file path, modified flag
+    set statusline+=%=                                  " Expand the next part of the statusline to the right
+    set statusline+=%#StatusLineFileType#\ %{GetNiceFileType()}\ " Set the colour for the file type, print the file type per the GetNiceFileType function
+    set statusline+=%#StatusLineLineInfo#               " Set the colour for the status line
+    set statusline+=\ %{&fileencoding?&fileencoding:&encoding}\  " Print the file encoding (utf-8, utf-16, etc)
+    set statusline+=\[%{&fileformat}\]                  " In square brackets, print the file format (unix, dos, mac)
+    set statusline+=\ %p%%                              " Print the percent through the file
+    set statusline+=\ %l:%c\                            " Print the line number, column number
 endfunction
 
 augroup SetStatusLineColour
