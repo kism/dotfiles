@@ -38,22 +38,23 @@ set ttimeout        " Speed up changing modes
 set ttimeoutlen=10  " Speed up changing modes
 set ttyfast         " Break compatibility with serial terminals
 
-" Set terminal cursor shape depending on terminal
-if empty($TMUX)
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-else
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-endif
-
-
 " Set colour mode depending on terminal type
-if $TERM_PROGRAM == 'Apple_Terminal'
-elseif $TERM !~? '^\(vt\|linux\|ansi\)'
-    set termguicolors
+if $TERM !~? '^\(vt\|linux\|ansi\)'
+    " Apple Terminal.app struggles with 256 colours, despite using xterm-256color???
+    if $TERM_PROGRAM !=# 'Apple_Terminal' " Depending on :set ignorecase/noignorecase the == is case sensitive, we use ==#
+        set termguicolors
+    endif
+
+    " Set the terminal cursor depending on the mode
+    let &t_SI = "\e[6 q" " Insert mode
+    let &t_EI = "\e[2 q" " Normal mode
+    let &t_SR = "\e[4 q" " Replace mode
+
+    " Reset the cursor on startup
+    augroup myCmds
+    au!
+    autocmd VimEnter * silent !echo -ne "\e[2 q"
+    augroup END
 endif
 
 " Statusline
