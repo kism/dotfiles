@@ -14,11 +14,12 @@ set ignorecase  " Ignore case when searching
 set incsearch   " Incremental search, real time results as you type
 
 " Indent
+set expandtab      " Use spaces instead of tabs
 set autoindent     " Copy indent from current line when starting a new line
+set tabstop=4      " Number of spaces that a <Tab> counts for
 set shiftwidth=4   " Number of spaces to use for autoindent
-set smartindent    " Do smart autoindenting when starting a new line
-set smarttab       " Use shiftwidth for tabstop
-set softtabstop=4  " Number of spaces that a <Tab> in the file counts for
+" set softtabstop=0  " God knows
+" set smarttab       " Use shiftwidth for tabstop ???
 
 " Keymaps
 map q <Nop> " Prevent myself from entering macro mode
@@ -45,6 +46,8 @@ if $TERM !~? '^\(vt\|linux\|ansi\)'
     " Apple Terminal.app struggles with 256 colours, despite using xterm-256color???
     if $TERM_PROGRAM !=# 'Apple_Terminal' " Depending on :set ignorecase/noignorecase the == is case sensitive, we use ==#
         set termguicolors
+    else
+        set t_Co=256
     endif
 
     " Set the terminal cursor depending on the mode
