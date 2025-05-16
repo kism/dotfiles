@@ -117,12 +117,11 @@ if type nvim >/dev/null; then
     alias vi=nvim
     alias vim=nvim
     alias view="nvim -R"
-    export EDITOR=nvim
-    export VISUAL=nvim
-else
-    export EDITOR=vim
-    export VISUAL=vim
 fi
+
+# Just a warning, this sets the zsh binds into vim mode
+export EDITOR=vim
+export VISUAL=vim
 # endregion
 
 # region: exports
