@@ -1,15 +1,17 @@
 " .vimrc
+" https://learnvimscriptthehardway.stevelosh.com/
+" https://learnvim.irian.to/
 
 " Wrapping
-set nowrap        " Don't wrap lines
-set showbreak=+++ " Show a break line when wrapping
-set textwidth=100 " Wrap lines at 100 characters
+set nowrap        " Don't wrap lines by default
+set showbreak=+++ " When wrapping, show a break line when wrapping
+set textwidth=100 " When wrapping, wrap at 120 characters
 
 " Search
 set hlsearch    " Highlight search results
 set smartcase   " Override ignorecase if the search pattern contains uppercase characters
 set ignorecase  " Ignore case when searching
-set incsearch   " Incremental search
+set incsearch   " Incremental search, real time results as you type
 
 " Indent
 set autoindent     " Copy indent from current line when starting a new line
@@ -26,7 +28,7 @@ set mouse-=a                   " Mouse off
 set pastetoggle=<F2>           " Toggle paste mode with F2
 set t_u7=                      " Fix Windows Terminal compatibility
 set tw=0                       " Set text wrapping off for the language formatter
-set undolevels=1000            " Set the number of undos
+set undolevels=250             " Set the number of undos
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode
 set showmatch                  " Show matching brackets
 set visualbell                 " No beeping
@@ -60,16 +62,17 @@ endif
 " Statusline
 " https://pastebin.com/qWRQVzES
 " https://shapeshed.com/vim-statuslines/
-"red, yellow, green, blue, magenta, cyan, white, black, gray
+" red, yellow, green, blue, magenta, cyan, white, black, gray
 
 " Default matches normal mode
 highlight ModeIndicator       guifg=#FFFFFF guibg=#808080 ctermfg=black ctermbg=white
-" These are constants
+" These are constants, for other parts of the statusline
 highlight StatusLineRegularBG guifg=#FFFFFF guibg=#444444 ctermfg=black ctermbg=gray
 highlight StatusLineLineInfo  guifg=#FFFFFF guibg=#808080 ctermfg=white ctermbg=black
 highlight StatusLineFileType  guifg=#FFFFFF guibg=#008080 ctermfg=black ctermbg=white
 
 function! SetModeColour()
+    " Depending on the mode, set the colour of ModeIndicator
     let l:current_mode = mode()
 
     if l:current_mode==#"n"
@@ -92,6 +95,7 @@ function! SetModeColour()
 endfunction
 
 function! GetNiceMode()
+    " Get the mode, return a string that nicely represents it
     call SetModeColour()
     let l:current_mode = mode()
     let l:mode_map = {'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK', 'c': 'COMMAND', 's': 'SELECT', 'S': 'S-LINE', "\<C-s>": 'S-BLOCK', 't': 'TERMINAL'}
@@ -104,6 +108,7 @@ function! GetNiceMode()
 endfunction
 
 function! GetNiceFileType()
+    " Get the file type, if not possible return 'text'
     let l:filetype = &filetype
     if l:filetype ==# ''
         return 'text'
@@ -111,24 +116,24 @@ function! GetNiceFileType()
     return l:filetype
 endfunction
 
-set noshowmode
-set laststatus=2
+set noshowmode   " Do not show -- INSERT --
+set laststatus=2 " Two rows, status line, command line
 
 function SetStatusLine()
     " On god this is the best way to do this
     " Seriously, look at github 'set statusline+=' in the code search
     " https://learnvimscriptthehardway.stevelosh.com/chapters/17.html
-    set statusline=                                     " Clear the statusline
-    set statusline+=%#ModeIndicator#\ %{GetNiceMode()}\ " Set the colour for the mode indication, print the mode per the GetNiceMode function
-    set statusline+=%#StatusLineRegularBG#              " Set the colour for the bulk of the statusline
-    set statusline+=\ \ %f\ %m                          " Two spaces and then print the file path, modified flag
-    set statusline+=%=                                  " Expand the next part of the statusline to the right
-    set statusline+=%#StatusLineFileType#\ %{GetNiceFileType()}\ " Set the colour for the file type, print the file type per the GetNiceFileType function
-    set statusline+=%#StatusLineLineInfo#               " Set the colour for the status line
-    set statusline+=\ %{&fileencoding?&fileencoding:&encoding}\  " Print the file encoding (utf-8, utf-16, etc)
-    set statusline+=\[%{&fileformat}\]                  " In square brackets, print the file format (unix, dos, mac)
-    set statusline+=\ %p%%                              " Print the percent through the file
-    set statusline+=\ %l:%c\                            " Print the line number, column number
+    set statusline=                                      " Clear the statusline
+    set statusline+=%#ModeIndicator#\ %{GetNiceMode()}\  " Set the colour for the mode indication, print the mode per the GetNiceMode function
+    set statusline+=%#StatusLineRegularBG#               " Set the colour for the bulk of the statusline
+    set statusline+=\ \ %f\ %m                           " Two spaces and then print the file path, modified flag
+    set statusline+=%=                                   " Expand the next part of the statusline to the right
+    set statusline+=%#StatusLineFileType#\ %{GetNiceFileType()}\  " Set the colour for the file type, print the file type per the GetNiceFileType function
+    set statusline+=%#StatusLineLineInfo#                " Set the colour for the status line
+    set statusline+=\ %{&fileencoding?&fileencoding:&encoding}\   " Print the file encoding (utf-8, utf-16, etc)
+    set statusline+=\[%{&fileformat}\]                   " In square brackets, print the file format (unix, dos, mac)
+    set statusline+=\ %p%%                               " Print the percent through the file
+    set statusline+=\ %l:%c\                             " Print the line number, column number
 endfunction
 
 augroup SetStatusLineColour
