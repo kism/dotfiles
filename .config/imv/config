@@ -1,7 +1,0 @@
-[options]
-background = aaaaaa
-overlay = true
-overlay_font = Monospace:14
-overlay_text_alpha = aa
-overlay_position_bottom = true
-scaling_mode = shrink

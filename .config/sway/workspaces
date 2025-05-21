@@ -1,2 +1,0 @@
-include $HOME/.config/sway/config.d/hosts/`hostname`.conf
-include $HOME/.config/sway/config.d/users/`whoami`.conf
