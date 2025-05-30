@@ -105,7 +105,7 @@ defaults write com.microsoft.Edge "EdgeShoppingAssistantEnabled" -bool "false"
 # Symlinks
 
 LOCAL_BIN="$HOME/.local/bin"
-mkdir -p 
+mkdir -p "$LOCAL_BIN"
 
 COT_SYMLINK_PATH="$LOCAL_BIN/cot"
 
