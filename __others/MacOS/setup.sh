@@ -104,16 +104,21 @@ defaults write com.microsoft.Edge "EdgeShoppingAssistantEnabled" -bool "false"
 
 # Symlinks
 
-if [ -f "/usr/local/bin/cot" ]; then
+LOCAL_BIN="$HOME/.local/bin"
+mkdir -p 
+
+COT_SYMLINK_PATH="$LOCAL_BIN/cot"
+
+if [ -f "$COT_SYMLINK_PATH" ]; then
     echo "cot is already symlinked."
 elif [ -d "/Applications/CotEditor.app" ]; then
     echo "Found CotEditor in /Applications"
-    echo "Adding cot to /usr/local/bin"
-    sudo ln -s /Applications/CotEditor.app/Contents/SharedSupport/bin/cot /usr/local/bin/cot
+    echo "Adding cot to $COT_SYMLINK_PATH"
+    ln -s "/Applications/CotEditor.app/Contents/SharedSupport/bin/cot" "$COT_SYMLINK_PATH"
 elif [ -d "$HOME/Applications/CotEditor.app" ]; then
     echo "Found CotEditor in $HOME/Applications"
-    echo "Adding cot to /usr/local/bin"
-    sudo ln -s "$HOME/Applications/CotEditor.app/Contents/SharedSupport/bin/cot" /usr/local/bin/cot
+    echo "Adding cot to $COT_SYMLINK_PATH"
+    ln -s "$HOME/Applications/CotEditor.app/Contents/SharedSupport/bin/cot" "$COT_SYMLINK_PATH"
 else
     echo "CotEditor is not installed."
     echo "Please install CotEditor from the App Store / mas"
