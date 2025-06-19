@@ -58,7 +58,7 @@ if $TERM !~? '^\(vt\|linux\|ansi\)'
     " Reset the cursor on startup
     augroup myCmds
     au!
-    autocmd VimEnter * silent !echo -ne "\e[2 q"
+    autocmd VimEnter * silent !echo -ne "\e[2 q" " This fails if the account's shell is /usr/bin/nologin
     augroup END
 endif
 
