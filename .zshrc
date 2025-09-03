@@ -290,6 +290,7 @@ bindkey "^[[6~" history-substring-search-down # Page Down
 # zi light zsh-users/zsh-autosuggestions # Naa
 
 zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
+zi load 'martvdmoosdijk/zsh-nvm-auto-use' # Load Node.js versions per project
 
 # Starship handles the prompt
 zi ice as"command" from"gh-r" \
