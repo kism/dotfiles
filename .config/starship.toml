@@ -34,7 +34,7 @@ format = '([$all_status$ahead_behind]($style) )'
 disabled = true
 
 [nodejs]
-symbol = 'N '
+symbol = '⬢ '
 
 [crystal]
 disabled = true
