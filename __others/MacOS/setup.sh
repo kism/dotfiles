@@ -22,9 +22,11 @@ defaults write -g com.apple.swipescrolldirection -bool "false" # Natural scrolli
 defaults write -g InitialKeyRepeat -int 25               # Key repeat
 defaults write -g KeyRepeat -int 2                       # Key repeat
 defaults write -g ApplePressAndHoldEnabled -bool "false" # Make holding characters behave normally
+defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool "false" # Disable double-space period
 
 # Interface
 defaults write -g AppleInterfaceStyle Dark # Dark mode
+defaults write -g AppleShowScrollBars -string "WhenScrolling;" # Show scroll bars when scrolling
 
 # Dock
 defaults write com.apple.dock "orientation" -string "left"        # Dock position
@@ -64,6 +66,8 @@ defaults write com.apple.TextEdit "RichText" -bool "false"
 defaults write org.mozilla.firefox "EnterprisePoliciesEnabled" -bool "true"
 defaults write org.mozilla.firefox "DisablePocket" -bool "true"
 defaults write org.mozilla.firefox "PasswordManagerEnabled" -bool "false"
+defaults write org.mozilla.firefox "AutofillAddressEnabled" -bool "false"
+defaults write org.mozilla.firefox "AutofillCreditCardEnabled" -bool "false"
 defaults write org.mozilla.firefox "NoDefaultBookmarks" -bool "true"
 defaults write org.mozilla.firefox "FirefoxHome" -dict \
     Search -bool "true" \
