@@ -253,6 +253,10 @@ if [ -f ~/.cargo/env ]; then
     source "$HOME/.cargo/env"
 fi
 
+# VSCode
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
 # region: zsh settings, handled by zinit
 
 # Fallback
