@@ -242,7 +242,6 @@ fi
 # Local Programming tools
 ## Node Version Manager
 if [ -d "$HOME/.nvm" ]; then
-    autoload -U +X compinit && compinit # TODO FIXME?
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -252,6 +251,22 @@ fi
 if [ -f ~/.cargo/env ]; then
     source "$HOME/.cargo/env"
 fi
+
+if [ -f "$HOME/.local/bin/uv" ]; then
+    echo 'eval "$(uv generate-shell-completion zsh)"' >> ~/.zshrc
+fi
+
+if type kubectl >/dev/null; then
+    source <(kubectl completion zsh)
+fi
+
+if type docker >/dev/null; then
+    mkdir -p ~/.docker/completions
+    docker completion zsh > ~/.docker/completions/_docker
+    FPATH="$HOME/.docker/completions:$FPATH"
+fi
+
+autoload -Uz compinit && compinit
 
 # VSCode
 
@@ -301,3 +316,4 @@ zi ice as"command" from"gh-r" \
           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
           atpull"%atclone" src"init.zsh"
 zi light starship/starship
+eval "$(uv generate-shell-completion zsh)"
