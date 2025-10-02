@@ -253,7 +253,7 @@ if [ -f ~/.cargo/env ]; then
 fi
 
 if [ -f "$HOME/.local/bin/uv" ]; then
-    echo 'eval "$(uv generate-shell-completion zsh)"' >> ~/.zshrc
+    eval "$(uv generate-shell-completion zsh)"
 fi
 
 if type kubectl >/dev/null; then
@@ -316,4 +316,3 @@ zi ice as"command" from"gh-r" \
           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
           atpull"%atclone" src"init.zsh"
 zi light starship/starship
-eval "$(uv generate-shell-completion zsh)"
