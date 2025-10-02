@@ -154,7 +154,7 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 # endregion
 
-# region keybinds
+# region: keybinds
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 # https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/key-bindings.zsh
@@ -252,26 +252,6 @@ if [ -f ~/.cargo/env ]; then
     source "$HOME/.cargo/env"
 fi
 
-if [ -f "$HOME/.local/bin/uv" ]; then
-    eval "$(uv generate-shell-completion zsh)"
-fi
-
-if type kubectl >/dev/null; then
-    source <(kubectl completion zsh)
-fi
-
-if type docker >/dev/null; then
-    mkdir -p ~/.docker/completions
-    docker completion zsh > ~/.docker/completions/_docker
-    FPATH="$HOME/.docker/completions:$FPATH"
-fi
-
-autoload -Uz compinit && compinit
-
-# VSCode
-
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
-
 # region: zsh settings, handled by zinit
 
 # Fallback
@@ -316,3 +296,12 @@ zi ice as"command" from"gh-r" \
           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
           atpull"%atclone" src"init.zsh"
 zi light starship/starship
+# endregion
+
+# region: Completions
+command -v kubectl >/dev/null && source <(kubectl completion zsh)
+command -v docker >/dev/null && source <(docker completion zsh)
+command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
+command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
+[[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
+# endregion
