@@ -260,7 +260,6 @@ if type git >/dev/null; then
     echo .Trash-* >> ~/.gitignore_global
     echo .fseventsd >> ~/.gitignore_global
     echo .Spotlight-V100 >> ~/.gitignore_global
-    echo core >> ~/.gitignore_global
     echo Thumbs.db >> ~/.gitignore_global
     git config --global core.excludesfile ~/.gitignore_global
 else
