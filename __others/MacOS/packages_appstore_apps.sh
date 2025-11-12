@@ -14,6 +14,7 @@ apps=(
     "Magnet"
     "Bitwarden"
     "WireGuard"
+    "Picview"
 )
 
 echo "Installing apps from the App Store using mas"
