@@ -89,6 +89,10 @@ function setup_dnf() {
     sudo dnf clean all
     h2 "dnf upgrade, install epel"
     sudo dnf upgrade -y
+    if [ "$ID" == "fedora" ] || [[ $ID_LIKE == *"fedora"* ]]; then
+        h2 "Fedora based system detected, enabling rpmfusion repos"
+        sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
+    fi
     sudo dnf install -y epel-release
     h2 "Installing Packages"
     # shellcheck disable=SC2086 # Required here to split the package list
