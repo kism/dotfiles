@@ -89,7 +89,7 @@ function setup_dnf() {
     sudo dnf clean all
     h2 "dnf upgrade"
     sudo dnf upgrade -y
-    if [ "$ID" == "fedora" ] || [[ $ID_LIKE == *"fedora"* ]]; then
+    if [ "$ID" == "fedora" ] || [[ $NAME == *"fedora"* ]]; then
         h2 "Fedora based system detected, enabling rpmfusion repos"
         sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
     else
