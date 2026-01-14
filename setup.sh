@@ -252,7 +252,7 @@ if type git >/dev/null; then
     git config --global credential.helper store
     h2 "Rebase setting"
     git config --global pull.rebase true
-    h2 CLRF""
+    h2 "CRLF"
     git config --global core.autocrlf false
     h2 "EOL LF"
     git config --global core.eol lf
@@ -260,6 +260,8 @@ if type git >/dev/null; then
     git config --global core.editor vim
     h2 "New repo default branch name"
     git config --global init.defaultBranch main
+    h2 "rerere"
+    git config --global rerere.enabled true
     h2 "Global git ignore: ~/.gitignore_global"
     touch ~/.gitignore_global
     echo "" > ~/.gitignore_global
