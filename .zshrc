@@ -302,6 +302,12 @@ zi ice as"command" from"gh-r" \
 zi light starship/starship
 # endregion
 
+# Ensure completion is initialized before sourcing any completion scripts
+if ! typeset -f compdef >/dev/null 2>&1; then
+    autoload -Uz compinit
+    compinit -i
+fi
+
 # region: Completions
 command -v kubectl >/dev/null && source <(kubectl completion zsh)
 command -v docker >/dev/null && source <(docker completion zsh)
@@ -309,3 +315,6 @@ command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
 # endregion
+
+# bun completions
+[ -s "/home/kism/.bun/_bun" ] && source "/home/kism/.bun/_bun"
