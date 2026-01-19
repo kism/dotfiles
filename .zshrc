@@ -252,6 +252,10 @@ if [ -f ~/.cargo/env ]; then
     source "$HOME/.cargo/env"
 fi
 
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # region: zsh settings, handled by zinit
 
 # Fallback
