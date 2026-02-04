@@ -124,6 +124,10 @@ export VISUAL=vim
 # endregion
 
 # region: exports
+if [[ "$TERM" == "xterm-ghostty" ]]; then
+	export COLORTERM="truecolor"
+fi
+
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
     export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
