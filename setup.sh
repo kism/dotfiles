@@ -272,6 +272,23 @@ if type git >/dev/null; then
     echo Thumbs.db >> ~/.gitignore_global
     git config --global core.excludesfile ~/.gitignore_global
 else
+    h3 "git not found, skipping"
+fi
+
+# SSH, this just exists to ensure COLORTERM is set for ssh sessions
+if type ssh >/dev/null; then
+    mkdir -p ~/.ssh
+    touch ~/.ssh/config
+    if ! grep -q "COLORTERM" ~/.ssh/config; then
+        h1 "Setting up ssh config for COLORTERM"
+        {
+            echo "Host *"
+            echo "    SendEnv COLORTERM"
+        } >>~/.ssh/config
+    else
+        h3 "ssh config already set up, skipping"
+    fi
+else
     h3 "ssh not found, skipping"
 fi
 
