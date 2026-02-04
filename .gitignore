@@ -1,3 +1,6 @@
+# ZSH Lint
+.zshrc_gen
+
 # vim / nvim swap
 *.swp
 *.swo

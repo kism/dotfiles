@@ -26,7 +26,7 @@ function get_mercury_retrograde() {
     fi
     if type curl >/dev/null; then
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            curl --max-time 5 -s https://mercuryretrogradeapi.com >! $RETROGRADETEMPFILE 2>/dev/null
+            curl --max-time 5 -s https://mercuryretrogradeapi.com >| $RETROGRADETEMPFILE 2>/dev/null
         fi
         if cat $RETROGRADETEMPFILE | grep false >/dev/null; then
             RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
@@ -300,8 +300,10 @@ zi snippet PZTM::completion
 zi light zdharma-continuum/fast-syntax-highlighting
 
 zi load 'zsh-users/zsh-history-substring-search'
-bindkey "^[[5~" history-substring-search-up   # Page Up
-bindkey "^[[6~" history-substring-search-down # Page Down
+# Page Up
+bindkey "^[[5~" history-substring-search-up
+# Page Down
+bindkey "^[[6~" history-substring-search-down
 
 # zi light zsh-users/zsh-autosuggestions # Naa
 
