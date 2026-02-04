@@ -157,7 +157,7 @@ cd "$(dirname "$0")"
 
 # Help
 if [[ $1 == --help ]]; then
-    echo Kieran\'s Dotfiles installer
+    echo "Kieran's Dotfiles installer"
     echo "bash setup.sh --allow-root         # If you want to allow this to setup on the root account"
     echo "bash setup.sh --no-package-install # Don't install packages with the package manager, useful for re-running"
     exit 0
