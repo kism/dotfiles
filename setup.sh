@@ -198,6 +198,7 @@ if [[ $1 != --no-package-install ]]; then
     Linux)
         # Source linux os info
         if test -f /etc/os-release; then
+            # shellcheck disable=SC1091
             source /etc/os-release
             echo "$PRETTY_NAME"
         else

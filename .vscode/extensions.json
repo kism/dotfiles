@@ -2,6 +2,6 @@
     "recommendations": [
         "yinfei.luahelper",
         "xadillax.viml",
-        "timonwong.shellcheck"
+        "mads-hartmann.bash-ide-vscode"
     ]
 }
