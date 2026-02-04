@@ -124,10 +124,6 @@ export VISUAL=vim
 # endregion
 
 # region: exports
-if [[ "$TERM" == "xterm-ghostty" ]]; then
-	export COLORTERM="truecolor"
-fi
-
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
     export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
@@ -223,7 +219,7 @@ fi
 
 
 # region: startup message
-# Operating system
+## Operating system
 if test -f /etc/os-release; then # Linux
     source /etc/os-release
     echo -e "$PRETTY_NAME, \c"
@@ -231,15 +227,22 @@ elif type sw_vers >/dev/null; then # MacOS
     echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
 fi
 
-# Kernel version
+## Kernel version
 echo -e "$(uname -s -r), \c"
 
-# Ssh keys loaded, mercury retrograde
+## Ssh keys loaded, mercury retrograde
 if check_modern_terminal; then
     echo -e "🗝️$EXTRA_SPACING_EMOJI$(get_ssh_keys_loaded),$SPACING_SYMBOLS_BEFORE\c"
-    get_mercury_retrograde
+    echo -e "$(get_mercury_retrograde)\c"
 else
-    echo -e "SSH KEYS: $(get_ssh_keys_loaded)"
+    echo -e "SSH KEYS: $(get_ssh_keys_loaded), \c"
+fi
+
+## If COLORTERM is not set, alert the user
+if [[ -z "$COLORTERM" ]]; then
+	echo -e ", \033[0;33mCOLORTERM not set!\033[0m"
+else
+	echo -e ""
 fi
 # endregion
 
