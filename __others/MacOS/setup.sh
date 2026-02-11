@@ -69,6 +69,7 @@ defaults write org.mozilla.firefox "PasswordManagerEnabled" -bool "false"
 defaults write org.mozilla.firefox "AutofillAddressEnabled" -bool "false"
 defaults write org.mozilla.firefox "AutofillCreditCardEnabled" -bool "false"
 defaults write org.mozilla.firefox "NoDefaultBookmarks" -bool "true"
+defaults write org.mozilla.firefox "GenerativeAI" -bool "false"
 defaults write org.mozilla.firefox "FirefoxHome" -dict \
     Search -bool "true" \
     TopSites -bool "false" \
