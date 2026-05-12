@@ -211,6 +211,7 @@ bindkey "^[[B" down-line-or-beginning-search
 
 # region: root user
 if [[ $EUID -eq 0 ]]; then
+    export TERM="xterm-256color"
     export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
 %{%F{196}%}#%{%f%} "
     autoload -U compinit; compinit
@@ -332,6 +333,3 @@ command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
 # endregion
-
-# bun completions
-[ -s "/home/kism/.bun/_bun" ] && source "/home/kism/.bun/_bun"
