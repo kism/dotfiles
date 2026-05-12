@@ -157,6 +157,12 @@ zle -N down-line-or-beginning-search
 # region: keybinds
 # Load terminfo
 zmodload zsh/terminfo
+
+# region: root user
+if [[ "$OSTYPE" == darwin* ]] && [[ $EUID -eq 0 ]]; then # Set this for root user on macOS so ghostty doesn't get in the way
+    export TERM="xterm-256color"
+fi
+
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 # https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/key-bindings.zsh
@@ -211,7 +217,6 @@ bindkey "^[[B" down-line-or-beginning-search
 
 # region: root user
 if [[ $EUID -eq 0 ]]; then
-    export TERM="xterm-256color"
     export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
 %{%F{196}%}#%{%f%} "
     autoload -U compinit; compinit
