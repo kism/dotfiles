@@ -155,6 +155,8 @@ zle -N down-line-or-beginning-search
 # endregion
 
 # region: keybinds
+# Load terminfo
+zmodload zsh/terminfo
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 # https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/key-bindings.zsh
