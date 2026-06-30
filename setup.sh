@@ -5,6 +5,8 @@
 # Turn on errors
 set -e
 
+export DEBIAN_FRONTEND=noninteractive
+
 install_base="zsh git git-lfs htop tmux curl wget tree ncdu stow"
 install_apt_brew_dnf_pacman="neovim"
 install_pkg="vim-console"
@@ -12,6 +14,10 @@ install_brew="htop tmux wget tree ncdu stow coreutils neovim"
 install_apt="software-properties-common gnupg2"
 
 function setup_brew() {
+    if ! prep_sudo; then
+        return 0
+    fi
+
     install_base="$install_base $install_brew $install_apt_brew_dnf_pacman"
     h1 "Brew (MacOS Package Manager)"
     if ! which brew >/dev/null; then
@@ -32,8 +38,11 @@ function setup_brew() {
 }
 
 function setup_pkg() {
+    if ! prep_sudo; then
+        return 0
+    fi
+
     to_install="$install_base $install_pkg"
-    prep_sudo
 
     h2 "pkg update"
     yes | sudo pkg update
@@ -47,8 +56,11 @@ function setup_pkg() {
 }
 
 function setup_pacman() {
+    if ! prep_sudo; then
+        return 0
+    fi
+
     to_install="$install_base $install_apt_brew_dnf_pacman"
-    prep_sudo
 
     h1 "Updating $PRETTY_NAME"
     h2 "pacman -Syyu"
@@ -61,8 +73,11 @@ function setup_pacman() {
 }
 
 function setup_apt() {
+    if ! prep_sudo; then
+        return 0
+    fi
+
     to_install="$install_base $install_apt_brew_dnf_pacman"
-    prep_sudo
 
     h1 "Updating $PRETTY_NAME"
     h2 "apt update"
@@ -81,8 +96,11 @@ function setup_apt() {
 }
 
 function setup_dnf() {
+    if ! prep_sudo; then
+        return 0
+    fi
+
     to_install="$install_base $install_apt_brew_dnf_pacman"
-    prep_sudo
 
     h1 "Updating $PRETTY_NAME"
     h2 "dnf clean all"
@@ -122,9 +140,22 @@ function set_shell() {
     fi
 }
 
+function is_codespaces() {
+    [ -n "${CODESPACES:-}" ] || [ -n "${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-}" ] || [ -n "${CODESPACE_NAME:-}" ]
+}
+
 function prep_sudo() {
     h3 "Installing packages will require sudo, checking if sudo is installed:"
-    type sudo >/dev/null 2>/dev/null
+    if ! command -v sudo >/dev/null 2>&1; then
+        h3 "sudo not found, skipping package installation"
+        return 1
+    fi
+
+    if ! sudo -n true 2>/dev/null; then
+        h3 "Passwordless sudo is not available, skipping package installation"
+        return 1
+    fi
+
     sudo echo "Starting install!"
 }
 
@@ -179,7 +210,17 @@ fi
 h2 "Detecting OS:"
 unameresult=$(uname)
 
-if [[ $1 != --no-package-install ]]; then
+skip_package_install=false
+if [[ $1 == --no-package-install ]]; then
+    skip_package_install=true
+fi
+
+if is_codespaces; then
+    h2 "GitHub Codespaces detected; skipping package-manager installs to avoid long startup hangs"
+    skip_package_install=true
+fi
+
+if [[ "$skip_package_install" != true ]]; then
     case $unameresult in
     Darwin)
         echo "MacOS"
