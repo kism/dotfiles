@@ -1,5 +1,10 @@
-font-family = Fira Code
-font-style = Medium
+font-family = Iosevka Term
+font-style = Extended
+font-style-bold = Bold Extended
+font-style-italic = Italic Extended
+font-style-bold-italic = Bold Extended Italic 
+#font-family = Fira Code
+#font-style = Medium
 font-size = 14
 font-thicken = false
 font-feature = -calt
