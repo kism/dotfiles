@@ -1,10 +1,15 @@
 font-family = Iosevka Term
 font-style = Extended
 font-style-bold = Bold Extended
+<<<<<<< Updated upstream
 font-style-italic = Italic Extended
 font-style-bold-italic = Bold Extended Italic 
 #font-family = Fira Code
 #font-style = Medium
+=======
+font-style-italic = Extended Italic
+font-style-bold-italic = Bold Extended
+>>>>>>> Stashed changes
 font-size = 14
 font-thicken = false
 font-feature = -calt
