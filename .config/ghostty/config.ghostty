@@ -1,15 +1,15 @@
-font-family = TerminusBMP-Medium
-font-family-bold = TerminusBMP-Bold
-font-family-italic = TerminusBMP-Italic
+# font-family = TerminusBMP-Medium
+# font-family-bold = TerminusBMP-Bold
+# font-family-italic = TerminusBMP-Italic
 
-# font-family = Iosevka Term
-# font-style = Extended
-# font-style-bold = Bold Extended
-# font-style-italic = Italic Extended
-# font-style-bold-italic = Bold Extended Italic
-# font-size = 14
-# font-thicken = false
-# font-feature = -calt
+font-family = Iosevka Term
+font-style = Extended
+font-style-bold = Bold Extended
+font-style-italic = Italic Extended
+font-style-bold-italic = Bold Extended Italic
+font-size = 14
+font-thicken = false
+font-feature = -calt
 
 cursor-style = underline
 cursor-style-blink = false
