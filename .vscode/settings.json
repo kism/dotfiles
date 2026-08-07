@@ -2,7 +2,8 @@
   "files.associations": {
     ".stow-local-ignore": "plaintext",
     "**/.config/sway/*": "shellscript",
-    ".vimrc": "viml"
+    ".vimrc": "viml",
+    "*.ghostty"
   },
   "[plaintext]": {
     "files.trimTrailingWhitespace": false
