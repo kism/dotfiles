@@ -15,6 +15,7 @@ apps=(
     "Bitwarden"
     "WireGuard"
     "Picview"
+	"iStat Menus 7"
 )
 
 echo "Installing apps from the App Store using mas"
