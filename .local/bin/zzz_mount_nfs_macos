@@ -28,8 +28,8 @@ nfs_server=pvewill.kg.lan
 for item in $pvewill_mounts; do
    mount_path=/Volumes/$item
    echo Mounting $nfs_server export $item to $mount_path
-   mount -t nfs -o resvport,tcp,vers=3,soft,timeo=60 $nfs_server:/srv/$item $mount_path
-#    mount -t nfs -o resvport,tcp,vers=4,soft,timeo=60 $nfs_server:/srv/$item $mount_path
+   mount -t nfs -o resvport,tcp,vers=3,hard,intr,timeo=60 $nfs_server:/srv/$item $mount_path
+#    mount -t nfs -o resvport,tcp,vers=4.1,soft,timeo=60 $nfs_server:/srv/$item $mount_path
 done
 
 echo
@@ -39,7 +39,7 @@ for item in $pvematt_mounts; do
    mount_path=/Volumes/$item
    echo Mounting $nfs_server export $item to $mount_path
    mount -t nfs -o resvport,tcp,vers=3,soft,timeo=60 $nfs_server:/srv/$item $mount_path
-#    mount -t nfs -o resvport,tcp,vers=4,soft,timeo=60 $nfs_server:/srv/$item $mount_path
+#    mount -t nfs -o resvport,tcp,vers=4.1,hard,intr,timeo=60 $nfs_server:/srv/$item $mount_path
 done
 
 echo
