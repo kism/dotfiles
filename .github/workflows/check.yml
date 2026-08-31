@@ -10,6 +10,7 @@ on:
       - "setup_simple_generate.sh"
       - ".bash*"
       - '.github/workflows/check.yml'
+      - '.local/bin/**'
 
 jobs:
   shellcheck:
