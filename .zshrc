@@ -338,3 +338,6 @@ command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
 # endregion
+
+# bun completions
+[ -s "/home/kism/.bun/_bun" ] && source "/home/kism/.bun/_bun"
