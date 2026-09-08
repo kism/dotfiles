@@ -263,9 +263,6 @@ if [ -d "$HOME/.nvm" ]; then
 fi
 
 # Rust
-if [ -f ~/.cargo/env ]; then
-    source "$HOME/.cargo/env"
-fi
 
 # Bun
 export BUN_INSTALL="$HOME/.bun"
