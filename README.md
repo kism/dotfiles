@@ -1,6 +1,6 @@
 # Kieran's Dotfiles
 
-Only for Kieran really
+My dotfiles, uses gnu stow to symlink files, alternate option to just fetch basic files.
 
 ## Simple, just curl the basics (bash, tmux, vim)
 
