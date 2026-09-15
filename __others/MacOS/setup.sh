@@ -113,11 +113,9 @@ else
     echo "Please install CotEditor from the App Store / mas"
 fi
 
-# Copy Scheduled Tasks
-sudo ln -Fs "$PWD/AppleScript/detectdisplays.applescript" "/usr/local/bin/detectdisplays.applescript"
-ln -Fs  "$PWD/AppleScript/au.kierangee.detectdisplays.plist" "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+# Remove old detectdisplays scheduled task
 set +e
-launchctl unload "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+launchctl bootout "gui/$(id -u)/au.kierangee.detectdisplays" 2>/dev/null
 set -e
-launchctl load "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
-launchctl start "au.kierangee.detectdisplays"
+rm -f "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
+sudo rm -f "/usr/local/bin/detectdisplays.applescript"

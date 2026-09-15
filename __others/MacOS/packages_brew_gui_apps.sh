@@ -9,5 +9,4 @@ brew install --cask betterdisplay
 brew install --cask domzilla-caffeine
 brew install --cask cyberduck
 brew install secretive
-brew install jordanbaird-ice
 brew install --cask ghostty
