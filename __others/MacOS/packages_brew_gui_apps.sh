@@ -6,7 +6,6 @@ if [ "$(uname)" != "Darwin" ]; then
 fi
 
 brew install --cask betterdisplay
-brew install --cask domzilla-caffeine
 brew install --cask cyberduck
 brew install secretive
 brew install --cask ghostty
