@@ -10,3 +10,4 @@ brew install --cask cyberduck
 brew install secretive
 brew install --cask ghostty
 brew install thaw@beta
+brew install --cask finetune
