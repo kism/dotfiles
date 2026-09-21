@@ -26,23 +26,6 @@ defaults write -g AppleShowScrollBars -string "WhenScrolling;" # Show scroll bar
 
 # Dock, Finder, Firefox, misc: config profiles in ./profiles (managed, so locked in System Settings)
 # `profiles install` is dead since Big Sur, so open each and approve in System Settings > General > Device Management
-# Remove the old defaults-written copies of these so only the profiles set them
-unset_keys() {
-    domain="$1"
-    shift
-    for key in "$@"; do
-        defaults delete "$domain" "$key" 2>/dev/null || true
-    done
-}
-unset_keys com.apple.desktopservices DSDontWriteNetworkStores DSDontWriteUSBStores
-unset_keys com.apple.dock orientation tilesize autohide-delay autohide-time-modifier mineffect show-recents \
-    show-recent-count springboard-columns springboard-rows scroll-to-open mru-spaces expose-group-apps
-unset_keys com.apple.finder ShowPathbar FXPreferredViewStyle FXPreferredSearchViewStyle _FXSortFoldersFirst \
-    FXDefaultSearchScope FXRemoveOldTrashItems
-unset_keys -g AppleShowAllExtensions NSDocumentSaveNewDocumentsToCloud
-unset_keys com.apple.menuextra.clock DateFormat
-unset_keys com.apple.TextEdit RichText
-defaults delete org.mozilla.firefox 2>/dev/null || true # Only ever held our policies
 
 # macOS only holds one pending profile at a time, so install them one by one
 for profile in profiles/*.mobileconfig; do
@@ -82,13 +65,3 @@ else
     echo "CotEditor is not installed."
     echo "Please install CotEditor from the App Store / mas"
 fi
-
-# Remove old detectdisplays scheduled task
-set +e
-launchctl bootout "gui/$(id -u)/au.kierangee.detectdisplays" 2>/dev/null
-set -e
-rm -f "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
-sudo rm -f "/usr/local/bin/detectdisplays.applescript"
-# Also drop the stale launchd override entry (takes effect after a reboot)
-sudo plutil -remove 'au\.kierangee\.detectdisplays' \
-    "/var/db/com.apple.xpc.launchd/disabled.$(id -u).plist" 2>/dev/null || true
