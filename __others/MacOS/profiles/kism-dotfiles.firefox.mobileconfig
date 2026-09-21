@@ -22,15 +22,57 @@
             <key>AutofillAddressEnabled</key><false/>
             <key>AutofillCreditCardEnabled</key><false/>
             <key>NoDefaultBookmarks</key><true/>
-            <key>GenerativeAI</key><false/>
+            <key>DontCheckDefaultBrowser</key><true/>
+            <key>TranslateEnabled</key><true/>
+            <key>IPProtectionAvailable</key><true/>
+            <key>VisualSearchEnabled</key><false/>
+            <key>GenerativeAI</key>
+            <dict>
+                <key>Enabled</key><false/>
+                <key>Chatbot</key><false/>
+                <key>LinkPreviews</key><false/>
+                <key>TabGroups</key><false/>
+                <key>Locked</key><false/>
+            </dict>
+            <key>AIControls</key>
+            <dict>
+                <key>Default</key><dict><key>Value</key><string>blocked</string><key>Locked</key><false/></dict>
+                <key>Translations</key><dict><key>Value</key><string>available</string><key>Locked</key><false/></dict>
+                <key>PDFAltText</key><dict><key>Value</key><string>available</string><key>Locked</key><false/></dict>
+                <key>SmartTabGroups</key><dict><key>Value</key><string>blocked</string><key>Locked</key><false/></dict>
+                <key>LinkPreviewKeyPoints</key><dict><key>Value</key><string>blocked</string><key>Locked</key><false/></dict>
+                <key>SidebarChatbot</key><dict><key>Value</key><string>blocked</string><key>Locked</key><false/></dict>
+                <key>SmartWindow</key><dict><key>Value</key><string>blocked</string><key>Locked</key><false/></dict>
+            </dict>
+            <key>SearchEngines</key>
+            <dict>
+                <key>Add</key>
+                <array>
+                    <dict>
+                        <key>Name</key><string>YouTube</string>
+                        <key>URLTemplate</key><string>https://www.youtube.com/results?search_query={searchTerms}</string>
+                        <key>Method</key><string>GET</string>
+                        <key>IconURL</key><string>https://www.youtube.com/favicon.ico</string>
+                        <key>Alias</key><string>@youtube</string>
+                    </dict>
+                </array>
+                <key>Remove</key>
+                <array>
+                    <string>Perplexity</string>
+                </array>
+            </dict>
+            <key>FirefoxSuggest</key>
+            <dict>
+                <key>SponsoredSuggestions</key><false/>
+            </dict>
             <key>FirefoxHome</key>
             <dict>
                 <key>Search</key><true/>
                 <key>TopSites</key><false/>
                 <key>SponsoredTopSites</key><false/>
                 <key>Highlights</key><false/>
-                <key>Pocket</key><false/>
-                <key>SponsoredPocket</key><false/>
+                <key>Stories</key><false/>
+                <key>SponsoredStories</key><false/>
                 <key>WebSuggestions</key><false/>
                 <key>SponsoredSuggestions</key><false/>
                 <key>ImproveSuggest</key><false/>
