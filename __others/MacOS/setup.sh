@@ -44,10 +44,18 @@ unset_keys com.apple.menuextra.clock DateFormat
 unset_keys com.apple.TextEdit RichText
 defaults delete org.mozilla.firefox 2>/dev/null || true # Only ever held our policies
 
+# macOS only holds one pending profile at a time, so install them one by one
 for profile in profiles/*.mobileconfig; do
-    open "$profile"
+    profile_id="$(basename "$profile" .mobileconfig)"
+    # ponytail: skips by identifier, so an edited profile needs removing in System Settings to reinstall
+    while ! profiles list 2>/dev/null | grep -q "$profile_id"; do
+        open "$profile"
+        open "x-apple.systempreferences:com.apple.preferences.configurationprofiles"
+        read -r -p "Approve $profile_id in System Settings, then press Enter (s to skip): " answer
+        [ "$answer" = "s" ] && break
+    done
 done
-echo "Approve the kism-dotfiles profiles in System Settings, then log out and back in."
+echo "Log out and back in for the kism-dotfiles profiles to fully apply."
 
 # Symlinks
 
