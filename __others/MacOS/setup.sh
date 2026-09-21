@@ -47,12 +47,16 @@ defaults delete org.mozilla.firefox 2>/dev/null || true # Only ever held our pol
 # macOS only holds one pending profile at a time, so install them one by one
 for profile in profiles/*.mobileconfig; do
     profile_id="$(basename "$profile" .mobileconfig)"
-    # ponytail: skips by identifier, so an edited profile needs removing in System Settings to reinstall
-    while ! profiles list 2>/dev/null | grep -q "$profile_id"; do
+    # Same PayloadIdentifier replaces the installed profile, so reopen when the file hash changes
+    # ponytail: stamp is written on Enter, it can't tell an approved update from an ignored one
+    stamp="$HOME/.local/state/kism-dotfiles/$profile_id.sha256"
+    hash="$(shasum -a 256 "$profile" | cut -d ' ' -f 1)"
+    while ! { profiles list 2>/dev/null | grep -q "$profile_id" && [ "$(cat "$stamp" 2>/dev/null)" = "$hash" ]; }; do
         open "$profile"
         open "x-apple.systempreferences:com.apple.preferences.configurationprofiles"
         read -r -p "Approve $profile_id in System Settings, then press Enter (s to skip): " answer
         [ "$answer" = "s" ] && break
+        profiles list 2>/dev/null | grep -q "$profile_id" && mkdir -p "${stamp%/*}" && echo "$hash" >"$stamp"
     done
 done
 echo "Log out and back in for the kism-dotfiles profiles to fully apply."
