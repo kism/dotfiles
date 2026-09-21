@@ -89,3 +89,6 @@ launchctl bootout "gui/$(id -u)/au.kierangee.detectdisplays" 2>/dev/null
 set -e
 rm -f "$HOME/Library/LaunchAgents/au.kierangee.detectdisplays.plist"
 sudo rm -f "/usr/local/bin/detectdisplays.applescript"
+# Also drop the stale launchd override entry (takes effect after a reboot)
+sudo plutil -remove 'au\.kierangee\.detectdisplays' \
+    "/var/db/com.apple.xpc.launchd/disabled.$(id -u).plist" 2>/dev/null || true
