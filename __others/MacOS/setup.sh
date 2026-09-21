@@ -9,10 +9,6 @@ if [ "$(uname)" != "Darwin" ]; then
     exit 1
 fi
 
-# Don't write .DS_Store files on network drives, external drives
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool "true"
-defaults write com.apple.desktopservices DSDontWriteUSBStores -bool "true"
-
 # Mouse
 defaults write -g com.apple.mouse.scaling 0.875                # Pointer speed
 defaults write -g com.apple.mouse.linear 1                     # Acceleration
@@ -28,68 +24,30 @@ defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool "false" # Disable d
 defaults write -g AppleInterfaceStyle Dark # Dark mode
 defaults write -g AppleShowScrollBars -string "WhenScrolling;" # Show scroll bars when scrolling
 
-# Dock
-defaults write com.apple.dock "orientation" -string "left"        # Dock position
-defaults write com.apple.dock "tilesize" -int "46"                # Set Dock icon size
-defaults write com.apple.dock "autohide-delay" -float "0"         # Remove Dock show/hide delay
-defaults write com.apple.dock "autohide-time-modifier" -float "0" # Remove Dock show/hide animation
-defaults write com.apple.dock "mineffect" -string "scale"         # Scale effect
-defaults write com.apple.dock "show-recents" -bool "true"         # Enable show recent apps (Just for the divider)
-defaults write com.apple.dock "show-recent-count" -int "1"        # Show only one recent app, zero doesn't work
-defaults write com.apple.dock "springboard-columns" -int "9"      # Set Launchpad icon columns
-defaults write com.apple.dock "springboard-rows" -int "9"         # Set Launchpad icon rows
-defaults write com.apple.dock "scroll-to-open" -bool "true"       # Scroll to show windows of the app
-killall Dock
+# Dock, Finder, Firefox, misc: config profiles in ./profiles (managed, so locked in System Settings)
+# `profiles install` is dead since Big Sur, so open each and approve in System Settings > General > Device Management
+# Remove the old defaults-written copies of these so only the profiles set them
+unset_keys() {
+    domain="$1"
+    shift
+    for key in "$@"; do
+        defaults delete "$domain" "$key" 2>/dev/null || true
+    done
+}
+unset_keys com.apple.desktopservices DSDontWriteNetworkStores DSDontWriteUSBStores
+unset_keys com.apple.dock orientation tilesize autohide-delay autohide-time-modifier mineffect show-recents \
+    show-recent-count springboard-columns springboard-rows scroll-to-open mru-spaces expose-group-apps
+unset_keys com.apple.finder ShowPathbar FXPreferredViewStyle FXPreferredSearchViewStyle _FXSortFoldersFirst \
+    FXDefaultSearchScope FXRemoveOldTrashItems
+unset_keys -g AppleShowAllExtensions NSDocumentSaveNewDocumentsToCloud
+unset_keys com.apple.menuextra.clock DateFormat
+unset_keys com.apple.TextEdit RichText
+defaults delete org.mozilla.firefox 2>/dev/null || true # Only ever held our policies
 
-# Mission Control / Expose / Space
-defaults write com.apple.dock "mru-spaces" -bool "true"        # Automatically rearrange spaces based on most recent use
-defaults write com.apple.dock "expose-group-apps" -bool "true" # Group windows by application
-
-# Finder
-defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"             # Show all file extensions
-defaults write com.apple.finder "ShowPathbar" -bool "true"                      # Show path bar
-defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv"           # Use list view in all Finder windows
-defaults write com.apple.finder "FXPreferredSearchViewStyle" -string "Nlsv"     # Use list view for search
-defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"              # Keep folders on top when sorting by name
-defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf"           # Search the current folder by default
-defaults write com.apple.finder "FXRemoveOldTrashItems" -bool "true"            # Remove items from the Trash after 30 days
-defaults write NSGlobalDomain "NSDocumentSaveNewDocumentsToCloud" -bool "false" # Save to disk by default
-killall Finder
-
-# Menu Bar
-defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm\"" # Show date and time in the menu bar
-
-# TextEdit
-defaults write com.apple.TextEdit "RichText" -bool "false"
-
-# Firefox Policies https://github.com/mozilla/policy-templates/blob/master/mac/org.mozilla.firefox.plist
-defaults write org.mozilla.firefox "EnterprisePoliciesEnabled" -bool "true"
-defaults write org.mozilla.firefox "DisablePocket" -bool "true"
-defaults write org.mozilla.firefox "PasswordManagerEnabled" -bool "false"
-defaults write org.mozilla.firefox "AutofillAddressEnabled" -bool "false"
-defaults write org.mozilla.firefox "AutofillCreditCardEnabled" -bool "false"
-defaults write org.mozilla.firefox "NoDefaultBookmarks" -bool "true"
-defaults write org.mozilla.firefox "GenerativeAI" -bool "false"
-defaults write org.mozilla.firefox "FirefoxHome" -dict \
-    Search -bool "true" \
-    TopSites -bool "false" \
-    SponsoredTopSites -bool "false" \
-    Highlights -bool "false" \
-    Pocket -bool "false" \
-    SponsoredPocket -bool "false" \
-    WebSuggestions -bool "false" \
-    SponsoredSuggestions -bool "false" \
-    ImproveSuggest -bool "false" \
-    Locked -bool "false"
-
-## Firefox Extensions
-plutil -replace Extensions -dictionary ~/Library/Preferences/org.mozilla.firefox.plist
-plutil -insert Extensions.Install -array ~/Library/Preferences/org.mozilla.firefox.plist
-plutil -insert Extensions.Install.0 -string "https://addons.mozilla.org/firefox/downloads/file/4407804/bitwarden_password_manager-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
-plutil -insert Extensions.Install.1 -string "https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
-plutil -insert Extensions.Install.2 -string "https://addons.mozilla.org/firefox/downloads/file/3938344/scroll_anywhere-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
-plutil -insert Extensions.Install.3 -string "https://addons.mozilla.org/firefox/downloads/file/4270221/english_australian_dictionary-latest.xpi" ~/Library/Preferences/org.mozilla.firefox.plist
-
+for profile in profiles/*.mobileconfig; do
+    open "$profile"
+done
+echo "Approve the kism-dotfiles profiles in System Settings, then log out and back in."
 
 # Symlinks
 

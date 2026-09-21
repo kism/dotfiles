@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadType</key><string>Configuration</string>
+    <key>PayloadVersion</key><integer>1</integer>
+    <key>PayloadScope</key><string>User</string>
+    <key>PayloadIdentifier</key><string>kism-dotfiles.dock</string>
+    <key>PayloadUUID</key><string>0C617D64-E33D-4753-ABBE-55DA1D638003</string>
+    <key>PayloadDisplayName</key><string>kism-dotfiles: Dock</string>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadType</key><string>com.apple.dock</string>
+            <key>PayloadVersion</key><integer>1</integer>
+            <key>PayloadIdentifier</key><string>kism-dotfiles.dock.com.apple.dock</string>
+            <key>PayloadUUID</key><string>5D8291BB-E34D-4D71-995A-06373AB25E68</string>
+            <key>orientation</key><string>left</string>
+            <key>tilesize</key><integer>46</integer>
+            <key>autohide-delay</key><real>0</real>
+            <key>autohide-time-modifier</key><real>0</real>
+            <key>mineffect</key><string>scale</string>
+            <!-- Enable show recent apps (Just for the divider), zero doesn't work -->
+            <key>show-recents</key><true/>
+            <key>show-recent-count</key><integer>1</integer>
+            <key>springboard-columns</key><integer>9</integer>
+            <key>springboard-rows</key><integer>9</integer>
+            <key>scroll-to-open</key><true/>
+            <!-- Mission Control -->
+            <key>mru-spaces</key><true/>
+            <key>expose-group-apps</key><true/>
+        </dict>
+    </array>
+</dict>
+</plist>

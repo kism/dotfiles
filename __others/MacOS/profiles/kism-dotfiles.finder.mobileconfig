@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadType</key><string>Configuration</string>
+    <key>PayloadVersion</key><integer>1</integer>
+    <key>PayloadScope</key><string>User</string>
+    <key>PayloadIdentifier</key><string>kism-dotfiles.finder</string>
+    <key>PayloadUUID</key><string>20FE4028-E1B0-487F-B8FC-0E717055816E</string>
+    <key>PayloadDisplayName</key><string>kism-dotfiles: Finder</string>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadType</key><string>com.apple.finder</string>
+            <key>PayloadVersion</key><integer>1</integer>
+            <key>PayloadIdentifier</key><string>kism-dotfiles.finder.com.apple.finder</string>
+            <key>PayloadUUID</key><string>7A5CCA2B-E426-41CC-BEA8-3B646DF89B29</string>
+            <key>ShowPathbar</key><true/>
+            <key>FXPreferredViewStyle</key><string>Nlsv</string>
+            <key>FXPreferredSearchViewStyle</key><string>Nlsv</string>
+            <key>_FXSortFoldersFirst</key><true/>
+            <key>FXDefaultSearchScope</key><string>SCcf</string>
+            <key>FXRemoveOldTrashItems</key><true/>
+        </dict>
+        <dict>
+            <key>PayloadType</key><string>.GlobalPreferences</string>
+            <key>PayloadVersion</key><integer>1</integer>
+            <key>PayloadIdentifier</key><string>kism-dotfiles.finder.GlobalPreferences</string>
+            <key>PayloadUUID</key><string>B5088F2E-A367-467C-9D40-E7750C3BF396</string>
+            <key>AppleShowAllExtensions</key><true/>
+            <key>NSDocumentSaveNewDocumentsToCloud</key><false/>
+        </dict>
+    </array>
+</dict>
+</plist>

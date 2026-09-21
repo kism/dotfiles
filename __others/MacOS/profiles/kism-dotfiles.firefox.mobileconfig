@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadType</key><string>Configuration</string>
+    <key>PayloadVersion</key><integer>1</integer>
+    <key>PayloadScope</key><string>User</string>
+    <key>PayloadIdentifier</key><string>kism-dotfiles.firefox</string>
+    <key>PayloadUUID</key><string>E40D91A8-C745-4B1F-B6F3-7E849DE308EE</string>
+    <key>PayloadDisplayName</key><string>kism-dotfiles: Firefox</string>
+    <key>PayloadContent</key>
+    <array>
+        <!-- https://github.com/mozilla/policy-templates/blob/master/mac/org.mozilla.firefox.plist -->
+        <dict>
+            <key>PayloadType</key><string>org.mozilla.firefox</string>
+            <key>PayloadVersion</key><integer>1</integer>
+            <key>PayloadIdentifier</key><string>kism-dotfiles.firefox.org.mozilla.firefox</string>
+            <key>PayloadUUID</key><string>A569EDA4-0AA0-4313-89AD-0E5E9145DDFA</string>
+            <key>EnterprisePoliciesEnabled</key><true/>
+            <key>DisablePocket</key><true/>
+            <key>PasswordManagerEnabled</key><false/>
+            <key>AutofillAddressEnabled</key><false/>
+            <key>AutofillCreditCardEnabled</key><false/>
+            <key>NoDefaultBookmarks</key><true/>
+            <key>GenerativeAI</key><false/>
+            <key>FirefoxHome</key>
+            <dict>
+                <key>Search</key><true/>
+                <key>TopSites</key><false/>
+                <key>SponsoredTopSites</key><false/>
+                <key>Highlights</key><false/>
+                <key>Pocket</key><false/>
+                <key>SponsoredPocket</key><false/>
+                <key>WebSuggestions</key><false/>
+                <key>SponsoredSuggestions</key><false/>
+                <key>ImproveSuggest</key><false/>
+                <key>Locked</key><false/>
+            </dict>
+            <key>Extensions</key>
+            <dict>
+                <key>Install</key>
+                <array>
+                    <string>https://addons.mozilla.org/firefox/downloads/file/4407804/bitwarden_password_manager-latest.xpi</string>
+                    <string>https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-latest.xpi</string>
+                    <string>https://addons.mozilla.org/firefox/downloads/file/3938344/scroll_anywhere-latest.xpi</string>
+                    <string>https://addons.mozilla.org/firefox/downloads/file/4270221/english_australian_dictionary-latest.xpi</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
