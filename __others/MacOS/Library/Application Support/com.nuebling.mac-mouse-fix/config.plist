@@ -5,7 +5,7 @@
 	<key>Constants</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>23</integer>
+		<integer>24</integer>
 		<key>defaultRemaps</key>
 		<dict>
 			<key>fiveButtons</key>
@@ -255,6 +255,12 @@
 				<string>MM</string>
 				<string>NP</string>
 				<string>LB</string>
+				<string>EG</string>
+				<string>BY</string>
+				<string>VE</string>
+				<string>LK</string>
+				<string>SY</string>
+				<string>ZW</string>
 			</array>
 			<key>maxActivations</key>
 			<integer>25</integer>
@@ -267,10 +273,24 @@
 			<key>trialDays</key>
 			<integer>30</integer>
 		</dict>
-		<key>isLicensedCache</key>
-		<true/>
-		<key>licenseReasonCache</key>
-		<integer>2</integer>
+		<key>licenseStateCache</key>
+		<dict>
+			<key>___MFPlistCoder_ClassName___</key>
+			<string>MFLicenseState</string>
+			<key>freshness</key>
+			<integer>1</integer>
+			<key>isLicensed</key>
+			<true/>
+			<key>licenseTypeInfo</key>
+			<dict>
+				<key>___MFPlistCoder_ClassName___</key>
+				<string>MFLicenseTypeInfoGumroadV1</string>
+			</dict>
+		</dict>
+		<key>licenseStateCacheHash</key>
+		<data>
+		qzRfjptuxTyraFwAMgxvZj377zwW2UtVFQHbpZigvsY=
+		</data>
 	</dict>
 	<key>Pointer</key>
 	<dict>
@@ -393,13 +413,13 @@
 	<key>State</key>
 	<dict>
 		<key>autosave_tabID</key>
-		<string>scrolling</string>
+		<string>buttons</string>
 		<key>lastLaunchedBundleVersion</key>
-		<integer>22854</integer>
+		<integer>24310</integer>
 		<key>launchesOfCurrentBundleVersion</key>
-		<integer>14</integer>
+		<integer>13</integer>
 		<key>launchesOverall</key>
-		<integer>14</integer>
+		<integer>33</integer>
 		<key>remapsAreInitialized</key>
 		<true/>
 	</dict>
