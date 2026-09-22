@@ -49,6 +49,18 @@
             <key>PayloadUUID</key><string>B5088F2E-A367-467C-9D40-E7750C3BF396</string>
             <key>AppleShowAllExtensions</key><true/>
             <key>NSDocumentSaveNewDocumentsToCloud</key><false/>
+            <!-- Typing: no autocorrect mangling code -->
+            <key>NSAutomaticQuoteSubstitutionEnabled</key><false/>
+            <key>NSAutomaticDashSubstitutionEnabled</key><false/>
+            <key>NSAutomaticCapitalizationEnabled</key><false/>
+            <key>NSAutomaticSpellingCorrectionEnabled</key><false/>
+            <!-- Expanded save and print dialogs -->
+            <key>NSNavPanelExpandedStateForSaveMode</key><true/>
+            <key>NSNavPanelExpandedStateForSaveMode2</key><true/>
+            <key>PMPrintingExpandedStateForPrint</key><true/>
+            <key>PMPrintingExpandedStateForPrint2</key><true/>
+            <!-- Tab moves between all controls -->
+            <key>AppleKeyboardUIMode</key><integer>3</integer>
         </dict>
         <!-- Don't write .DS_Store files on network drives, external drives -->
         <dict>
@@ -72,6 +84,16 @@
             <key>PayloadIdentifier</key><string>kism-dotfiles.macos.com.apple.TextEdit</string>
             <key>PayloadUUID</key><string>79485D9B-899D-4E5C-92D4-75282893F810</string>
             <key>RichText</key><false/>
+        </dict>
+        <!-- Magnet handles tiling; no click-wallpaper-to-show-desktop -->
+        <dict>
+            <key>PayloadType</key><string>com.apple.WindowManager</string>
+            <key>PayloadVersion</key><integer>1</integer>
+            <key>PayloadIdentifier</key><string>kism-dotfiles.macos.com.apple.WindowManager</string>
+            <key>PayloadUUID</key><string>60C2FAC2-DF68-4CC6-929D-7816AE084310</string>
+            <key>EnableTilingByEdgeDrag</key><false/>
+            <key>EnableTopTilingByEdgeDrag</key><false/>
+            <key>EnableStandardClickToShowDesktop</key><false/>
         </dict>
     </array>
 </dict>
