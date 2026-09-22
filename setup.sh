@@ -18,7 +18,6 @@ function setup_brew() {
         return 0
     fi
 
-    install_base="$install_base $install_brew $install_apt_brew_dnf_pacman"
     h1 "Brew (MacOS Package Manager)"
     if ! which brew >/dev/null; then
         h2 "Installing Brew"
@@ -305,13 +304,7 @@ if type git >/dev/null; then
     h2 "rerere"
     git config --global rerere.enabled true
     h2 "Global git ignore: ~/.gitignore_global"
-    touch ~/.gitignore_global
-    echo "" > ~/.gitignore_global
-    echo .DS_Store >> ~/.gitignore_global
-    echo .Trash-* >> ~/.gitignore_global
-    echo .fseventsd >> ~/.gitignore_global
-    echo .Spotlight-V100 >> ~/.gitignore_global
-    echo Thumbs.db >> ~/.gitignore_global
+    printf '%s\n' .DS_Store '.Trash-*' .fseventsd .Spotlight-V100 Thumbs.db >~/.gitignore_global
     git config --global core.excludesfile ~/.gitignore_global
 else
     h3 "git not found, skipping"

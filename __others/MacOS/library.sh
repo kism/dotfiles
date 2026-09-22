@@ -5,41 +5,20 @@ if [ "$(uname)" != "Darwin" ]; then
     exit 1
 fi
 
-if [ $# -eq 0 ]; then
-  echo "Usage: $0 [backup|restore]"
-  echo "No arguments provided. Exiting."
-  exit 1
-fi
-
 if [ "$1" != "backup" ] && [ "$1" != "restore" ]; then
-  echo "Invalid argument. Only 'backup' or 'restore' are allowed. Exiting."
+  echo "Usage: $0 [backup|restore]"
   exit 1
 fi
 
 # Set working dir
 cd "$(dirname "$0")" || exit
 
-# Section, Application Support
-mkdir -p "Library/Application Support"
-
-# Section, mac-mouse-fix
-APP_NAME="com.nuebling.mac-mouse-fix"
-if [ "$1" == "backup" ]; then
-  echo "$1 $APP_NAME"
-  mkdir -p Library/Application\ Support/$APP_NAME
-  defaults export "$HOME/Library/Application Support/$APP_NAME/config.plist" - >"Library/Application Support/$APP_NAME/config.plist"
-else
-  echo "$1 $APP_NAME"
-  defaults import "$HOME/Library/Application Support/$APP_NAME/config.plist" "Library/Application Support/$APP_NAME/config.plist"
-fi
-
-# Section, Preferences
-mkdir -p Library/Preferences
-APP_NAME="com.crowdcafe.windowmagnet"
-if [ "$1" == "backup" ]; then
-  echo "$1 $APP_NAME"
-  defaults export "$HOME/Library/Preferences/$APP_NAME.plist" - >"Library/Preferences/$APP_NAME.plist"
-else
-  echo "$1 $APP_NAME"
-  defaults import "$HOME/Library/Preferences/$APP_NAME.plist" "Library/Preferences/$APP_NAME.plist"
-fi
+for plist in "Application Support/com.nuebling.mac-mouse-fix/config.plist" "Preferences/com.crowdcafe.windowmagnet.plist"; do
+  echo "$1 $plist"
+  if [ "$1" == "backup" ]; then
+    mkdir -p "Library/$(dirname "$plist")"
+    defaults export "$HOME/Library/$plist" - >"Library/$plist"
+  else
+    defaults import "$HOME/Library/$plist" "Library/$plist"
+  fi
+done

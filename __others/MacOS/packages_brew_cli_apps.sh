@@ -5,11 +5,4 @@ if [ "$(uname)" != "Darwin" ]; then
     exit 1
 fi
 
-brew install mas # Mac App Store CLI
-brew install ffmpeg
-brew install yt-dlp
-brew install coreutils
-brew install htop
-brew install fastfetch
-brew install cmatrix
-brew install nload
+brew install mas ffmpeg yt-dlp coreutils htop fastfetch cmatrix nload

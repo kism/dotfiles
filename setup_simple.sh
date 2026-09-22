@@ -4,54 +4,24 @@
 # Exit the script if there is an error
 set -e
 
-# Bash
-echo Setting up bash...
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.bashrc -o ~/.bashrc
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.bash_profile -o ~/.bash_profile
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.bash_aliases -o ~/.bash_aliases
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.inputrc -o ~/.inputrc
+BASE=https://raw.githubusercontent.com/kism/dotfiles/main
 
-# Tmux
-echo Setting up tmux...
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.tmux.conf -o ~/.tmux.conf
+get() {
+    echo "Setting up $1..."
+    mkdir -p "$(dirname ~/"$1")"
+    curl --fail --silent -L "$BASE/$1" -o ~/"$1"
+}
+
+for f in .bashrc .bash_profile .bash_aliases .inputrc .tmux.conf .vimrc .config/nvim/init.lua \
+    .config/htop/htoprc .config/btop/btop.conf .zshrc .terminfo/g/ghostty .terminfo/x/xterm-ghostty; do
+    get "$f"
+done
+
 if [ $EUID -eq 0 ]; then # If this is setting up the root user account, make the tmux bar red
     sed -i 's/green/red/g' ~/.tmux.conf
     sed -i 's/colour10/colour9/g' ~/.tmux.conf
 fi
 
-# Vim
-echo Setting up vim...
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.vimrc -o ~/.vimrc
-
-# NeoVim
-echo Setting up neovim...
-mkdir -p ~/.config/nvim/
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.config/nvim/init.lua -o ~/.config/nvim/init.lua
-
-# Htop
-echo Setting up htop...
-mkdir -p ~/.config/htop/
-curl --fail --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/htop/htoprc -o ~/.config/htop/htoprc
-
-# Btop
-echo Setting up btop...
-mkdir -p ~/.config/btop/
-curl --fail --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/btop/btop.conf -o ~/.config/btop/btop.conf
-
-
 if [ "$1" == "--gui" ]; then
-    echo Setting up ghostty
-    mkdir -p ~/.config/ghostty/
-    curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/.config/ghostty/config -o ~/.config/ghostty/config
+    get .config/ghostty/config.ghostty
 fi
-
-# Zsh
-echo Setting up zsh...
-curl --fail --silent -L https://raw.githubusercontent.com/kism/dotfiles/main/.zshrc -o ~/.zshrc
-
-# Terminfo
-echo Setting up terminfo...
-mkdir -p ~/.terminfo/g/
-mkdir -p ~/.terminfo/x/
-curl --fail --silent -L https://github.com/kism/dotfiles/raw/refs/heads/main/.terminfo/g/ghostty -o ~/.terminfo/g/ghostty
-curl --fail --silent -L https://github.com/kism/dotfiles/raw/refs/heads/main/.terminfo/x/xterm-ghostty -o ~/.terminfo/x/xterm-ghostty

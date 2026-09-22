@@ -60,22 +60,11 @@ function load_ssh_keys() {
 }
 
 function get_ssh_keys_loaded() {
-    KEYS_LOADED="0"
-    # if type keychain >/dev/null; then # If keychain is installed we check if we have keys loaded
-    #     KEYS_LOADED=$(keychain -l 2>/dev/null | grep -c "The agent has no identities." | xargs)
-    # fi
-    if [[ ! "$SSH_AUTH_SOCK" == "" ]]; then # If we have an SSH_AUTH_SOCK we have a key loaded
-        KEYS_LOADED=$((KEYS_LOADED + 1))
-    fi
-    echo "$KEYS_LOADED"
+    [[ -n "$SSH_AUTH_SOCK" ]] && echo 1 || echo 0 # If we have an SSH_AUTH_SOCK we have a key loaded
 }
 
 function check_modern_terminal() {
-    if [[ "$TERM" != vt* && "$TERM" != linux && "$TERM" != linux && "$TERM" != dumb ]]; then # Easier to check if it not a legacy terminal
-        return 0                                                                             # Zero is success/true
-    else
-        return 1
-    fi
+    [[ "$TERM" != vt* && "$TERM" != linux && "$TERM" != dumb ]] # Easier to check if it not a legacy terminal
 }
 
 # endregion
@@ -99,10 +88,12 @@ alias sudp='sudo'
 alias tmux='tmux -u'
 alias sl='ls'
 
-if [[ "$OSTYPE" == darwin* ]] && [[ $(type gls >/dev/null) != 0 ]] ; then
-    alias ls='ls --color=auto -F'
-else
+if [[ "$OSTYPE" != darwin* ]]; then
     alias ls='ls --color=auto --group-directories-first -F'
+elif type gls >/dev/null; then # GNU ls from brew coreutils
+    alias ls='gls --color=auto --group-directories-first -F'
+else
+    alias ls='ls --color=auto -F'
 fi
 alias nano='vim'
 alias bim='echo -e "\033[0;31m\033[0;41mB\033[0mim"'
@@ -158,7 +149,6 @@ zle -N down-line-or-beginning-search
 # Load terminfo
 zmodload zsh/terminfo
 
-# region: root user
 if [[ "$OSTYPE" == darwin* ]] && [[ $EUID -eq 0 ]]; then # Set this for root user on macOS so ghostty doesn't get in the way
     export TERM="xterm-256color"
 fi
@@ -262,8 +252,6 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
-# Rust
-
 # Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -297,8 +285,6 @@ autoload -Uz _zinit
 # zinit packages, mostly use Pretzo plugins
 zi snippet PZTM::environment
 zi snippet PZTM::terminal
-# zi snippet PZTM::editor # I do this myself instead, can't get history-substring-search to work
-# zi snippet PZTM::history # I do this myself instead
 zi snippet PZTM::directory
 zi snippet PZTM::utility
 zi snippet PZTM::completion
@@ -309,8 +295,6 @@ zi load 'zsh-users/zsh-history-substring-search'
 bindkey "^[[5~" history-substring-search-up
 # Page Down
 bindkey "^[[6~" history-substring-search-down
-
-# zi light zsh-users/zsh-autosuggestions # Naa
 
 zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
 zi load 'martvdmoosdijk/zsh-nvm-auto-use' # Load Node.js versions per project
@@ -337,4 +321,4 @@ command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 # endregion
 
 # bun completions
-[ -s "/home/kism/.bun/_bun" ] && source "/home/kism/.bun/_bun"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"

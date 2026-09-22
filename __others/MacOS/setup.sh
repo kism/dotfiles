@@ -24,7 +24,7 @@ defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool "false" # Disable d
 defaults write -g AppleInterfaceStyle Dark # Dark mode
 defaults write -g AppleShowScrollBars -string "WhenScrolling;" # Show scroll bars when scrolling
 
-# Dock, Finder, Firefox, misc: config profiles in ./profiles (managed, so locked in System Settings)
+# macOS (Dock, Finder, misc) and Firefox: config profiles in ./profiles (managed, so locked in System Settings)
 # `profiles install` is dead since Big Sur, so open each and approve in System Settings > General > Device Management
 
 # macOS only holds one pending profile at a time, so install them one by one

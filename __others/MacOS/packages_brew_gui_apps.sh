@@ -5,9 +5,5 @@ if [ "$(uname)" != "Darwin" ]; then
     exit 1
 fi
 
-brew install --cask betterdisplay
-brew install --cask cyberduck
-brew install secretive
-brew install --cask ghostty
-brew install thaw@beta
-brew install --cask finetune
+brew install secretive thaw@beta
+brew install --cask betterdisplay cyberduck ghostty finetune
