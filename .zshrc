@@ -25,13 +25,19 @@ function get_mercury_retrograde() {
         touch -a -m -t 197001010000.00 $RETROGRADETEMPFILE
     fi
     if type curl >/dev/null; then
+        # ponytail: refresh detached so shell startup never waits on the network,
+        # this shell prints the cached answer (blank until the first fetch lands)
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            curl --max-time 5 -s https://mercuryretrogradeapi.com >| $RETROGRADETEMPFILE 2>/dev/null
+            { curl --max-time 5 -s https://mercuryretrogradeapi.com >| "$RETROGRADETEMPFILE.new" 2>/dev/null &&
+                [[ -s "$RETROGRADETEMPFILE.new" ]] &&
+                mv "$RETROGRADETEMPFILE.new" "$RETROGRADETEMPFILE" } >/dev/null 2>&1 &!
         fi
-        if cat $RETROGRADETEMPFILE | grep false >/dev/null; then
-            RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
-        else
-            RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;31mRetrograde\033[0m"
+        if [[ -s $RETROGRADETEMPFILE ]]; then
+            if grep -q false $RETROGRADETEMPFILE; then
+                RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
+            else
+                RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;31mRetrograde\033[0m"
+            fi
         fi
     fi
     echo -e "$RESULT"
@@ -245,11 +251,20 @@ fi
 # endregion
 
 # Local Programming tools
-## Node Version Manager
-if [ -d "$HOME/.nvm" ]; then
+## Node Version Manager, sourced once, ~300ms so only if actually installed
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
     export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+elif [ -s /opt/homebrew/opt/nvm/nvm.sh ]; then
+    export NVM_DIR="$HOME/.nvm"  # brew keeps the script in the cellar, the versions here
+    \. /opt/homebrew/opt/nvm/nvm.sh
+    [ -s /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm ] && \. /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm
+fi
+
+## Rust
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
 fi
 
 # Bun
