@@ -15,13 +15,13 @@ defaults write -g com.apple.mouse.linear 1                     # Acceleration
 defaults write -g com.apple.swipescrolldirection -bool "false" # Natural scrolling direction off
 
 # Keyboard
-defaults write -g InitialKeyRepeat -int 25               # Key repeat
-defaults write -g KeyRepeat -int 2                       # Key repeat
-defaults write -g ApplePressAndHoldEnabled -bool "false" # Make holding characters behave normally
+defaults write -g InitialKeyRepeat -int 25                           # Key repeat
+defaults write -g KeyRepeat -int 2                                   # Key repeat
+defaults write -g ApplePressAndHoldEnabled -bool "false"             # Make holding characters behave normally
 defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool "false" # Disable double-space period
 
 # Interface
-defaults write -g AppleInterfaceStyle Dark # Dark mode
+defaults write -g AppleInterfaceStyle Dark                     # Dark mode
 defaults write -g AppleShowScrollBars -string "WhenScrolling;" # Show scroll bars when scrolling
 
 # macOS (Dock, Finder, misc) and Firefox: config profiles in ./profiles (managed, so locked in System Settings)

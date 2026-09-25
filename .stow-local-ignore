@@ -24,6 +24,7 @@ _darcs
 
 # This repo
 __others
+__scripts
 generated.txt
 setup.sh
 setup_simple.sh

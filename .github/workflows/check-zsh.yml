@@ -1,0 +1,27 @@
+---
+name: check-zsh
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".zshrc"
+      - ".github/workflows/check-zsh.yml"
+  pull_request:
+    paths:
+      - ".zshrc"
+      - ".github/workflows/check-zsh.yml"
+
+jobs:
+  zsh-parse:
+    name: zsh parse check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Shellcheck can't read zsh, so .zshrc is in its ignore list. This is the
+      # only thing that catches a syntax error before it breaks a login shell.
+      - name: Parse .zshrc
+        run: |
+          zsh --version || sudo apt-get install -y --no-install-recommends zsh
+          zsh -n .zshrc

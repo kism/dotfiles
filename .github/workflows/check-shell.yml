@@ -1,0 +1,52 @@
+---
+name: check-shell
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.sh"
+      - ".bash*"
+      - ".local/bin/**"
+      - ".shellcheckrc"
+      - ".github/workflows/check-shell.yml"
+  pull_request:
+    paths:
+      - "**.sh"
+      - ".bash*"
+      - ".local/bin/**"
+      - ".shellcheckrc"
+      - ".github/workflows/check-shell.yml"
+
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          ignore_paths: >-
+            .config
+            .local/share
+            .ssh
+          ignore_names: >-
+            .zshrc
+            zzz_mount_nfs_macos
+        env:
+          SHELLCHECK_OPTS: -e SC1091 # Happy for it to not be able to follow everything
+
+  shfmt:
+    name: shfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Run shfmt
+        run: |
+          curl -fsSL -o /tmp/shfmt https://github.com/mvdan/sh/releases/download/v3.14.1/shfmt_v3.14.1_linux_amd64
+          chmod +x /tmp/shfmt
+          # 4 space indent, matches the repo
+          git ls-files -z '*.sh' '.bash*' .local/bin | xargs -0 -r /tmp/shfmt -d -i 4

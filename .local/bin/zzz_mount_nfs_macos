@@ -2,10 +2,10 @@
 
 # Preflight checks
 if [[ $EUID -eq 0 ]]; then
-  echo "You are running as root, good!"
+    echo "You are running as root, good!"
 else
-  echo "You are NOT running as root, exiting"
-  exit 1
+    echo "You are NOT running as root, exiting"
+    exit 1
 fi
 
 pvematt_mounts=("Amarant" "Freya" "Garnet" "Vivi")
@@ -15,31 +15,31 @@ all_mounts=("${pvewill_mounts[@]}" "${pvematt_mounts[@]}")
 echo
 echo "Creating Folders"
 for item in $all_mounts; do
-  mount_path=/Volumes/$item
-  umount $mount_path
-  mkdir $mount_path
-  chown nobody $mount_path
-  chmod 600 $mount_path
+    mount_path=/Volumes/$item
+    umount $mount_path
+    mkdir $mount_path
+    chown nobody $mount_path
+    chmod 600 $mount_path
 done
 
 echo
 echo "Mounting pvewill items"
 nfs_server=pvewill.kg.lan
 for item in $pvewill_mounts; do
-   mount_path=/Volumes/$item
-   echo Mounting $nfs_server export $item to $mount_path
-   mount -t nfs -o resvport,tcp,vers=3,hard,intr,timeo=60 $nfs_server:/srv/$item $mount_path
-#    mount -t nfs -o resvport,tcp,vers=4.1,soft,timeo=60 $nfs_server:/srv/$item $mount_path
+    mount_path=/Volumes/$item
+    echo Mounting $nfs_server export $item to $mount_path
+    mount -t nfs -o resvport,tcp,vers=3,hard,intr,timeo=60 $nfs_server:/srv/$item $mount_path
+    #    mount -t nfs -o resvport,tcp,vers=4.1,soft,timeo=60 $nfs_server:/srv/$item $mount_path
 done
 
 echo
 echo "Mounting pvematt items"
 nfs_server=pvematt.kg.lan
 for item in $pvematt_mounts; do
-   mount_path=/Volumes/$item
-   echo Mounting $nfs_server export $item to $mount_path
-   mount -t nfs -o resvport,tcp,vers=3,soft,timeo=60 $nfs_server:/srv/$item $mount_path
-#    mount -t nfs -o resvport,tcp,vers=4.1,hard,intr,timeo=60 $nfs_server:/srv/$item $mount_path
+    mount_path=/Volumes/$item
+    echo Mounting $nfs_server export $item to $mount_path
+    mount -t nfs -o resvport,tcp,vers=3,soft,timeo=60 $nfs_server:/srv/$item $mount_path
+    #    mount -t nfs -o resvport,tcp,vers=4.1,hard,intr,timeo=60 $nfs_server:/srv/$item $mount_path
 done
 
 echo

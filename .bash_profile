@@ -10,6 +10,6 @@ export PATH
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-  # shellcheck source=.bashrc
-  source ~/.bashrc
+    # shellcheck source=.bashrc
+    source ~/.bashrc
 fi

@@ -1,0 +1,48 @@
+---
+name: check-config
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.toml"
+      - "**.lua"
+      - "**.plist"
+      - "**.mobileconfig"
+      - ".github/workflows/check-config.yml"
+  pull_request:
+    paths:
+      - "**.toml"
+      - "**.lua"
+      - "**.plist"
+      - "**.mobileconfig"
+      - ".github/workflows/check-config.yml"
+
+jobs:
+  syntax:
+    name: Config syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check TOML # starship, alacritty, spotify-player
+        run: |
+          for f in $(git ls-files '*.toml'); do
+            python3 -c "import tomllib,sys; tomllib.load(open(sys.argv[1],'rb'))" "$f"
+            echo "ok $f"
+          done
+
+      - name: Check Lua # nvim config, mpv scripts
+        run: |
+          sudo apt-get install -y --no-install-recommends lua5.4
+          for f in $(git ls-files '*.lua'); do
+            lua5.4 -e "assert(loadfile('$f'))" # compile only, never runs the file
+            echo "ok $f"
+          done
+
+      - name: Check plists and mobileconfigs # plistlib parses these, no macOS runner needed
+        run: |
+          git ls-files -z '*.plist' '*.mobileconfig' | while IFS= read -r -d '' f; do
+            python3 -c "import plistlib,sys; plistlib.load(open(sys.argv[1],'rb'))" "$f" || exit 1
+            echo "ok $f"
+          done

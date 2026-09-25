@@ -11,4 +11,3 @@ fi
 
 # No power-on when lid opened or power plugged in
 sudo nvram BootPreference=%00
-
