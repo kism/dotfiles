@@ -1,5 +1,7 @@
 # Kieran's Dotfiles
 
+[![test-deploy](https://github.com/kism/dotfiles/actions/workflows/test-deploy.yml/badge.svg)](https://github.com/kism/dotfiles/actions/workflows/test-deploy.yml) [![check-shell](https://github.com/kism/dotfiles/actions/workflows/check-shell.yml/badge.svg)](https://github.com/kism/dotfiles/actions/workflows/check-shell.yml) [![check-zsh](https://github.com/kism/dotfiles/actions/workflows/check-zsh.yml/badge.svg)](https://github.com/kism/dotfiles/actions/workflows/check-zsh.yml) [![check-config](https://github.com/kism/dotfiles/actions/workflows/check-config.yml/badge.svg)](https://github.com/kism/dotfiles/actions/workflows/check-config.yml) [![check-actions](https://github.com/kism/dotfiles/actions/workflows/check-actions.yml/badge.svg)](https://github.com/kism/dotfiles/actions/workflows/check-actions.yml) [![check-windows](https://github.com/kism/dotfiles/actions/workflows/check-windows.yml/badge.svg)](https://github.com/kism/dotfiles/actions/workflows/check-windows.yml)
+
 My dotfiles, uses gnu stow to symlink files, alternate option to just fetch basic files.
 
 ## Simple, just curl the basics (bash, tmux, vim)
