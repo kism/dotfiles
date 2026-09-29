@@ -1,0 +1,87 @@
+{
+  "policies": {
+    "DisablePocket": true,
+    "PasswordManagerEnabled": false,
+    "AutofillAddressEnabled": false,
+    "AutofillCreditCardEnabled": false,
+    "NoDefaultBookmarks": true,
+    "DontCheckDefaultBrowser": true,
+    "TranslateEnabled": true,
+    "IPProtectionAvailable": true,
+    "VisualSearchEnabled": false,
+    "GenerativeAI": {
+      "Enabled": false,
+      "Chatbot": false,
+      "LinkPreviews": false,
+      "TabGroups": false,
+      "Locked": false
+    },
+    "AIControls": {
+      "Default": {
+        "Value": "blocked",
+        "Locked": false
+      },
+      "Translations": {
+        "Value": "available",
+        "Locked": false
+      },
+      "PDFAltText": {
+        "Value": "available",
+        "Locked": false
+      },
+      "SmartTabGroups": {
+        "Value": "blocked",
+        "Locked": false
+      },
+      "LinkPreviewKeyPoints": {
+        "Value": "blocked",
+        "Locked": false
+      },
+      "SidebarChatbot": {
+        "Value": "blocked",
+        "Locked": false
+      },
+      "SmartWindow": {
+        "Value": "blocked",
+        "Locked": false
+      }
+    },
+    "SearchEngines": {
+      "Add": [
+        {
+          "Name": "YouTube",
+          "URLTemplate": "https://www.youtube.com/results?search_query={searchTerms}",
+          "Method": "GET",
+          "IconURL": "https://www.youtube.com/favicon.ico",
+          "Alias": "@youtube"
+        }
+      ],
+      "Remove": [
+        "Perplexity"
+      ]
+    },
+    "FirefoxSuggest": {
+      "SponsoredSuggestions": false
+    },
+    "FirefoxHome": {
+      "Search": true,
+      "TopSites": false,
+      "SponsoredTopSites": false,
+      "Highlights": false,
+      "Stories": false,
+      "SponsoredStories": false,
+      "WebSuggestions": false,
+      "SponsoredSuggestions": false,
+      "ImproveSuggest": false,
+      "Locked": false
+    },
+    "Extensions": {
+      "Install": [
+        "https://addons.mozilla.org/firefox/downloads/file/4407804/bitwarden_password_manager-latest.xpi",
+        "https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-latest.xpi",
+        "https://addons.mozilla.org/firefox/downloads/file/3938344/scroll_anywhere-latest.xpi",
+        "https://addons.mozilla.org/firefox/downloads/file/4270221/english_australian_dictionary-latest.xpi"
+      ]
+    }
+  }
+}

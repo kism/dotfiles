@@ -221,6 +221,85 @@ if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
 
+# Firefox, parity with __others/Linux/firefox/policies.json, "HKEY_CURRENT_USER\SOFTWARE\Policies\Mozilla\Firefox"
+## Per user, HKLM would apply machine wide and take precedence. Arrays are numbered subkeys/values, booleans are DWORD 0/1
+Write-Host "Firefox..."
+$firefoxPolicyPath = "HKCU:\SOFTWARE\Policies\Mozilla\Firefox"
+## Start clean so removed policies/extensions don't linger
+Remove-Item -Path $firefoxPolicyPath -Recurse -ErrorAction SilentlyContinue
+New-Item -Path $firefoxPolicyPath -Force | Out-Null
+$firefoxPolicyKeys = @(
+    "GenerativeAI",
+    "AIControls",
+    "AIControls\Default",
+    "AIControls\Translations",
+    "AIControls\PDFAltText",
+    "AIControls\SmartTabGroups",
+    "AIControls\LinkPreviewKeyPoints",
+    "AIControls\SidebarChatbot",
+    "AIControls\SmartWindow",
+    "SearchEngines",
+    "SearchEngines\Add",
+    "SearchEngines\Add\1",
+    "SearchEngines\Remove",
+    "FirefoxSuggest",
+    "FirefoxHome",
+    "Extensions",
+    "Extensions\Install"
+)
+ForEach ($key in $firefoxPolicyKeys) {
+    New-Item -Path "$firefoxPolicyPath\$key" -Force | Out-Null
+}
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "DisablePocket" -Value 1 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "PasswordManagerEnabled" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "AutofillAddressEnabled" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "AutofillCreditCardEnabled" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "NoDefaultBookmarks" -Value 1 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "DontCheckDefaultBrowser" -Value 1 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "TranslateEnabled" -Value 1 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "IPProtectionAvailable" -Value 1 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath" -Name "VisualSearchEnabled" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\GenerativeAI" -Name "Enabled" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\GenerativeAI" -Name "Chatbot" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\GenerativeAI" -Name "LinkPreviews" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\GenerativeAI" -Name "TabGroups" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\GenerativeAI" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\Default" -Name "Value" -Value 'blocked' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\Default" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\Translations" -Name "Value" -Value 'available' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\Translations" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\PDFAltText" -Name "Value" -Value 'available' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\PDFAltText" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\SmartTabGroups" -Name "Value" -Value 'blocked' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\SmartTabGroups" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\LinkPreviewKeyPoints" -Name "Value" -Value 'blocked' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\LinkPreviewKeyPoints" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\SidebarChatbot" -Name "Value" -Value 'blocked' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\SidebarChatbot" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\SmartWindow" -Name "Value" -Value 'blocked' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\AIControls\SmartWindow" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\SearchEngines\Add\1" -Name "Name" -Value 'YouTube' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\SearchEngines\Add\1" -Name "URLTemplate" -Value 'https://www.youtube.com/results?search_query={searchTerms}' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\SearchEngines\Add\1" -Name "Method" -Value 'GET' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\SearchEngines\Add\1" -Name "IconURL" -Value 'https://www.youtube.com/favicon.ico' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\SearchEngines\Add\1" -Name "Alias" -Value '@youtube' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\SearchEngines\Remove" -Name "1" -Value 'Perplexity' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxSuggest" -Name "SponsoredSuggestions" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "Search" -Value 1 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "TopSites" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "SponsoredTopSites" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "Highlights" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "Stories" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "SponsoredStories" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "WebSuggestions" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "SponsoredSuggestions" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "ImproveSuggest" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\FirefoxHome" -Name "Locked" -Value 0 -Type DWord
+Set-ItemProperty -Path "$firefoxPolicyPath\Extensions\Install" -Name "1" -Value 'https://addons.mozilla.org/firefox/downloads/file/4407804/bitwarden_password_manager-latest.xpi' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\Extensions\Install" -Name "2" -Value 'https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-latest.xpi' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\Extensions\Install" -Name "3" -Value 'https://addons.mozilla.org/firefox/downloads/file/3938344/scroll_anywhere-latest.xpi' -Type String
+Set-ItemProperty -Path "$firefoxPolicyPath\Extensions\Install" -Name "4" -Value 'https://addons.mozilla.org/firefox/downloads/file/4270221/english_australian_dictionary-latest.xpi' -Type String
+
 # Windows Time Settings, "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
 Write-Host "RTC..."
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Value 1 -Force
