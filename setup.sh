@@ -83,8 +83,13 @@ function setup_apt() {
     sudo apt-get update
     # shellcheck disable=SC2086 # Required here to split the package list
     sudo apt-get install --no-install-recommends -y $install_apt
-    h2 "add-apt-repository -y ppa:neovim-ppa/unstable"
-    sudo add-apt-repository -y ppa:neovim-ppa/unstable
+    # Ubuntu 26.04+ ships a recent enough neovim in the main repos
+    if [ "$ID" == "ubuntu" ] && [ "${VERSION_ID%%.*}" -ge 26 ]; then
+        h2 "Ubuntu $VERSION_ID detected, using neovim from the Ubuntu repos"
+    else
+        h2 "add-apt-repository -y ppa:neovim-ppa/unstable"
+        sudo add-apt-repository -y ppa:neovim-ppa/unstable
+    fi
     h2 "apt upgrade"
     sudo apt-get upgrade -y
     h2 "Installing Packages"
