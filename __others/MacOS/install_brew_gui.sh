@@ -5,17 +5,25 @@ if [ "$(uname)" != "Darwin" ]; then
     exit 1
 fi
 
-formulae=(
-    secretive
-    thaw@beta
-)
-
 casks=(
     betterdisplay
     cyberduck
     ghostty
-    finetune
+    secretive
+    thaw@beta
+    claude-code
+    font-fira-code
+    font-iosevka
+    domzilla-caffeine
+    obs
+    audacity
+    libreoffice
+    foobar2000
+    macshot-offline
+    # shutter-encoder
+    # porting-kit
+    # ares-emulator
+    # space-cadet-pinball
 )
 
-brew install "${formulae[@]}"
 brew install --cask "${casks[@]}"
