@@ -335,5 +335,9 @@ command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
 # endregion
 
-# bun completions
-[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+# pnpm completions
+export PNPM_HOME='/home/kgee/.local/share/pnpm'
+case ":$PATH:" in
+  ":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
