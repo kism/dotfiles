@@ -114,6 +114,9 @@ function setup_dnf() {
     if [ "$ID" == "fedora" ] || [[ $NAME == *"fedora"* ]]; then
         h2 "Fedora based system detected, enabling rpmfusion repos"
         sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
+    elif [ "$ID" == "ol" ]; then
+        h2 "Oracle Linux detected, enabling Oracle EPEL repo"
+        sudo dnf install -y "oracle-epel-release-el${VERSION_ID%%.*}"
     else
         h2 "Enabling EPEL repo"
         sudo dnf install -y epel-release
