@@ -242,12 +242,22 @@ else
     echo -e "SSH KEYS: $(get_ssh_keys_loaded), \c"
 fi
 
+if [[ $OSTYPE == darwin* ]]; then
+  _vols=(/Volumes/*(N/))
+  _vols=(${_vols:#/Volumes/Recovery})
+  if (( ${#_vols} )); then
+    echo ", 💾"
+  fi
+  unset _vols
+fi
+
 ## If COLORTERM is not set, alert the user
 if [[ -z "$COLORTERM" ]]; then
 	echo -e ", \033[0;33mCOLORTERM not set!\033[0m"
 else
 	echo -e ""
 fi
+
 # endregion
 
 # Local Programming tools
@@ -267,15 +277,17 @@ if [ -f "$HOME/.cargo/env" ]; then
     source "$HOME/.cargo/env"
 fi
 
-# Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 # Go
 if [ -d "$HOME/go/bin" ]; then
     export PATH="$HOME/go/bin:$PATH"
 fi
 
+# Pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
 
 # region: zsh settings, handled by zinit
 
@@ -335,9 +347,4 @@ command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
 # endregion
 
-# pnpm completions
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
+
