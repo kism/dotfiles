@@ -1,0 +1,37 @@
+#!/usr/bin/env zsh
+
+# Print fstab lines to stop macOS auto-mounting the volumes that trigger the 💾 in .zshrc
+
+found=0
+vols=()
+uuids=()
+for vol in /Volumes/*(N/); do
+    [[ $vol == /Volumes/Recovery ]] && continue
+    uuid=$(diskutil info "$vol" 2>/dev/null | awk -F': *' '/Volume UUID/ {print $2}')
+    [[ -z $uuid ]] && continue # not a real mount, e.g. stale Time Machine folder
+    fs=$(diskutil info "$vol" | awk -F': *' '/Type \(Bundle\)/ {print $2}')
+    if (( !found )); then
+        echo "Run 'sudo vifs' and add these lines:"
+        echo
+        found=1
+    fi
+    echo "UUID=$uuid none $fs rw,noauto # ${vol:t}"
+    vols+=("$vol")
+    uuids+=("$uuid")
+done
+
+if (( !found )); then
+    echo "No extra volumes mounted, nothing to ignore"
+    exit 0
+fi
+
+echo
+echo "Then eject them now with:"
+for vol in $vols; do
+    echo "  diskutil unmount \"$vol\""
+done
+echo
+echo "Mount on demand later with:"
+for i in {1..${#vols}}; do
+    echo "  diskutil mount $uuids[i] # ${vols[i]:t}"
+done

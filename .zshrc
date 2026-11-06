@@ -243,12 +243,10 @@ else
 fi
 
 if [[ $OSTYPE == darwin* ]]; then
-  _vols=(/Volumes/*(N/))
-  _vols=(${_vols:#/Volumes/Recovery})
-  if (( ${#_vols} )); then
+  # Real mounts only, /Volumes has stale folders (e.g. Time Machine)
+  if mount | grep ' on /Volumes/' | grep -qv ' on /Volumes/Recovery '; then
     echo ", 💾"
   fi
-  unset _vols
 fi
 
 ## If COLORTERM is not set, alert the user
