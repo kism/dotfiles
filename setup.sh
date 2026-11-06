@@ -335,6 +335,17 @@ else
     h3 "ssh not found, skipping"
 fi
 
+# sshd side: accept COLORTERM from clients
+sshd_conf=/etc/ssh/sshd_config.d/99-colorterm.conf
+if [ -d /etc/ssh/sshd_config.d ] && [ ! -f "$sshd_conf" ]; then
+    if command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+        h1 "Setting up sshd to accept COLORTERM"
+        echo "AcceptEnv COLORTERM" | sudo tee "$sshd_conf" >/dev/null
+    else
+        h3 "No passwordless sudo, skipping sshd COLORTERM config"
+    fi
+fi
+
 h3 "All done!"
 hr
 echo
