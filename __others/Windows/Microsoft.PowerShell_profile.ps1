@@ -1,4 +1,6 @@
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/ys2.omp.json" | Invoke-Expression
+if (Get-Command starship -ErrorAction SilentlyContinue) {
+    Invoke-Expression (&starship init powershell)
+}
 
 # Make PS behave a bit more like zsh
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
@@ -20,9 +22,9 @@ else {
     $funkey = [System.Char]::ConvertFromUtf32([System.Convert]::toInt32("1F511", 16))
 }
 
-$poshactive = " "
-if (Test-Path env:POSH_PID) {
-    $poshactive = ", oh-my-posh"
+$promptactive = " "
+if (Test-Path env:STARSHIP_SHELL) {
+    $promptactive = ", starship"
 }
 
 # Alias
@@ -36,5 +38,5 @@ if (Get-Command nvim -ErrorAction SilentlyContinue) {
 $bootuptime = (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
 $CurrentDate = Get-Date
 $uptime = $CurrentDate - $bootuptime
-Write-Output "$((Get-WmiObject Win32_OperatingSystem).Caption), Powershell $($PSVersionTable.PSVersion)$poshactive"
+Write-Output "$((Get-WmiObject Win32_OperatingSystem).Caption), Powershell $($PSVersionTable.PSVersion)$promptactive"
 Write-Output "$env:username@$env:USERDNSDOMAIN $env:computername Up: $($uptime.days) Days, $($uptime.Hours)h$($uptime.Minutes)m $funkey"

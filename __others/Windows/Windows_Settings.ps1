@@ -19,6 +19,12 @@ else {
 
 Write-Host "Operating System: $windowsMajorVersion"
 
+# Set a registry value, creating the key first if it doesn't exist (avoids "Cannot find path" errors)
+function Set-RegValue {
+    param([string]$Path, [string]$Name, $Value)
+    if (!(Test-Path $Path)) { New-Item -Path $Path -Force | Out-Null }
+    Set-ItemProperty -Path $Path -Name $Name -Value $Value -Force
+}
 
 # Taskbar, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 Write-Host "Taskbar..."
@@ -42,9 +48,9 @@ Set-ItemProperty -Path "HKCU:\AppEvents\Schemes\Apps\.Default\.Default\.Current"
 # Windows Colour Settings, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM"
 Write-Host "Colour & DWM..."
 ## DWM
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "AccentColor" -Value 0xff008080
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "AccentColor" -Value 0xff808000 # Teal #008080, stored as ABGR (not ARGB)
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "AlwaysHibernateThumbnails" -Value 0x0
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "ColorizationAfterglow" -Value c4008080
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "ColorizationAfterglow" -Value 0xc4008080
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "ColorizationAfterglowBalance" -Value 0xa
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "ColorizationBlurBalance" -Value 0x1
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\DWM" -Name "ColorizationColor" -Value 0xc4008080
@@ -59,6 +65,13 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Value 0x0
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "ColorPrevalence" -Value 0x1
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency" -Value 0x1
+## Accent colour for Start, taskbar, borders. Explorer\Accent colours are ABGR, the palette is 8x RGBA (light to dark)
+Set-RegValue -Path "HKCU:\Control Panel\Desktop" -Name "AutoColorization" -Value 0 # Don't derive the accent from the wallpaper
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentColorMenu" -Value 0xff808000
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "StartColorMenu" -Value 0xff606000
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentPalette" -Value ([byte[]](
+    0xCC,0xE6,0xE6,0x00, 0x99,0xCC,0xCC,0x00, 0x66,0xB3,0xB3,0x00, 0x33,0x99,0x99,0x00,
+    0x00,0x80,0x80,0x00, 0x00,0x66,0x66,0x00, 0x00,0x4D,0x4D,0x00, 0x00,0x33,0x33,0x00))
 
 # Server Specific Settings, don't use dark mode, different colour title bars
 if ($windowsMajorVersion -eq "Windows Server") {
@@ -80,6 +93,12 @@ if ($windowsMajorVersion -eq "Windows 11") {
     # On Windows 11, Install startallback lmao, or maybe that stardock one
     # Windows 11 SnapBar (thing at top to snap windows when draging a window), Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\
     Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "EnableSnapBar" -Value 0
+    # Hide the Copilot taskbar button
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "ShowCopilotButton" -Value 0
+    # Taskbar icons aligned left (0) instead of centred (1), and small icons (0 = small, 1 = default, 2 = large)
+    # Windows 11 has no supported way to put the taskbar on the left/top edge, that needs StartAllBack or ExplorerPatcher
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "TaskbarAl" -Value 0
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "TaskbarSI" -Value 0
 }
 
 # International Settings, "HKEY_CURRENT_USER\Control Panel\International"
@@ -104,6 +123,11 @@ Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\Keyboard Response" -Na
 Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\StickyKeys" -Name "Flags" -Value 506
 Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\ToggleKeys" -Name "Flags" -Value 506
 
+# Touchpad, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\PrecisionTouchPad"
+Write-Host "Touchpad..."
+## "Down motion scrolls down". 0xFFFFFFFF (-1) = down motion scrolls down (Windows default), 0 = natural, "Down motion scrolls up". Precision touchpads only
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\PrecisionTouchPad" -Name "ScrollDirection" -Value -1
+
 # Explorer, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 Write-Host "Explorer..."
 ## Disallow shake to minimise all windows
@@ -112,7 +136,7 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShowFrequent" -Value 1
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShowRecent" -Value 1
 ## Disable suggested/recent documents/files in jump lists
-Set-ItemProperty -Path "HKCU:HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_TrackDocs" -Value 1
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_TrackDocs" -Value 1
 ## Shown File Extensions, hidden items
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Value 0
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Value 1
@@ -120,7 +144,7 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideIcons" -Value 1
 ## For Windows 10 version 2004 or later Policies may not exist, "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer"
 if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
-    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Explorer"
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Explorer" | Out-Null
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1
 
@@ -132,20 +156,21 @@ if ($windowsMajorVersion -eq "Windows 10") {
 }
 if ($windowsMajorVersion -eq "Windows 11") {
     # "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding"
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "Browser" -Value '{"progress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "CheckMSAAccount" -Value '{"progress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "LandingPage" -Value '{"progress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "OneDriveStartScan" -Value '{"progress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "overallContext" -Value '{"version":0,"trigger":"","lastUpdated":"132851413906829880","overallProgress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "RecommendedApps" -Value '{"progress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "StartSelector" -Value '{"progress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "TipsFiles" -Value '{"progress":100}'
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding" -Name "Welcome" -Value '{"progress":100}'
+    $onboarding = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserOnboarding"
+    Set-RegValue -Path $onboarding -Name "Browser" -Value '{"progress":100}'
+    Set-RegValue -Path $onboarding -Name "CheckMSAAccount" -Value '{"progress":100}'
+    Set-RegValue -Path $onboarding -Name "LandingPage" -Value '{"progress":100}'
+    Set-RegValue -Path $onboarding -Name "OneDriveStartScan" -Value '{"progress":100}'
+    Set-RegValue -Path $onboarding -Name "overallContext" -Value '{"version":0,"trigger":"","lastUpdated":"132851413906829880","overallProgress":100}'
+    Set-RegValue -Path $onboarding -Name "RecommendedApps" -Value '{"progress":100}'
+    Set-RegValue -Path $onboarding -Name "StartSelector" -Value '{"progress":100}'
+    Set-RegValue -Path $onboarding -Name "TipsFiles" -Value '{"progress":100}'
+    Set-RegValue -Path $onboarding -Name "Welcome" -Value '{"progress":100}'
 
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-310093Enabled" -Value 0
+    Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-310093Enabled" -Value 0
 
     if (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement")) {
-        New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion" -Name "UserProfileEngagement"
+        New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion" -Name "UserProfileEngagement" | Out-Null
     }
 }
 
@@ -161,9 +186,20 @@ if ($windowsMajorVersion -eq "Windows 10") {
 # Edge, I give up on this tbh
 Write-Host "Edge..."
 if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge" | Out-Null
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+
+# Claude Code, the native installer puts claude.exe here but doesn't add it to PATH
+Write-Host "Claude Code PATH..."
+$claudeBin = Join-Path $env:USERPROFILE ".local\bin"
+if (Test-Path (Join-Path $claudeBin "claude.exe")) {
+    $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    if (($userPath -split ';') -notcontains $claudeBin) {
+        [Environment]::SetEnvironmentVariable("Path", ($userPath.TrimEnd(';') + ";$claudeBin"), "User")
+    }
+    if (($env:Path -split ';') -notcontains $claudeBin) { $env:Path += ";$claudeBin" }
+}
 
 ################################################################################################################################################################
 #### ELEVATED SECTION
@@ -190,36 +226,79 @@ Write-Host "Elevated Section"
 
 # Firewall
 Write-Host "Firewall..."
-New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Enabled True -Direction Inbound -Action Allow
-New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Enabled True -Direction Inbound -Action Allow
+if (!(Get-NetFirewallRule -DisplayName "Allow ICMPv4-In" -ErrorAction SilentlyContinue)) {
+    New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Enabled True -Direction Inbound -Action Allow | Out-Null
+}
+if (!(Get-NetFirewallRule -DisplayName "Allow ICMPv6-In" -ErrorAction SilentlyContinue)) {
+    New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Enabled True -Direction Inbound -Action Allow | Out-Null
+}
 
 # Disable Cortana
 # "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
 Write-Host "Cortana..."
 if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search")) {
-    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Windows Search"
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Windows Search" | Out-Null
 }
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value 0 -Force
 
 # Disable OneDrive, "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive"
 Write-Host "OneDrive..."
-if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows")) {
-    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "OneDrive"
-}
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1 -Force
+Set-RegValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1
 
 
 # Edge, I give up on this tbh, "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Edge"
 Write-Host "Edge..."
 if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge" | Out-Null
 }
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
 
 if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge"
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge" | Out-Null
 }
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+
+# Remove unwanted apps, also removes the provisioned copy so new user profiles don't get them back
+Write-Host "Remove Apps..."
+$UnwantedApps = [ordered]@{
+    "Microsoft Bing"          = "Microsoft.BingSearch"
+    "Microsoft Clipchamp"     = "Clipchamp.Clipchamp"
+    "Microsoft News"          = "Microsoft.BingNews"
+    "Feedback Hub"            = "Microsoft.WindowsFeedbackHub"
+    "Quick Assist"            = "MicrosoftCorporationII.QuickAssist"
+    "Solitaire & Casual Games" = "Microsoft.MicrosoftSolitaireCollection", "*CasualGames*"
+    "Xbox"                    = "Microsoft.GamingApp", "Microsoft.XboxApp", "Microsoft.XboxGamingOverlay", "Microsoft.XboxGameOverlay", "Microsoft.XboxSpeechToTextOverlay"
+    "Copilot"                 = "Microsoft.Copilot", "Microsoft.Windows.Ai.Copilot.Provider"
+    "Xbox Live"               = "Microsoft.XboxIdentityProvider", "Microsoft.Xbox.TCUI"
+}
+$provisioned = Get-AppxProvisionedPackage -Online
+ForEach ($App in $UnwantedApps.GetEnumerator()) {
+    $removed = $false
+    ForEach ($PackageName in $App.Value) {
+        $installed = Get-AppxPackage -AllUsers -Name $PackageName
+        ForEach ($Package in $installed) {
+            Write-Host "  Removing $($App.Key): $($Package.Name)"
+            Remove-AppxPackage -Package $Package.PackageFullName -AllUsers -ErrorAction SilentlyContinue
+            $removed = $true
+        }
+        $provisioned | Where-Object { $_.DisplayName -like $PackageName } | ForEach-Object {
+            Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName -ErrorAction SilentlyContinue | Out-Null
+        }
+    }
+    if (-not $removed) { Write-Host "  Not installed: $($App.Key)" }
+}
+
+# The Copilot app is also a system-level Win32 install (Microsoft 365 Copilot), not an Appx package
+$copilotUninstall = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" -ErrorAction SilentlyContinue |
+    Where-Object { $_.DisplayName -eq "Copilot" -and $_.Publisher -eq "Microsoft Corporation" -and $_.UninstallString } |
+    Select-Object -First 1
+if ($copilotUninstall) {
+    Write-Host "  Removing Copilot (Win32): $($copilotUninstall.DisplayVersion)"
+    winget uninstall --id Microsoft.365Copilot --silent --accept-source-agreements | Out-Null
+}
+else {
+    Write-Host "  Not installed: Copilot (Win32)"
+}
 
 # Firefox, parity with __others/Linux/firefox/policies.json, "HKEY_CURRENT_USER\SOFTWARE\Policies\Mozilla\Firefox"
 ## Per user, HKLM would apply machine wide and take precedence. Arrays are numbered subkeys/values, booleans are DWORD 0/1
@@ -306,8 +385,7 @@ Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\TimeZoneInformati
 
 ## Context Menu
 Write-Host "Context Menu..."
-$ConfirmPreference = 'High'
-New-PSDrive -Name "HKCR" -PSProvider Registry -Root "HKEY_CLASSES_ROOT"
+New-PSDrive -Name "HKCR" -PSProvider Registry -Root "HKEY_CLASSES_ROOT" | Out-Null
 
 $ContextMenuRegPaths = @(
     # Git Bash
@@ -334,5 +412,11 @@ $ContextMenuRegPaths = @(
 )
 
 ForEach ($RegPath in $ContextMenuRegPaths) {
-    Remove-Item -Path $RegPath -Recurse -Confirm -ErrorAction SilentlyContinue
+    if (Test-Path -LiteralPath $RegPath) {
+        Write-Host "  Removing $RegPath"
+        Remove-Item -LiteralPath $RegPath -Recurse -Force -Confirm:$false
+    }
+    else {
+        Write-Host "  Not present: $RegPath"
+    }
 }
