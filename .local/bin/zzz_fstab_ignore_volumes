@@ -5,10 +5,14 @@
 found=0
 vols=()
 uuids=()
-for vol in /Volumes/*(N/); do
+# Same source as the 💾 check in .zshrc, so they can't disagree
+for vol in ${(f)"$(mount | grep ', local' | sed -n 's|^.* on \(/Volumes/.*\) (.*$|\1|p')"}; do
     [[ $vol == /Volumes/Recovery ]] && continue
     uuid=$(diskutil info "$vol" 2>/dev/null | awk -F': *' '/Volume UUID/ {print $2}')
-    [[ -z $uuid ]] && continue # not a real mount, e.g. stale Time Machine folder
+    if [[ -z $uuid ]]; then
+        echo "Skipping $vol, no Volume UUID (FAT?): $(mount | grep " on $vol ")" >&2
+        continue
+    fi
     fs=$(diskutil info "$vol" | awk -F': *' '/Type \(Bundle\)/ {print $2}')
     if (( !found )); then
         echo "Run 'sudo vifs' and add these lines:"
