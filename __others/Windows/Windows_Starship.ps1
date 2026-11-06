@@ -8,6 +8,9 @@ if (Get-Command starship -ErrorAction SilentlyContinue) {
     winget install Starship.Starship --source winget --accept-source-agreements --accept-package-agreements
 }
 
+# The profile caches `starship init`, drop the cache so it regenerates for the new version
+Remove-Item (Join-Path $env:LOCALAPPDATA "starship-init.ps1") -ErrorAction SilentlyContinue
+
 # Copy from the repo if this script was run from a clone, otherwise (iex from the README one-liner) download it
 function Install-DotFile {
     param([string]$RepoPath, [string]$Destination)

@@ -183,12 +183,22 @@ if ($windowsMajorVersion -eq "Windows 10") {
     Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -Value 0
 }
 
-# Edge, I give up on this tbh
+# Edge policies, "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge", check edge://policy
 Write-Host "Edge..."
-if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge" | Out-Null
-}
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
+$edgePolicyPath = "HKCU:\SOFTWARE\Policies\Microsoft\Edge"
+## Sidebar and Copilot
+Set-RegValue -Path $edgePolicyPath -Name "HubsSidebarEnabled" -Value 0
+Set-RegValue -Path $edgePolicyPath -Name "Microsoft365CopilotChatIconEnabled" -Value 0
+Set-RegValue -Path $edgePolicyPath -Name "CopilotPageContext" -Value 0
+Set-RegValue -Path $edgePolicyPath -Name "EdgeEntraCopilotPageContext" -Value 0
+## New tab page ads, news feed and sponsored tiles
+Set-RegValue -Path $edgePolicyPath -Name "NewTabPageContentEnabled" -Value 0
+Set-RegValue -Path $edgePolicyPath -Name "NewTabPageHideDefaultTopSites" -Value 1
+## Promotions and recommendations
+Set-RegValue -Path $edgePolicyPath -Name "ShowRecommendationsEnabled" -Value 0
+Set-RegValue -Path $edgePolicyPath -Name "SpotlightExperiencesAndRecommendationsEnabled" -Value 0
+Set-RegValue -Path $edgePolicyPath -Name "PromotionalTabsEnabled" -Value 0
+Set-RegValue -Path $edgePolicyPath -Name "ShowMicrosoftRewards" -Value 0
 
 # Claude Code, the native installer puts claude.exe here but doesn't add it to PATH
 Write-Host "Claude Code PATH..."
@@ -224,6 +234,13 @@ if (-not $isElevated) {
 Write-Host ""
 Write-Host "Elevated Section"
 
+# OpenSSH agent, used by the PowerShell profile to hold the SSH key
+Write-Host "OpenSSH Authentication Agent..."
+if (Get-Service ssh-agent -ErrorAction SilentlyContinue) {
+    Set-Service ssh-agent -StartupType Automatic
+    Start-Service ssh-agent -ErrorAction SilentlyContinue
+}
+
 # Firewall
 Write-Host "Firewall..."
 if (!(Get-NetFirewallRule -DisplayName "Allow ICMPv4-In" -ErrorAction SilentlyContinue)) {
@@ -246,17 +263,6 @@ Write-Host "OneDrive..."
 Set-RegValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Value 1
 
 
-# Edge, I give up on this tbh, "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Edge"
-Write-Host "Edge..."
-if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge" | Out-Null
-}
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
-
-if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge")) {
-    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows" -Name "Edge" | Out-Null
-}
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Edge" -Name "HubsSidebarEnabled" -Value 0 -Force
 
 # Remove unwanted apps, also removes the provisioned copy so new user profiles don't get them back
 Write-Host "Remove Apps..."
@@ -294,7 +300,9 @@ $copilotUninstall = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVe
     Select-Object -First 1
 if ($copilotUninstall) {
     Write-Host "  Removing Copilot (Win32): $($copilotUninstall.DisplayVersion)"
-    winget uninstall --id Microsoft.365Copilot --silent --accept-source-agreements | Out-Null
+    # Not in the winget catalog (id is ARP\Machine\X86\Microsoft Copilot), so run its own uninstaller
+    cmd /c "$($copilotUninstall.UninstallString)" | Out-Null
+    if ($LASTEXITCODE -ne 0) { Write-Host "    Uninstall failed (exit $LASTEXITCODE), run as admin?" }
 }
 else {
     Write-Host "  Not installed: Copilot (Win32)"
