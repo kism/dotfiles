@@ -6,7 +6,7 @@ found=0
 vols=()
 uuids=()
 # Same source as the 💾 check in .zshrc, so they can't disagree
-for vol in ${(f)"$(mount | grep ', local' | sed -n 's|^.* on \(/Volumes/.*\) (.*$|\1|p')"}; do
+for vol in ${(f)"$(mount | grep ', local' | grep -v nobrowse | sed -n 's|^.* on \(/Volumes/.*\) (.*$|\1|p')"}; do
     [[ $vol == /Volumes/Recovery ]] && continue
     if diskutil info "$vol" 2>/dev/null | grep -q 'Protocol: *Disk Image'; then
         echo "Skipping $vol, mounted disk image, eject with: diskutil eject \"$vol\"" >&2

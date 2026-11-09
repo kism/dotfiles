@@ -244,7 +244,7 @@ fi
 
 if [[ $OSTYPE == darwin* ]]; then
   # Real local mounts only, /Volumes has stale folders (e.g. Time Machine) and network shares
-  if mount | grep ' on /Volumes/.*, local' | grep -qv ' on /Volumes/Recovery '; then
+  if mount | grep ' on /Volumes/.*, local' | grep -v nobrowse | grep -qv ' on /Volumes/Recovery '; then
     echo -e ", 💾\c"
   fi
 fi
