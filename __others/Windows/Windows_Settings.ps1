@@ -174,6 +174,36 @@ if ($windowsMajorVersion -eq "Windows 11") {
     }
 }
 
+# Ads, suggestions and tips, "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
+Write-Host "Ads & suggestions..."
+$cdm = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
+## Lock screen: fun facts/tips/ads overlay on Spotlight (the Spotlight picture itself is left alone)
+Set-RegValue -Path $cdm -Name "RotatingLockScreenOverlayEnabled" -Value 0
+Set-RegValue -Path $cdm -Name "SubscribedContent-338387Enabled" -Value 0
+## Start menu suggestions / promoted apps
+Set-RegValue -Path $cdm -Name "SubscribedContent-338388Enabled" -Value 0
+Set-RegValue -Path $cdm -Name "SystemPaneSuggestionsEnabled" -Value 0
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_IrisRecommendations" -Value 0
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Start_AccountNotifications" -Value 0
+## Tips, tricks and suggestions notifications, Settings app suggestions, welcome experience
+Set-RegValue -Path $cdm -Name "SubscribedContent-338389Enabled" -Value 0
+Set-RegValue -Path $cdm -Name "SubscribedContent-353694Enabled" -Value 0
+Set-RegValue -Path $cdm -Name "SubscribedContent-353696Enabled" -Value 0
+Set-RegValue -Path $cdm -Name "SubscribedContent-338393Enabled" -Value 0
+Set-RegValue -Path $cdm -Name "SoftLandingEnabled" -Value 0
+Set-RegValue -Path $cdm -Name "FeatureManagementEnabled" -Value 0
+## Silently installed / pre-installed promoted apps
+Set-RegValue -Path $cdm -Name "ContentDeliveryAllowed" -Value 0
+Set-RegValue -Path $cdm -Name "SilentInstalledAppsEnabled" -Value 0
+Set-RegValue -Path $cdm -Name "OemPreInstalledAppsEnabled" -Value 0
+Set-RegValue -Path $cdm -Name "PreInstalledAppsEnabled" -Value 0
+Set-RegValue -Path $cdm -Name "PreInstalledAppsEverEnabled" -Value 0
+## Ads in Explorer (OneDrive/Microsoft 365 promos), advertising ID, tailored experiences
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSyncProviderNotifications" -Value 0
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Value 0
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" -Name "TailoredExperiencesWithDiagnosticDataEnabled" -Value 0
+Set-RegValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Value 0
+
 # Start menu search
 Write-Host "Start Menu..."
 ## Disable web search in start menu
