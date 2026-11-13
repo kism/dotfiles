@@ -28,18 +28,39 @@ for vol in ${(f)"$(mount | grep ', local' | grep -v nobrowse | sed -n 's|^.* on 
     uuids+=("$uuid")
 done
 
+# Locked FileVault volumes (e.g. another macOS install) aren't mounted so the loop above misses them,
+# but they still trigger an unlock prompt at login
+locked=()
+for line in ${(f)"$(diskutil apfs list | awk '
+    /\+-> Volume/ {uuid = $NF}
+    /Name:/ {sub(/^.*Name: */, ""); sub(/ \(Case-.*$/, ""); name = $0}
+    /FileVault:.*Locked/ {print uuid " " name}')"}; do
+    if (( !found )); then
+        echo "Run 'sudo vifs' and add these lines:"
+        echo
+        found=1
+    fi
+    echo "UUID=${line%% *} none apfs rw,noauto # ${line#* } (locked)"
+    locked+=("$line")
+done
+
 if (( !found )); then
     echo "No extra volumes mounted, nothing to ignore"
     exit 0
 fi
 
-echo
-echo "Then eject them now with:"
-for vol in $vols; do
-    echo "  diskutil unmount \"$vol\""
-done
+if (( ${#vols} )); then
+    echo
+    echo "Then eject them now with:"
+    for vol in $vols; do
+        echo "  diskutil unmount \"$vol\""
+    done
+fi
 echo
 echo "Mount on demand later with:"
-for i in {1..${#vols}}; do
+for (( i = 1; i <= ${#vols}; i++ )); do
     echo "  diskutil mount $uuids[i] # ${vols[i]:t}"
+done
+for line in $locked; do
+    echo "  diskutil apfs unlockVolume ${line%% *} # ${line#* }"
 done
