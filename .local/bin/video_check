@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""Check every video in the cwd with ffmpeg, write errors to ./video_check.json.
+
+Files whose sha256 matches the previous run are skipped.
+"""
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+VIDEO_EXTS = {
+    ".mkv", ".mp4", ".m4v", ".mov", ".avi", ".wmv", ".webm", ".ts",
+    ".m2ts", ".mpg", ".mpeg", ".flv", ".3gp", ".vob",
+}
+OUT = Path("video_check.json")
+
+
+def sha256(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def ffmpeg_errors(path):
+    p = subprocess.run(
+        ["ffmpeg", "-nostdin", "-v", "error", "-i", str(path), "-f", "null", "-"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+        errors="replace",
+    )
+    errors = [line for line in p.stderr.splitlines() if line.strip()]
+    if p.returncode and not errors:
+        errors.append(f"ffmpeg exited with code {p.returncode}")
+    return errors
+
+
+def save(results):
+    tmp = OUT.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(results, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+    os.replace(tmp, OUT)
+
+
+def main():
+    if not shutil.which("ffmpeg"):
+        sys.exit("ffmpeg not found in PATH, install it first")
+
+    files = sorted(p for p in Path(".").iterdir() if p.is_file() and p.suffix.lower() in VIDEO_EXTS)
+    if not files:
+        sys.exit("No video files in current directory")
+
+    try:
+        old = json.loads(OUT.read_text())
+    except (FileNotFoundError, ValueError):
+        old = {}
+
+    results = {}
+    for i, path in enumerate(files, 1):
+        print(f"[{i}/{len(files)}] {path.name}", end=" ... ", flush=True)
+        digest = sha256(path)
+        prev = old.get(path.name)
+        if isinstance(prev, dict) and prev.get("sha256") == digest:
+            results[path.name] = prev
+            print("unchanged, skipped")
+        else:
+            errors = ffmpeg_errors(path)
+            results[path.name] = {"sha256": digest, "errors": errors}
+            print(f"{len(errors)} error(s)" if errors else "ok")
+        save({**old, **results})  # keep unchecked old entries if interrupted
+
+    save(results)  # final write drops files that no longer exist
+    bad = sum(1 for r in results.values() if r["errors"])
+    print(f"\n{len(results)} files, {bad} with errors -> {OUT.resolve()}")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit("\nInterrupted, progress saved")
