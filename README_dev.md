@@ -30,4 +30,9 @@ ZDOTDIR=$D zsh -i -c exit | head -25
 
 ## Ghostty terminfo
 
-Update on a machine with Ghostty: `infocmp -x xterm-ghostty > /tmp/g.src && tic -x -o .terminfo /tmp/g.src`
+Update on a machine with Ghostty (mac `tic` writes hex dirs like `78/`, so copy into the linux layout):
+
+```sh
+infocmp -x xterm-ghostty > /tmp/g.src && rm -rf /tmp/ti && tic -x -o /tmp/ti /tmp/g.src \
+  && f=$(find /tmp/ti -name xterm-ghostty) && cp "$f" .terminfo/x/xterm-ghostty && cp "$f" .terminfo/g/ghostty
+```
