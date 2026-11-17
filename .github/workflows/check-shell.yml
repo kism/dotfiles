@@ -35,5 +35,20 @@ jobs:
           ignore_names: >-
             .zshrc
             zzz_mount_nfs_macos
+            zzz_fstab_ignore_volumes
         env:
           SHELLCHECK_OPTS: -e SC1091 # Happy for it to not be able to follow everything
+
+  shfmt:
+    name: shfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Run shfmt
+        # Same file selection as __scripts/lint.sh: .local/bin also holds python and zsh, so go by shebang
+        run: |
+          # shellcheck disable=SC2046,SC2086 # no spaces in these paths, splitting is intended
+          go install mvdan.cc/sh/v3/cmd/shfmt@latest
+          files=$(git ls-files '*.sh' '.bash*'; grep -lE '^#!.*[ /](ba)?sh( |$)' $(git ls-files .local/bin))
+          "$(go env GOPATH)/bin/shfmt" -d -i 4 $files

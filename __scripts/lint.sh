@@ -23,13 +23,24 @@ check() { # check <label> <command...>
 }
 
 # No spaces in any of these paths, so word splitting is fine and intended
-shell_files=$(git ls-files '*.sh' '.bash*' .local/bin)
-shellcheck_files=$(echo "$shell_files" | grep -v zzz_mount_nfs_macos) # not valid sh
+# .local/bin holds python and zsh too, so only take sh/bash shebangs (shellcheck and shfmt can't parse the rest)
+# shellcheck disable=SC2046
+shell_files=$(
+    git ls-files '*.sh' '.bash*'
+    grep -lE '^#!.*[ /](ba)?sh( |$)' $(git ls-files .local/bin)
+)
+
+# zsh scripts, for shfmt -ln zsh, zsh-lint and zsh -n (shellcheck can't read zsh)
+# shellcheck disable=SC2046
+zsh_files=$(
+    echo .zshrc
+    grep -lE '^#!.*[ /]zsh( |$)' $(git ls-files .local/bin)
+)
 
 h "shellcheck"
 if type shellcheck >/dev/null 2>&1; then
     # shellcheck disable=SC2086
-    check shellcheck shellcheck -e SC1091 $shellcheck_files
+    check shellcheck shellcheck -e SC1091 $shell_files
 else
     skip shellcheck
 fi
@@ -44,9 +55,25 @@ fi
 
 h "zsh -n"
 if type zsh >/dev/null 2>&1; then
-    check .zshrc zsh -n .zshrc
+    for f in $zsh_files; do check "$f" zsh -n "$f"; done
 else
     skip zsh
+fi
+
+h "shfmt (zsh)"
+if type shfmt >/dev/null 2>&1; then
+    # shellcheck disable=SC2086
+    check shfmt-zsh shfmt -ln zsh -d -i 4 $zsh_files
+else
+    skip shfmt
+fi
+
+h "zsh-lint"
+if type zsh-lint >/dev/null 2>&1; then
+    # shellcheck disable=SC2086
+    check zsh-lint zsh-lint $zsh_files
+else
+    skip zsh-lint
 fi
 
 h "toml"

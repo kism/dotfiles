@@ -18,7 +18,7 @@ for vol in ${(f)"$(mount | grep ', local' | grep -v nobrowse | sed -n 's|^.* on 
         continue
     fi
     fs=$(diskutil info "$vol" | awk -F': *' '/Type \(Bundle\)/ {print $2}')
-    if (( !found )); then
+    if ((! found)); then
         echo "Run 'sudo vifs' and add these lines:"
         echo
         found=1
@@ -35,7 +35,7 @@ for line in ${(f)"$(diskutil apfs list | awk '
     /\+-> Volume/ {uuid = $NF}
     /Name:/ {sub(/^.*Name: */, ""); sub(/ \(Case-.*$/, ""); name = $0}
     /FileVault:.*Locked/ {print uuid " " name}')"}; do
-    if (( !found )); then
+    if ((! found)); then
         echo "Run 'sudo vifs' and add these lines:"
         echo
         found=1
@@ -44,12 +44,12 @@ for line in ${(f)"$(diskutil apfs list | awk '
     locked+=("$line")
 done
 
-if (( !found )); then
+if ((! found)); then
     echo "No extra volumes mounted, nothing to ignore"
     exit 0
 fi
 
-if (( ${#vols} )); then
+if ((${#vols})); then
     echo
     echo "Then eject them now with:"
     for vol in $vols; do
@@ -58,7 +58,7 @@ if (( ${#vols} )); then
 fi
 echo
 echo "Mount on demand later with:"
-for (( i = 1; i <= ${#vols}; i++ )); do
+for ((i = 1; i <= ${#vols}; i++)); do
     echo "  diskutil mount $uuids[i] # ${vols[i]:t}"
 done
 for line in $locked; do

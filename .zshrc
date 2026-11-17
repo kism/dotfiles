@@ -28,9 +28,9 @@ function get_mercury_retrograde() {
         # ponytail: refresh detached so shell startup never waits on the network,
         # this shell prints the cached answer (blank until the first fetch lands)
         if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            { curl --max-time 5 -s https://mercuryretrogradeapi.com >| "$RETROGRADETEMPFILE.new" 2>/dev/null &&
+            { curl --max-time 5 -s https://mercuryretrogradeapi.com >|"$RETROGRADETEMPFILE.new" 2>/dev/null &&
                 [[ -s "$RETROGRADETEMPFILE.new" ]] &&
-                mv "$RETROGRADETEMPFILE.new" "$RETROGRADETEMPFILE" } >/dev/null 2>&1 &!
+                mv "$RETROGRADETEMPFILE.new" "$RETROGRADETEMPFILE"; } >/dev/null 2>&1 &|
         fi
         if [[ -s $RETROGRADETEMPFILE ]]; then
             if grep -q false $RETROGRADETEMPFILE; then
@@ -123,7 +123,7 @@ export VISUAL=vim
 # region: exports
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # VSCode Fix?
 if [[ "$OSTYPE" == darwin* ]]; then
-    export ZSH_DISABLE_COMPFIX="true" # Brew multiuser
+    export ZSH_DISABLE_COMPFIX="true"              # Brew multiuser
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # Unbreak ansible on macos
 else
     export SYSTEMD_COLORS=true
@@ -173,7 +173,6 @@ bindkey "${terminfo[kend]}" end-of-line
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 
-
 ## ctrl+arrows
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
@@ -215,12 +214,12 @@ bindkey "^[[B" down-line-or-beginning-search
 if [[ $EUID -eq 0 ]]; then
     export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
 %{%F{196}%}#%{%f%} "
-    autoload -U compinit; compinit
+    autoload -U compinit
+    compinit
     zstyle ':completion:*' menu select
     return # End early since nothing following matters for root
 fi
 # endregion
-
 
 # region: startup message
 ## Operating system
@@ -243,17 +242,17 @@ else
 fi
 
 if [[ $OSTYPE == darwin* ]]; then
-  # Real local mounts only, /Volumes has stale folders (e.g. Time Machine) and network shares
-  if mount | grep ' on /Volumes/.*, local' | grep -v nobrowse | grep -qv ' on /Volumes/Recovery '; then
-    echo -e ", 💾\c"
-  fi
+    # Real local mounts only, /Volumes has stale folders (e.g. Time Machine) and network shares
+    if mount | grep ' on /Volumes/.*, local' | grep -v nobrowse | grep -qv ' on /Volumes/Recovery '; then
+        echo -e ", 💾\c"
+    fi
 fi
 
 ## If COLORTERM is not set, alert the user
 if [[ -z "$COLORTERM" ]]; then
-	echo -e ", \033[0;33mCOLORTERM not set!\033[0m"
+    echo -e ", \033[0;33mCOLORTERM not set!\033[0m"
 else
-	echo -e ""
+    echo -e ""
 fi
 
 # endregion
@@ -262,10 +261,10 @@ fi
 ## Node Version Manager, sourced once, ~300ms so only if actually installed
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
     export NVM_DIR="$HOME/.nvm"
-    \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    \. "$NVM_DIR/nvm.sh"                                               # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 elif [ -s /opt/homebrew/opt/nvm/nvm.sh ]; then
-    export NVM_DIR="$HOME/.nvm"  # brew keeps the script in the cellar, the versions here
+    export NVM_DIR="$HOME/.nvm" # brew keeps the script in the cellar, the versions here
     \. /opt/homebrew/opt/nvm/nvm.sh
     [ -s /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm ] && \. /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm
 fi
@@ -283,8 +282,8 @@ fi
 # Pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+*":$PNPM_HOME/bin:"*) ;;
+*) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 
 # region: zsh settings, handled by zinit
@@ -297,14 +296,14 @@ export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" &&
+        print -P "%F{33} %F{34}Installation successful.%f%b" ||
         print -P "%F{160} The clone has failed.%f%b"
 fi
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+((${+_comps})) && _comps[zinit]=_zinit
 ## End of Zinit's installer chunk
 
 # zinit packages, mostly use Pretzo plugins
@@ -321,13 +320,13 @@ bindkey "^[[5~" history-substring-search-up
 # Page Down
 bindkey "^[[6~" history-substring-search-down
 
-zi load 'matthiasha/zsh-uv-env' # Load Python virtual environments per UV
+zi load 'matthiasha/zsh-uv-env'           # Load Python virtual environments per UV
 zi load 'martvdmoosdijk/zsh-nvm-auto-use' # Load Node.js versions per project
 
 # Starship handles the prompt
 zi ice as"command" from"gh-r" \
-          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-          atpull"%atclone" src"init.zsh"
+    atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+    atpull"%atclone" src"init.zsh"
 zi light starship/starship
 # endregion
 
@@ -344,5 +343,3 @@ command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
 # endregion
-
-

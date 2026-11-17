@@ -1,4 +1,3 @@
----
 name: check-zsh
 on:
   push:
@@ -6,10 +5,12 @@ on:
       - main
     paths:
       - ".zshrc"
+      - ".local/bin/**"
       - ".github/workflows/check-zsh.yml"
   pull_request:
     paths:
       - ".zshrc"
+      - ".local/bin/**"
       - ".github/workflows/check-zsh.yml"
 
 jobs:
@@ -21,7 +22,32 @@ jobs:
 
       # Shellcheck can't read zsh, so .zshrc is in its ignore list. This is the
       # only thing that catches a syntax error before it breaks a login shell.
-      - name: Parse .zshrc
+      - name: Parse zsh files
         run: |
           zsh --version || sudo apt-get install -y --no-install-recommends zsh
-          zsh -n .zshrc
+          # shellcheck disable=SC2046
+          for f in .zshrc $(grep -lE '^#!.*[ /]zsh( |$)' $(git ls-files .local/bin)); do
+            zsh -n "$f"
+          done
+
+  zsh-lint:
+    name: shfmt + zsh-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install shfmt and zsh-lint
+        env:
+          GOTOOLCHAIN: auto # zsh-lint wants a newer Go than the runner image has
+        run: |
+          go install mvdan.cc/sh/v3/cmd/shfmt@latest
+          go install github.com/z-shell/zsh-lint/cmd/zsh-lint@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      # Same file selection as __scripts/lint.sh. Only warning/error findings fail zsh-lint.
+      - name: Check formatting and lint
+        run: |
+          # shellcheck disable=SC2046,SC2086 # no spaces in these paths, splitting is intended
+          files=$(echo .zshrc; grep -lE '^#!.*[ /]zsh( |$)' $(git ls-files .local/bin))
+          shfmt -ln zsh -d -i 4 $files
+          zsh-lint $files

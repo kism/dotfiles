@@ -9,15 +9,30 @@ __scripts/lint.sh   # mac and linux
 pwsh __scripts/lint.ps1   # windows, PSScriptAnalyzer
 ```
 
-Tools it uses, all optional: `shellcheck`, `shfmt`, `zsh`, `lua`, `actionlint`, `python3`.
+### Linters and formatters (local)
+
+| Tool | For | CI |
+|---|---|---|
+| `shellcheck` | bash/sh lint (can't read zsh) | `check-shell` |
+| `shfmt` (`-i 4`, `-ln zsh` for zsh) | bash and zsh formatting | `check-shell`, `check-zsh` |
+| `zsh-lint` | zsh lint, only warning/error fail | `check-zsh` |
+| `zsh -n` | zsh parse | `check-zsh` |
+
+Distro packages lag. Install or upgrade all three to the latest in `~/.local/bin` (needs only `curl`, `jq` and `tar`, no Go, with `~/.local/bin` on `PATH`):
+
+```sh
+__scripts/install-lint-tools.sh   # BIN=/other/dir to change the target
+```
+
+shellcheck and shfmt are downloaded release binaries (linux/mac, x86_64/arm64). zsh-lint ships no binaries, so the script builds it with a checksummed, temporary Go toolchain and deletes it afterwards. With Go already installed, `go install github.com/z-shell/zsh-lint/cmd/zsh-lint@latest` does the same (it needs Go 1.27+, add `GOTOOLCHAIN=auto`).
+
+Fix formatting with `shfmt -i 4 -w <bash files>` and `shfmt -ln zsh -i 4 -w .zshrc`.
+
+Tools it uses, all optional: `shellcheck`, `shfmt`, `zsh`, `zsh-lint`, `lua`, `actionlint`, `python3`.
 
 ## zsh
 
-```zsh
-zi light z-shell/zsh-lint
-zsh-lint .zshrc
-code --diff .zshrc .zshrc_gen
-```
+Lint with `zsh-lint .zshrc` (installed above). Zsh files are `.zshrc` plus the zsh-shebang scripts in `.local/bin`.
 
 Startup profiling:
 
