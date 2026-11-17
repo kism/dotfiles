@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Claude Code statusline: dir | repo:branch | model | ctx % | session meter + reset | mercury
+# Claude Code statusline: dir | repo:branch | model | ctx % | session meter + reset | plugins | mercury | inuktitut place
 in=$(cat)
 [[ $LANG$LC_ALL == *UTF-8* ]] || export LC_ALL=C.UTF-8 # so ${#var} counts glyphs, not bytes
 dir=$(jq -r '.workspace.current_dir // .cwd // ""' <<<"$in")
@@ -49,12 +49,6 @@ if [ -n "$ses" ]; then # "current session" = 5h rate limit window, as in /usage
     fi
 fi
 
-# mercury status from the cache the zsh banner keeps fresh (.zshrc get_mercury_retrograde); blank if absent
-mf=~/.config/mercuryretrograde
-if [ -s "$mf" ]; then
-    if grep -q false "$mf"; then out+=" | ☿ ${G}Prograde$R"; else out+=" | ☿ ${X}Retrograde$R"; fi
-fi
-
 # enabled plugins (user + project settings); names in full if they fit COLUMNS, else a count
 cfg=()
 for f in ~/.claude/settings.json "$dir/.claude/settings.json" "$dir/.claude/settings.local.json"; do [ -f "$f" ] && cfg+=("$f"); done
@@ -72,5 +66,15 @@ if ((${#plugins[@]})); then
         out+=" | ${#plugins[@]} plugins"
     fi
 fi
+
+# mercury status from the cache the zsh banner keeps fresh (.zshrc get_mercury_retrograde); blank if absent
+mf=~/.config/mercuryretrograde
+if [ -s "$mf" ]; then
+    if grep -q false "$mf"; then out+=" | ☿ ${G}Prograde$R"; else out+=" | ☿ ${X}Retrograde$R"; fi
+fi
+
+# random Canadian place in Inuktitut syllabics (re-rolls on each refresh)
+places=(ᐃᖃᓗᐃᑦ ᓄᓇᕗᑦ ᓄᓇᕕᒃ ᓄᓇᑦᓯᐊᖅ ᑭᕕᖅᑖᓗᒃ ᑭᑦᑭᑕᓂ ᑰᔾᔪᐊᖅ ᑲᖏᖅᓕᓂᖅ ᐃᖃᓗᒃᑑᑦᑎᐊᖅ ᐸᖕᓂᖅᑑᖅ ᑭᙵᐃᑦ ᐃᒡᓗᓕᒃ ᖃᐅᓱᐃᑦᑐᖅ ᐊᕐᕕᐊᑦ ᖃᒪᓂᑐᐊᖅ ᐃᓄᕕᒃ ᒥᑦᑎᒪᑕᓕᒃ)
+out+=" | ${places[RANDOM % ${#places[@]}]}"
 
 printf '%s' "$out"
