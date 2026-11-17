@@ -48,7 +48,6 @@ jobs:
       - name: Run shfmt
         # Same file selection as __scripts/lint.sh: .local/bin also holds python and zsh, so go by shebang
         run: |
-          # shellcheck disable=SC2046,SC2086 # no spaces in these paths, splitting is intended
           go install mvdan.cc/sh/v3/cmd/shfmt@latest
-          files=$(git ls-files '*.sh' '.bash*'; grep -lE '^#!.*[ /](ba)?sh( |$)' $(git ls-files .local/bin))
-          "$(go env GOPATH)/bin/shfmt" -d -i 4 $files
+          mapfile -t files < <({ git ls-files '*.sh' '.bash*'; git ls-files -z .local/bin | xargs -0 grep -lE '^#!.*[ /](ba)?sh( |$)'; })
+          "$(go env GOPATH)/bin/shfmt" -d -i 4 "${files[@]}"

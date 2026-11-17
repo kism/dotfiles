@@ -25,10 +25,8 @@ jobs:
       - name: Parse zsh files
         run: |
           zsh --version || sudo apt-get install -y --no-install-recommends zsh
-          # shellcheck disable=SC2046
-          for f in .zshrc $(grep -lE '^#!.*[ /]zsh( |$)' $(git ls-files .local/bin)); do
-            zsh -n "$f"
-          done
+          mapfile -t files < <({ echo .zshrc; git ls-files -z .local/bin | xargs -0 grep -lE '^#!.*[ /]zsh( |$)'; })
+          for f in "${files[@]}"; do zsh -n "$f"; done
 
   zsh-lint:
     name: shfmt + zsh-lint
@@ -47,7 +45,6 @@ jobs:
       # Same file selection as __scripts/lint.sh. Only warning/error findings fail zsh-lint.
       - name: Check formatting and lint
         run: |
-          # shellcheck disable=SC2046,SC2086 # no spaces in these paths, splitting is intended
-          files=$(echo .zshrc; grep -lE '^#!.*[ /]zsh( |$)' $(git ls-files .local/bin))
-          shfmt -ln zsh -d -i 4 $files
-          zsh-lint $files
+          mapfile -t files < <({ echo .zshrc; git ls-files -z .local/bin | xargs -0 grep -lE '^#!.*[ /]zsh( |$)'; })
+          shfmt -ln zsh -d -i 4 "${files[@]}"
+          zsh-lint "${files[@]}"
