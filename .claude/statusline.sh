@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Claude Code statusline: dir | repo:branch | model | ctx % | session meter + reset | plugins | penguins | mercury | moon | inuktitut place + temp | ANT stock
 in=$(cat)
+command -v jq >/dev/null || {
+    printf '\e[31mstatusline: jq not installed\e[0m\n'
+    exit 0
+}
 [[ $LANG$LC_ALL == *UTF-8* ]] || export LC_ALL=C.UTF-8 # so ${#var} counts glyphs, not bytes
 dir=$(jq -r '.workspace.current_dir // .cwd // ""' <<<"$in")
 model=$(jq -r '.model.display_name // empty' <<<"$in")

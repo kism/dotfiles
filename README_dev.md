@@ -24,7 +24,7 @@ Distro packages lag. Install or upgrade all three to the latest in `~/.local/bin
 __scripts/install-lint-tools.sh   # BIN=/other/dir to change the target
 ```
 
-shellcheck and shfmt are downloaded release binaries (linux/mac, x86_64/arm64). zsh-lint ships no binaries, so the script builds it with a checksummed, temporary Go toolchain and deletes it afterwards. With Go already installed, `go install github.com/z-shell/zsh-lint/cmd/zsh-lint@latest` does the same (it needs Go 1.27+, add `GOTOOLCHAIN=auto`).
+shellcheck and shfmt are downloaded release binaries (linux/mac, x86_64/arm64). zsh-lint ships no binaries, so the script builds it with your installed Go if it is 1.21+ (`GOTOOLCHAIN=auto` fetches the newer Go zsh-lint needs), otherwise with a checksummed, temporary Go toolchain that is deleted afterwards.
 
 Fix formatting with `shfmt -i 4 -w <bash files>` and `shfmt -ln zsh -i 4 -w .zshrc`.
 

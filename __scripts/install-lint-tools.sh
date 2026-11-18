@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # Installs the latest shellcheck, shfmt and zsh-lint into ~/.local/bin (override with BIN=...).
-# Needs only curl, jq and tar, no Go: zsh-lint ships no binaries, so it is built with a
-# throwaway Go toolchain (checksummed, deleted afterwards). Rerun to upgrade.
+# Needs only curl, jq and tar. zsh-lint ships no binaries, so it is built with the installed Go
+# (1.21+, fetches a newer toolchain itself) or, failing that, a throwaway Go toolchain
+# (checksummed, deleted afterwards). Rerun to upgrade.
 
 set -euo pipefail
 
@@ -31,15 +32,22 @@ v=$(latest mvdan/sh)
 curl -fsSL -o "$bin/shfmt" "https://github.com/mvdan/sh/releases/download/$v/shfmt_${v}_${os}_$go_arch"
 chmod 755 "$bin/shfmt"
 
-echo "zsh-lint (builds with a temporary Go)"
+echo "zsh-lint"
 zl=$(latest z-shell/zsh-lint)
-read -r file want < <(curl -fsSL 'https://go.dev/dl/?mode=json' |
-    jq -r --arg os "$os" --arg arch "$go_arch" '[.[0].files[] | select(.os == $os and .arch == $arch and .kind == "archive")][0] | "\(.filename) \(.sha256)"')
-curl -fsSL -o "$tmp/$file" "https://go.dev/dl/$file"
-[ "$(sha256 "$tmp/$file")" = "$want" ] || { echo "go toolchain checksum mismatch" >&2 && exit 1; }
-tar xzf "$tmp/$file" -C "$tmp"
-GOPATH=$tmp/gopath GOCACHE=$tmp/cache GOBIN=$bin GOTOOLCHAIN=auto \
-    "$tmp/go/bin/go" install "github.com/z-shell/zsh-lint/cmd/zsh-lint@$zl"
+# go env prints an empty line for unknown vars, so this is only non-empty on Go 1.21+
+if command -v go >/dev/null && [ -n "$(go env GOTOOLCHAIN 2>/dev/null)" ]; then
+    echo "building with installed $(go version | cut -d' ' -f3)"
+    GOBIN=$bin GOTOOLCHAIN=auto go install "github.com/z-shell/zsh-lint/cmd/zsh-lint@$zl"
+else
+    echo "no Go 1.21+ found, building with a temporary one"
+    read -r file want < <(curl -fsSL 'https://go.dev/dl/?mode=json' |
+        jq -r --arg os "$os" --arg arch "$go_arch" '[.[0].files[] | select(.os == $os and .arch == $arch and .kind == "archive")][0] | "\(.filename) \(.sha256)"')
+    curl -fsSL -o "$tmp/$file" "https://go.dev/dl/$file"
+    [ "$(sha256 "$tmp/$file")" = "$want" ] || { echo "go toolchain checksum mismatch" >&2 && exit 1; }
+    tar xzf "$tmp/$file" -C "$tmp"
+    GOPATH=$tmp/gopath GOCACHE=$tmp/cache GOBIN=$bin GOTOOLCHAIN=auto \
+        "$tmp/go/bin/go" install "github.com/z-shell/zsh-lint/cmd/zsh-lint@$zl"
+fi
 
 echo
 "$bin/shellcheck" --version | sed -n 2p
