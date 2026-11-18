@@ -1,0 +1,6 @@
+{
+  "model": "claude-opus-5-5",
+  "theme": "dark",
+  "agentPushNotifEnabled": true,
+  "statusLine": { "type": "command", "command": "~/.claude/statusline.sh" }
+}
