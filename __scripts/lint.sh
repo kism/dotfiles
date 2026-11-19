@@ -96,6 +96,20 @@ while IFS= read -r -d '' f; do
     check "$f" python3 -c "import plistlib,sys; plistlib.load(open(sys.argv[1],'rb'))" "$f"
 done < <(git ls-files -z '*.plist' '*.mobileconfig')
 
+h "uv format (python)"
+if type uv >/dev/null 2>&1; then
+    # .local/bin python scripts have no .py, so go by shebang like the shell files
+    # shellcheck disable=SC2046
+    py_files=$(
+        git ls-files '*.py'
+        grep -lE '^#!.*python' $(git ls-files .local/bin)
+    )
+    # shellcheck disable=SC2086
+    check "uv format" uv format --preview-features format-command --check --diff -- $py_files
+else
+    skip uv
+fi
+
 h "actionlint"
 if type actionlint >/dev/null 2>&1; then
     check actionlint actionlint

@@ -13,8 +13,20 @@ import sys
 from pathlib import Path
 
 VIDEO_EXTS = {
-    ".mkv", ".mp4", ".m4v", ".mov", ".avi", ".wmv", ".webm", ".ts",
-    ".m2ts", ".mpg", ".mpeg", ".flv", ".3gp", ".vob",
+    ".mkv",
+    ".mp4",
+    ".m4v",
+    ".mov",
+    ".avi",
+    ".wmv",
+    ".webm",
+    ".ts",
+    ".m2ts",
+    ".mpg",
+    ".mpeg",
+    ".flv",
+    ".3gp",
+    ".vob",
 }
 OUT = Path("video_check.json")
 
@@ -43,7 +55,9 @@ def ffmpeg_errors(path):
 
 def save(results):
     tmp = OUT.with_suffix(".json.tmp")
-    tmp.write_text(json.dumps(results, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+    tmp.write_text(
+        json.dumps(results, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+    )
     os.replace(tmp, OUT)
 
 
@@ -51,7 +65,9 @@ def main():
     if not shutil.which("ffmpeg"):
         sys.exit("ffmpeg not found in PATH, install it first")
 
-    files = sorted(p for p in Path(".").iterdir() if p.is_file() and p.suffix.lower() in VIDEO_EXTS)
+    files = sorted(
+        p for p in Path(".").iterdir() if p.is_file() and p.suffix.lower() in VIDEO_EXTS
+    )
     if not files:
         sys.exit("No video files in current directory")
 
