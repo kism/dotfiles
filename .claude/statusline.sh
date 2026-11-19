@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Claude Code statusline: dir | repo:branch | model | ctx % | session meter + reset | plugins | penguins | mercury | moon | inuktitut place + temp | ANT stock
+# Claude Code statusline: dir | repo:branch | model | ctx % | session meter + reset | plugins | penguins | mercury | inuktitut place + temp | ANT stock
 in=$(cat)
 command -v jq >/dev/null || {
     printf '\e[31mstatusline: jq not installed\e[0m\n'
@@ -85,11 +85,6 @@ mf=~/.config/mercuryretrograde
 if [ -s "$mf" ]; then
     if grep -q false "$mf"; then out+=" | ☿ ${G}Prograde$R"; else out+=" | ☿ ${X}Retrograde$R"; fi
 fi
-
-# moon phase, computed locally: seconds since a known new moon (2000-01-06 18:14 UTC) mod the synodic month, in eighths
-# ponytail: mean synodic month, accurate to about a day
-m=("🌑 New" "🌒 Waxing Crescent" "🌓 First Quarter" "🌔 Waxing Gibbous" "🌕 Full" "🌖 Waning Gibbous" "🌗 Last Quarter" "🌘 Waning Crescent")
-out+=" | ${m[$((((($(date +%s) - 947182440) % 2551443) * 8 + 1275721) / 2551443 % 8))]}"
 
 # random Canadian place in Inuktitut syllabics + temp (Open-Meteo, no key); place and weather cached 1h
 # entries: name lat lon (approximate for regions)
