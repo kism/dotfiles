@@ -98,7 +98,11 @@ def ant():
     data = get_json(
         "https://query1.finance.yahoo.com/v8/finance/chart/ANT?interval=1d&range=1d"
     )
-    return f"${data['chart']['result'][0]['meta']['regularMarketPrice']:.2f}"
+    # vs previous close: day in progress while trading, last session once closed
+    m = data["chart"]["result"][0]["meta"]
+    p, prev = m["regularMarketPrice"], m["chartPreviousClose"]
+    d = p - prev
+    return f"${p:.2f} {G if d >= 0 else X}{d:+.2f} ({d / prev:+.2%}){R}"
 
 
 def plugins(d):
