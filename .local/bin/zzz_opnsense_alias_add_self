@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""Add this machine's 192.168.24.0/24 IPv4 to the TempPentanetClients."""
+
+import base64
+import ipaddress
+import json
+import os
+import socket
+import ssl
+import urllib.error
+import urllib.request
+
+# ponytail: single use, everything hardcoded
+HOST = "https://192.168.24.1"
+UUID = "75042d82-e8ad-4fbb-81c9-abb3ffd68699"
+NET = ipaddress.ip_network("192.168.24.0/24")
+
+auth = base64.b64encode(f"{os.environ['OPNSENSE_KEY']}:{os.environ['OPNSENSE_SECRET']}".encode()).decode()
+ctx = ssl._create_unverified_context()  # router has a self-signed cert
+
+
+def api(path: str, body: dict | None = None) -> dict:
+    headers = {"Authorization": f"Basic {auth}"}
+    if body is not None:  # OPNsense 400s on a json Content-Type with an empty body
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(
+        f"{HOST}/api/{path}",
+        data=None if body is None else json.dumps(body).encode(),
+        headers=headers,
+    )
+    try:
+        with urllib.request.urlopen(req, context=ctx) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        raise SystemExit(f"{e.code} {path}: {e.read().decode()}") from None
+
+
+# Source address the kernel would use to reach the router, no packets sent
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+    s.connect(("192.168.24.1", 80))
+    my_ip = s.getsockname()[0]
+if ipaddress.ip_address(my_ip) not in NET:
+    raise SystemExit(f"{my_ip} is not in {NET}, not adding")
+
+# get_item returns content as {value: {"value": ..., "selected": 0|1}}
+current = api(f"firewall/alias/get_item/{UUID}")["alias"]["content"]
+ips = [k for k, v in current.items() if v.get("selected")]
+if my_ip in ips:
+    print(f"{my_ip} already in alias")
+else:
+    ips.append(my_ip)
+    print(api(f"firewall/alias/set_item/{UUID}", {
+        "alias": {
+            "enabled": "1", "name": "TempPentanetClients", "type": "host", "proto": "", "categories": "",
+            "updatefreq": "", "content": "\n".join(ips), "path_expression": "", "authtype": "",
+            "username": "", "password": "", "interface": "", "counters": "0", "expire": "", "description": "",
+        },
+        "network_content": "",
+        "authgroup_content": "",
+    }))
+
+print(api("firewall/alias/reconfigure", {}))
