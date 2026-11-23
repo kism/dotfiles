@@ -270,6 +270,18 @@ if [[ "$skip_package_install" != true ]]; then
     esac
 fi
 
+# Claude settings: tracked shared base merged over the untracked, machine-local settings.json
+# (which keeps local-only keys like autoMode). Shared keys from the base win.
+if type jq >/dev/null; then
+    h1 "Merging Claude settings"
+    claude_settings=.claude/settings.json
+    [ -f "$claude_settings" ] || echo '{}' >"$claude_settings"
+    jq -s '.[0] * .[1]' "$claude_settings" .claude/settings.base.json >"$claude_settings.tmp"
+    mv "$claude_settings.tmp" "$claude_settings"
+else
+    h3 "jq not found, skipping Claude settings merge"
+fi
+
 # Stow
 h1 "Stowing dotfiles"
 if type stow >/dev/null; then

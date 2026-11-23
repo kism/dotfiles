@@ -22,8 +22,6 @@
       }
     }
   },
-  "theme": "dark",
-  "agentPushNotifEnabled": true,
   "pluginConfigs": {
     "ponytail@ponytail": {
       "options": {
@@ -31,5 +29,7 @@
         "sendNames": true
       }
     }
-  }
+  },
+  "theme": "dark",
+  "agentPushNotifEnabled": true
 }

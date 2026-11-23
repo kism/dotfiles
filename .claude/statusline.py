@@ -79,8 +79,8 @@ def penguins():
         if g["awayTeam"]["abbrev"] == "PIT"
         else (g["homeTeam"], g["awayTeam"])
     )
-    live = " live" if g["gameState"] in ("LIVE", "CRIT") else ""
-    return f"PIT {p['score']}-{o['score']} {o['abbrev']}{live}"
+    s = f"PIT {p['score']}-{o['score']} {o['abbrev']}"
+    return f"{s} {X}LIVE{R}" if g["gameState"] in ("LIVE", "CRIT") else s
 
 
 def place():
@@ -162,7 +162,10 @@ def main():
             else f"{len(pl)} plugins"
         )
 
-    out.append(cached("claude-statusline-pit", 3, penguins))
+    # refresh every 30s while the last fetch showed a live game, else every 3 min
+    pit = CACHE / "claude-statusline-pit"
+    live = pit.exists() and "LIVE" in pit.read_text()
+    out.append(cached(pit.name, 0.5 if live else 3, penguins))
 
     # mercury status from the cache the zsh banner keeps fresh (.zshrc get_mercury_retrograde)
     try:
