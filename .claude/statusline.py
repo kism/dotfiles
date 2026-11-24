@@ -143,7 +143,7 @@ def main():
         out.append(f"{c}{name}{R}" + (f" {DIM}{effort}{R}" if effort else ""))
 
     if ctx is not None:
-        out.append(f"{heat(int(ctx))}ctx {int(ctx)}%{R}")
+        out[-1] += f" {heat(int(ctx))}{'○◔◑◕●'[min(int(ctx) * 5 // 100, 4)]}{R}"
 
     # "current session" = 5h rate limit window, as in /usage
     if (ses := five.get("used_percentage")) is not None:
