@@ -139,8 +139,9 @@ def main():
         c = G if "haiku" in w else Y if "sonnet" in w else O if "opus" in w else X
         effort = (inp.get("effort") or {}).get("level")
         # ponytail: unknown levels fall back to the word
+        ec = {"low": G, "medium": Y, "high": O}.get(effort, X)
         effort = {"low": "▁", "medium": "▃", "high": "▅", "xhigh": "▇", "max": "█"}.get(effort, effort)
-        out.append(f"{c}{name}{R}" + (f" {DIM}{effort}{R}" if effort else ""))
+        out.append(f"{c}{name}{R}" + (f" {ec}{effort}{R}" if effort else ""))
 
     if ctx is not None:
         out[-1] += f" {heat(int(ctx))}{'○◔◑◕●'[min(int(ctx) * 5 // 100, 4)]}{R}"
