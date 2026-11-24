@@ -138,6 +138,8 @@ def main():
         w = (model.get("id", "") + name).lower()
         c = G if "haiku" in w else Y if "sonnet" in w else O if "opus" in w else X
         effort = (inp.get("effort") or {}).get("level")
+        # ponytail: unknown levels fall back to the word
+        effort = {"low": "▁", "medium": "▃", "high": "▅", "xhigh": "▇", "max": "█"}.get(effort, effort)
         out.append(f"{c}{name}{R}" + (f" {DIM}{effort}{R}" if effort else ""))
 
     if ctx is not None:
@@ -149,7 +151,7 @@ def main():
         n = min(p // 10, 10)
         s = f"{heat(p)}{'█' * n}{'░' * (10 - n)} {p}%{R}"
         if rst := five.get("resets_at"):
-            s += f" resets {datetime.fromtimestamp(rst):%H:%M}"
+            s += f" ↻ {datetime.fromtimestamp(rst):%H:%M}"
         out.append(s)
 
     # plugin names in full if they fit COLUMNS, else a count
