@@ -252,9 +252,119 @@ def section_unique(snaps: list[str]) -> None:
         print("  " + (out[-1] if out else f"?  {p}"), flush=True)
 
 
+EXCLUDE_XATTR = b"com.apple.metadata:com_apple_backup_excludeItem"
+
+
+def _xattr_checker():
+    """has_exclude_xattr(path) using libc getxattr (os.getxattr is Linux-only)."""
+    import ctypes
+
+    libc = ctypes.CDLL("libc.dylib", use_errno=True)
+    libc.getxattr.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_void_p, ctypes.c_size_t, ctypes.c_uint32, ctypes.c_int]
+    libc.getxattr.restype = ctypes.c_ssize_t
+    XATTR_NOFOLLOW = 1
+    return lambda p: libc.getxattr(os.fsencode(p), EXCLUDE_XATTR, None, 0, 0, XATTR_NOFOLLOW) >= 0
+
+
+def fixed_exclusions() -> set[str]:
+    try:
+        with open("/Library/Preferences/com.apple.TimeMachine.plist", "rb") as f:
+            p = plistlib.load(f)
+    except (OSError, plistlib.InvalidFileException):
+        return set()
+    paths = set(p.get("SkipPaths", [])) | set(p.get("ExcludeByPath", []))
+    return {os.path.expanduser(x).rstrip("/") for x in paths}
+
+
+def section_local(sub: str, depth: int, top: int) -> None:
+    """Size what the next full backup of this Mac would contain, honouring exclusions."""
+    data = "/System/Volumes/Data"
+    start = os.path.join(data, sub) if sub else data
+    header(f"Local: what Time Machine would back up under /{sub} (depth {depth})")
+    print("  scanning (a few minutes for the whole disk) ...", file=sys.stderr, flush=True)
+    excluded_xattr = _xattr_checker()
+    fixed = fixed_exclusions()
+    dev = os.lstat(start).st_dev
+    included: dict[str, int] = defaultdict(int)
+    excluded: dict[str, int] = defaultdict(int)
+    seen_inodes: set[int] = set()
+
+    def is_excluded(path: str) -> bool:
+        logical = path[len(data):] or "/"  # /System/Volumes/Data/Users -> /Users
+        return path in fixed or logical in fixed or excluded_xattr(path)
+
+    def dir_size(d: str) -> int:
+        total = 0
+        for root, dirs, files in os.walk(d, onerror=lambda e: None):
+            for name in files:
+                try:
+                    st = os.lstat(os.path.join(root, name))
+                except OSError:
+                    continue
+                if st.st_nlink > 1:  # count hard links once
+                    if st.st_ino in seen_inodes:
+                        continue
+                    seen_inodes.add(st.st_ino)
+                total += st.st_blocks * 512
+        return total
+
+    def key(path: str) -> str:
+        parts = os.path.relpath(path, data).split(os.sep)
+        return "/" + "/".join(parts[:depth])
+
+    def tm_excluded(dirs: list[str]) -> set[str]:
+        """Ask tmutil in batches; it knows built-in rules (Caches, Logs, ...) that xattrs don't show."""
+        out: set[str] = set()
+        for i in range(0, len(dirs), 1000):
+            for line in run(["tmutil", "isexcluded", *dirs[i:i + 1000]]).splitlines():
+                if line.startswith("[Excluded]"):
+                    out.add(line.split(None, 1)[1].strip())
+        return out
+
+    # Breadth-first so each directory level is one batch of tmutil calls
+    level = [start]
+    while level:
+        subdirs: list[str] = []
+        for d in level:
+            try:
+                it = os.scandir(d)
+            except OSError:
+                continue
+            with it:
+                for e in it:
+                    try:
+                        st = e.stat(follow_symlinks=False)
+                    except OSError:
+                        continue
+                    if st.st_dev != dev:  # other volumes, firmlinked system volume
+                        continue
+                    if e.is_dir(follow_symlinks=False):
+                        subdirs.append(e.path)
+                    elif is_excluded(e.path):
+                        excluded[e.path[len(data):]] += st.st_blocks * 512
+                    elif st.st_ino not in seen_inodes:
+                        if st.st_nlink > 1:
+                            seen_inodes.add(st.st_ino)
+                        included[key(e.path)] += st.st_blocks * 512
+        skip = tm_excluded(subdirs) | {p for p in subdirs if p in fixed or p[len(data):] in fixed}
+        for p in skip:
+            excluded[p[len(data):]] += dir_size(p)
+        level = [p for p in subdirs if p not in skip]
+
+    print(f"  would back up: {human(sum(included.values())).strip()}   "
+          f"excluded: {human(sum(excluded.values())).strip()}")
+    print("\n  Largest included:")
+    for path, size in sorted(included.items(), key=lambda kv: kv[1], reverse=True)[:top]:
+        print(f"  {human(size)}  {path}")
+    print("\n  Largest excluded:")
+    for path, size in sorted(excluded.items(), key=lambda kv: kv[1], reverse=True)[:15]:
+        print(f"  {human(size)}  {path}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--large", type=parse_size, metavar="SIZE", help="find files >= SIZE (e.g. 500M, 1G)")
+    ap.add_argument("--local", action="store_true", help="size what this Mac would back up now (no backup needed)")
+    ap.add_argument("--large",type=parse_size, metavar="SIZE", help="find files >= SIZE (e.g. 500M, 1G)")
     ap.add_argument("--samples", type=int, default=10, help="snapshots to scan for --large, spread evenly (default 10)")
     ap.add_argument("--all", action="store_true", help="scan every snapshot for --large (slow)")
     ap.add_argument("--du", action="store_true", help="largest dirs in the latest snapshot")
@@ -268,6 +378,11 @@ def main() -> None:
 
     if sys.platform != "darwin":
         sys.exit("This script is for MacOS only.")
+    if args.local:
+        if os.geteuid() != 0:
+            print("warning: not root, other users' files will be skipped.", file=sys.stderr)
+        section_local(sub, args.depth, args.top)
+        return
     if os.geteuid() != 0:
         sys.exit("Run with sudo (mounting snapshots needs root).")
 

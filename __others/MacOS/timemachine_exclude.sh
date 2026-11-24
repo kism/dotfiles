@@ -50,6 +50,8 @@ paths=(
     "$HOME/.cache"
     "$HOME/.npm"
     "$HOME/.pnpm-store"
+    "$HOME/Library/pnpm/store"
+    "$HOME/.local/share/pnpm"
     "$HOME/.cargo/registry"
     "$HOME/.rustup"
     "$HOME/.gradle/caches"
@@ -88,6 +90,7 @@ dir_names=(
 )
 search_roots=(
     "$HOME/projects"
+    "$HOME/Documents"
 )
 
 exclude() {
