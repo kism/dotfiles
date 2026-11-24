@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Claude Code statusline, stdlib only.
 
-dir | repo:branch | model | ctx % | session meter + reset | plugins | penguins
+repo:branch (or dir) | model | ctx % | session meter + reset | plugins | penguins
 | mercury | inuktitut place + temp | ANT stock
 """
 
@@ -127,10 +127,11 @@ def main():
     ctx = (inp.get("context_window") or {}).get("used_percentage")
     five = (inp.get("rate_limits") or {}).get("five_hour") or {}
 
-    out = [d.replace(str(HOME), "~", 1) if d.startswith(str(HOME)) else d]
-
+    # repo:branch inside a git repo, else the dir
     if d and (top := git(d, "rev-parse", "--show-toplevel")):
-        out.append(f"{Path(top).name}:{git(d, 'branch', '--show-current') or ''}")
+        out = [f"{Path(top).name}:{git(d, 'branch', '--show-current') or ''}"]
+    else:
+        out = [d.replace(str(HOME), "~", 1) if d.startswith(str(HOME)) else d]
 
     # model, coloured by weight: haiku green, sonnet yellow, opus orange, fable/mythos red
     if name := model.get("display_name"):
