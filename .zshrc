@@ -1,6 +1,8 @@
 # .zshrc
+# Lines between "# simple:skip" and "# simple:end" are stripped by setup_simple.sh
 # https://github.com/kism/dotfiles-simple/blob/main/.zshrc
 
+# simple:skip
 # region Functions
 # Due to weirdness with emojis, we need these variables
 if [[ "$TERM_PROGRAM" == vscode ]]; then # Check if we are in a vscode terminal
@@ -74,6 +76,7 @@ function check_modern_terminal() {
 }
 
 # endregion
+# simple:end
 
 # region: non-interactive
 # set PATH so it includes user's private bin if it exists
@@ -129,7 +132,9 @@ else
     export SYSTEMD_COLORS=true
     export SYSTEMD_PAGER=
 fi
+# simple:skip
 load_ssh_keys
+# simple:end
 # endregion
 
 # region: history
@@ -221,6 +226,7 @@ if [[ $EUID -eq 0 ]]; then
 fi
 # endregion
 
+# simple:skip
 # region: startup message
 ## Operating system
 if test -f /etc/os-release; then # Linux
@@ -256,6 +262,7 @@ else
 fi
 
 # endregion
+# simple:end
 
 # Local Programming tools
 ## Node Version Manager, sourced once, ~300ms so only if actually installed
@@ -292,6 +299,7 @@ esac
 export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
 %{%F{39}%}$%{%f%} "
 
+# simple:skip
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -328,6 +336,7 @@ zi ice as"command" from"gh-r" \
     atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
     atpull"%atclone" src"init.zsh"
 zi light starship/starship
+# simple:end
 # endregion
 
 # Ensure completion is initialized before sourcing any completion scripts
@@ -335,6 +344,7 @@ if ! typeset -f compdef >/dev/null 2>&1; then
     autoload -Uz compinit
     compinit -i
 fi
+zstyle ':completion:*' menu select
 
 # region: Completions
 command -v kubectl >/dev/null && source <(kubectl completion zsh)
