@@ -9,7 +9,7 @@ My dotfiles, uses gnu stow to symlink files, alternate option to just fetch basi
 With curl, assuming bash is your shell
 
 ```bash
-curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/setup_simple.sh | bash && . ~/.bashrc && bind -f ~/.inputrc
+curl --silent https://raw.githubusercontent.com/kism/dotfiles/main/setup_simple.sh | bash && exec "$SHELL"
 ```
 
 Gui systems, Assumes you have zsh and git installed
