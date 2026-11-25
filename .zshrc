@@ -268,12 +268,12 @@ fi
 ## Node Version Manager, sourced once, ~300ms so only if actually installed
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
     export NVM_DIR="$HOME/.nvm"
-    \. "$NVM_DIR/nvm.sh"                                               # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+    \. "$NVM_DIR/nvm.sh" # This loads nvm
+    NVM_COMPLETION="$NVM_DIR/bash_completion"
 elif [ -s /opt/homebrew/opt/nvm/nvm.sh ]; then
     export NVM_DIR="$HOME/.nvm" # brew keeps the script in the cellar, the versions here
     \. /opt/homebrew/opt/nvm/nvm.sh
-    [ -s /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm ] && \. /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm
+    NVM_COMPLETION=/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm
 fi
 
 ## Rust
@@ -351,5 +351,7 @@ command -v kubectl >/dev/null && source <(kubectl completion zsh)
 command -v docker >/dev/null && source <(docker completion zsh)
 command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
+# nvm's bash_completion runs its own (second) compinit unless compinit is already loaded, so it must come after compinit
+[[ -s "$NVM_COMPLETION" ]] && source "$NVM_COMPLETION"
 [[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
 # endregion
