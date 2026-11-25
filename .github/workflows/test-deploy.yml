@@ -46,6 +46,9 @@ jobs:
           if grep -nE '^(zi |source .*zinit)|starship|get_mercury|load_ssh_keys' ~/.zshrc; then exit 1; fi
           out=$(zsh -i -c 'exit 0' </dev/null 2>&1)
           [ -z "$out" ] || { echo "$out"; exit 1; }
+        env:
+          TERM: xterm-256color # CI has no terminal, real shells always have TERM
+          skip_global_compinit: 1 # Ubuntu's /etc/zsh/zshrc compinit trips on the runner's insecure dirs
 
       - name: Run setup script
         run: bash setup.sh --no-package-install
@@ -68,6 +71,9 @@ jobs:
           if grep -nE '^(zi |source .*zinit)|starship|get_mercury|load_ssh_keys' ~/.zshrc; then exit 1; fi
           out=$(zsh -i -c 'exit 0' </dev/null 2>&1)
           [ -z "$out" ] || { echo "$out"; exit 1; }
+        env:
+          TERM: xterm-256color # CI has no terminal, real shells always have TERM
+          skip_global_compinit: 1 # Ubuntu's /etc/zsh/zshrc compinit trips on the runner's insecure dirs
 
       - name: Install stow # so the stow step actually runs instead of being skipped
         run: brew install stow
