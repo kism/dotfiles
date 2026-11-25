@@ -1,6 +1,6 @@
 # .zshrc
 # Lines between "# simple:skip" and "# simple:end" are stripped by setup_simple.sh
-# https://github.com/kism/dotfiles-simple/blob/main/.zshrc
+# https://github.com/kism/dotfiles/blob/main/.zshrc
 
 # simple:skip
 # region Functions
@@ -79,9 +79,11 @@ function check_modern_terminal() {
 # simple:end
 
 # region: non-interactive
+typeset -U path # no duplicate PATH entries in nested shells, only holds for path=(...) not PATH=...
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
+    path=("$HOME/.local/bin" $path)
 fi
 
 # If we are not an interactive shell, don't do anything else
@@ -139,7 +141,7 @@ load_ssh_keys
 
 # region: history
 export HISTFILE=~/.zsh_history
-export HISTSIZE=10000
+export HISTSIZE=12000 # must exceed SAVEHIST for hist_expire_dups_first to do anything
 export SAVEHIST=10000
 ## History command configuration, from oh-my-zsh
 setopt extended_history       # record timestamp of command in HISTFILE
@@ -209,6 +211,9 @@ bindkey "\e[3;6~" kill-line
 # Up, down
 bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
 bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+## ctrl+r, vi insert mode (EDITOR=vim) binds it to redisplay otherwise
+bindkey "^R" history-incremental-search-backward
+
 ## Up, down, God know why, ghostty?
 bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
@@ -230,8 +235,7 @@ fi
 # region: startup message
 ## Operating system
 if test -f /etc/os-release; then # Linux
-    source /etc/os-release
-    echo -e "$PRETTY_NAME, \c"
+    echo -e "$(. /etc/os-release && echo "$PRETTY_NAME"), \c" # subshell, keeps NAME/ID/VERSION out of the shell
 elif type sw_vers >/dev/null; then # MacOS
     echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
 fi
@@ -265,15 +269,23 @@ fi
 # simple:end
 
 # Local Programming tools
-## Node Version Manager, sourced once, ~300ms so only if actually installed
+## Node Version Manager, only if actually installed
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
     export NVM_DIR="$HOME/.nvm"
-    \. "$NVM_DIR/nvm.sh" # This loads nvm
+    \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
     NVM_COMPLETION="$NVM_DIR/bash_completion"
 elif [ -s /opt/homebrew/opt/nvm/nvm.sh ]; then
     export NVM_DIR="$HOME/.nvm" # brew keeps the script in the cellar, the versions here
-    \. /opt/homebrew/opt/nvm/nvm.sh
+    \. /opt/homebrew/opt/nvm/nvm.sh --no-use
     NVM_COMPLETION=/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm
+fi
+# --no-use skips nvm resolving the default alias (~200ms), so put the newest matching install on PATH ourselves
+# ponytail: assumes alias/default is a version (26, v26.8.2), not lts/* or node; those get no node until `nvm use`
+if [[ -s "$NVM_DIR/alias/default" ]]; then
+    nvm_default=$(<"$NVM_DIR/alias/default")
+    nvm_bins=("$NVM_DIR"/versions/node/v${nvm_default#v}(|.*)/bin(Nn))
+    (( $#nvm_bins )) && path=($nvm_bins[-1] $path)
+    unset nvm_default nvm_bins
 fi
 
 ## Rust
@@ -283,15 +295,12 @@ fi
 
 # Go
 if [ -d "$HOME/go/bin" ]; then
-    export PATH="$HOME/go/bin:$PATH"
+    path=("$HOME/go/bin" $path)
 fi
 
 # Pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-*":$PNPM_HOME/bin:"*) ;;
-*) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
+path=("$PNPM_HOME/bin" $path)
 
 # region: zsh settings, handled by zinit
 
@@ -353,5 +362,7 @@ command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 # nvm's bash_completion runs its own (second) compinit unless compinit is already loaded, so it must come after compinit
 [[ -s "$NVM_COMPLETION" ]] && source "$NVM_COMPLETION"
-[[ "$TERM_PROGRAM" == "vscode" ]] && source "$(code --locate-shell-integration-path zsh)"
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then # if-form so a non-vscode shell does not start with $? = 1
+    source "$(code --locate-shell-integration-path zsh)"
+fi
 # endregion
