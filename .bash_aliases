@@ -1,11 +1,11 @@
 # shellcheck shell=bash
 # .bash_aliases
-# https://github.com/kism/dotfiles-simple/blob/main/.bash_aliases
+# https://github.com/kism/dotfiles/blob/main/.bash_aliases
 
 alias ls='ls --color=auto --group-directories-first -F'
 alias ll='ls -lh --color=auto --group-directories-first'
 alias la='ls -halal --color=auto --group-directories-first'
-alias sl='ls --color=auto --group-directories-first'
+alias grep='grep --color=auto'
 
 alias please='sudo $(fc -ln -1)'
 alias sudp='sudo'
