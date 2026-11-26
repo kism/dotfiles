@@ -13,9 +13,11 @@ get() {
 }
 
 for f in .bashrc .bash_profile .bash_aliases .inputrc .tmux.conf .vimrc .config/nvim/init.lua \
-    .config/htop/htoprc .config/btop/btop.conf .terminfo/g/ghostty .terminfo/x/xterm-ghostty; do
+    .config/htop/htoprc .config/btop/btop.conf .terminfo/g/ghostty .terminfo/x/xterm-ghostty \
+    .local/bin/unarchive; do
     get "$f"
 done
+chmod +x ~/.local/bin/unarchive # curl drops the exec bit
 
 echo "Setting up .zshrc..."
 curl --fail --silent -L "$BASE/.zshrc" | sed '/^# simple:skip$/,/^# simple:end$/d' >~/.zshrc

@@ -8,6 +8,8 @@ on:
       - "setup.sh"
       - "setup_simple.sh"
       - ".zshrc"
+      - ".local/bin/unarchive"
+      - "__scripts/test_unarchive.py"
       - "setup_simple_generate.sh"
       - ".stow-local-ignore"
       - ".github/workflows/test-deploy.yml"
@@ -16,6 +18,8 @@ on:
       - "setup.sh"
       - "setup_simple.sh"
       - ".zshrc"
+      - ".local/bin/unarchive"
+      - "__scripts/test_unarchive.py"
       - "setup_simple_generate.sh"
       - ".stow-local-ignore"
       - ".github/workflows/test-deploy.yml"
@@ -50,6 +54,13 @@ jobs:
           [ -z "$out" ] || { echo "$out"; exit 1; }
         env:
           TERM: xterm-256color # CI has no terminal, real shells always have TERM
+
+      - name: Check unarchive
+        run: |
+          test -x ~/.local/bin/unarchive # installed and executable by setup_simple.sh
+          ~/.local/bin/unarchive --help >/dev/null
+          sudo apt-get install -y --no-install-recommends zstd 7zip # so the zstd and 7z paths run too
+          python3 __scripts/test_unarchive.py
 
       - name: Run setup script
         run: bash setup.sh --no-package-install

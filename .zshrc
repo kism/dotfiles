@@ -233,9 +233,9 @@ load_ssh_keys
 
 # region: startup message
 ## Operating system
-if test -f /etc/os-release; then # Linux
+if test -f /etc/os-release; then                              # Linux
     echo -e "$(. /etc/os-release && echo "$PRETTY_NAME"), \c" # subshell, keeps NAME/ID/VERSION out of the shell
-elif type sw_vers >/dev/null; then # MacOS
+elif type sw_vers >/dev/null; then                            # MacOS
     echo -e "$(sw_vers | grep -E "ProductName|ProductVersion" | awk '{print $2}' | tr '\n' ' ' | sed 's/.$//'), \c"
 fi
 
@@ -283,7 +283,7 @@ fi
 if [[ -s "$NVM_DIR/alias/default" ]]; then
     nvm_default=$(<"$NVM_DIR/alias/default")
     nvm_bins=("$NVM_DIR"/versions/node/v${nvm_default#v}(|.*)/bin(Nn))
-    (( $#nvm_bins )) && path=($nvm_bins[-1] $path)
+    (($#nvm_bins)) && path=($nvm_bins[-1] $path)
     unset nvm_default nvm_bins
 fi
 
