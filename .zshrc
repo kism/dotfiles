@@ -2,82 +2,6 @@
 # Lines between "# simple:skip" and "# simple:end" are stripped by setup_simple.sh
 # https://github.com/kism/dotfiles/blob/main/.zshrc
 
-# simple:skip
-# region Functions
-# Due to weirdness with emojis, we need these variables
-if [[ "$TERM_PROGRAM" == vscode ]]; then # Check if we are in a vscode terminal
-    EXTRA_SPACING_EMOJI=" "
-    SPACING_SYMBOLS_AFTER=" "
-    SPACING_SYMBOLS_BEFORE=" "
-elif [[ "$TERM" == alacritty ]]; then
-    EXTRA_SPACING_EMOJI=" "
-    SPACING_SYMBOLS_AFTER=""
-    SPACING_SYMBOLS_BEFORE=""
-else
-    EXTRA_SPACING_EMOJI=""
-    SPACING_SYMBOLS_AFTER=" "
-    SPACING_SYMBOLS_BEFORE=" "
-fi
-
-function get_mercury_retrograde() {
-    RESULT=""
-    RETROGRADETEMPFILE=~/.config/mercuryretrograde
-    if ! [ -f $RETROGRADETEMPFILE ]; then
-        mkdir -p ~/.config/ >/dev/null
-        touch -a -m -t 197001010000.00 $RETROGRADETEMPFILE
-    fi
-    if type curl >/dev/null; then
-        # ponytail: refresh detached so shell startup never waits on the network,
-        # this shell prints the cached answer (blank until the first fetch lands)
-        if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
-            { curl --max-time 5 -s https://mercuryretrogradeapi.com >|"$RETROGRADETEMPFILE.new" 2>/dev/null &&
-                [[ -s "$RETROGRADETEMPFILE.new" ]] &&
-                mv "$RETROGRADETEMPFILE.new" "$RETROGRADETEMPFILE"; } >/dev/null 2>&1 &|
-        fi
-        if [[ -s $RETROGRADETEMPFILE ]]; then
-            if grep -q false $RETROGRADETEMPFILE; then
-                RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
-            else
-                RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;31mRetrograde\033[0m"
-            fi
-        fi
-    fi
-    echo -e "$RESULT"
-}
-
-function load_ssh_keys() {
-    # This also fixes vscode
-    SSH_AGENT_FOLDERS=(${(f)$(ls -1 /tmp | grep ssh)})
-    if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
-        export SSH_AUTH_SOCK=$(/bin/ls -t /tmp/ssh-**/* | head -1)
-    fi
-
-    # Load up ssh keys into keychain if it is on this system
-    if type keychain >/dev/null; then
-        sshkeylist=('id_rsa' 'id_ed25519')
-
-        for i in $sshkeylist; do
-            if [[ -e ~/.ssh/$i ]]; then
-                if ! eval "$(keychain -q --eval --agents ssh "$i")"; then
-                    echo "Keychain failed to load $i"
-                    echo "run 'ssh-agent -s', kill the pid listed 'kill -9 PID' and try again"
-                fi
-            fi
-        done
-    fi
-}
-
-function get_ssh_keys_loaded() {
-    [[ -n "$SSH_AUTH_SOCK" ]] && echo 1 || echo 0 # If we have an SSH_AUTH_SOCK we have a key loaded
-}
-
-function check_modern_terminal() {
-    [[ "$TERM" != vt* && "$TERM" != linux && "$TERM" != dumb ]] # Easier to check if it not a legacy terminal
-}
-
-# endregion
-# simple:end
-
 # region: non-interactive
 typeset -U path # no duplicate PATH entries in nested shells, only holds for path=(...) not PATH=...
 
@@ -134,9 +58,6 @@ else
     export SYSTEMD_COLORS=true
     export SYSTEMD_PAGER=
 fi
-# simple:skip
-load_ssh_keys
-# simple:end
 # endregion
 
 # region: history
@@ -225,13 +146,91 @@ if [[ $EUID -eq 0 ]]; then
     export PS1="%{%F{196}%}%n%{%F{202}%}@%{%F{208}%}%m %{%F{220}%}%~
 %{%F{196}%}#%{%f%} "
     autoload -U compinit
-    compinit
+    compinit -i
     zstyle ':completion:*' menu select
     return # End early since nothing following matters for root
 fi
 # endregion
 
 # simple:skip
+# region: functions
+# Due to weirdness with emojis, we need these variables
+if [[ "$TERM_PROGRAM" == vscode ]]; then # Check if we are in a vscode terminal
+    EXTRA_SPACING_EMOJI=" "
+    SPACING_SYMBOLS_AFTER=" "
+    SPACING_SYMBOLS_BEFORE=" "
+elif [[ "$TERM" == alacritty ]]; then
+    EXTRA_SPACING_EMOJI=" "
+    SPACING_SYMBOLS_AFTER=""
+    SPACING_SYMBOLS_BEFORE=""
+else
+    EXTRA_SPACING_EMOJI=""
+    SPACING_SYMBOLS_AFTER=" "
+    SPACING_SYMBOLS_BEFORE=" "
+fi
+
+function get_mercury_retrograde() {
+    RESULT=""
+    RETROGRADETEMPFILE=~/.config/mercuryretrograde
+    if ! [ -f $RETROGRADETEMPFILE ]; then
+        mkdir -p ~/.config/ >/dev/null
+        touch -a -m -t 197001010000.00 $RETROGRADETEMPFILE
+    fi
+    if type curl >/dev/null; then
+        # ponytail: refresh detached so shell startup never waits on the network,
+        # this shell prints the cached answer (blank until the first fetch lands)
+        if [[ $(find "$RETROGRADETEMPFILE" -mmin +600 -print) ]]; then
+            { curl --max-time 5 -s https://mercuryretrogradeapi.com >|"$RETROGRADETEMPFILE.new" 2>/dev/null &&
+                [[ -s "$RETROGRADETEMPFILE.new" ]] &&
+                mv "$RETROGRADETEMPFILE.new" "$RETROGRADETEMPFILE"; } >/dev/null 2>&1 &|
+        fi
+        if [[ -s $RETROGRADETEMPFILE ]]; then
+            if grep -q false $RETROGRADETEMPFILE; then
+                RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;32mPrograde\033[0m"
+            else
+                RESULT="☿$SPACING_SYMBOLS_AFTER\033[0;31mRetrograde\033[0m"
+            fi
+        fi
+    fi
+    echo -e "$RESULT"
+}
+
+function load_ssh_keys() {
+    # This also fixes vscode
+    SSH_AGENT_FOLDERS=(${(f)$(ls -1 /tmp | grep ssh)})
+    if [[ -n "$SSH_AGENT_FOLDERS" ]]; then
+        export SSH_AUTH_SOCK=$(/bin/ls -t /tmp/ssh-**/* | head -1)
+    fi
+
+    # Load up ssh keys into keychain if it is on this system
+    if type keychain >/dev/null; then
+        sshkeylist=('id_rsa' 'id_ed25519')
+
+        for i in $sshkeylist; do
+            if [[ -e ~/.ssh/$i ]]; then
+                if ! eval "$(keychain -q --eval --agents ssh "$i")"; then
+                    echo "Keychain failed to load $i"
+                    echo "run 'ssh-agent -s', kill the pid listed 'kill -9 PID' and try again"
+                fi
+            fi
+        done
+    fi
+}
+
+function get_ssh_keys_loaded() {
+    [[ -n "$SSH_AUTH_SOCK" ]] && echo 1 || echo 0 # If we have an SSH_AUTH_SOCK we have a key loaded
+}
+
+function check_modern_terminal() {
+    [[ "$TERM" != vt* && "$TERM" != linux && "$TERM" != dumb ]] # Easier to check if it not a legacy terminal
+}
+
+# endregion
+
+# region: ssh keys
+load_ssh_keys
+# endregion
+
 # region: startup message
 ## Operating system
 if test -f /etc/os-release; then # Linux
@@ -268,7 +267,7 @@ fi
 # endregion
 # simple:end
 
-# Local Programming tools
+# region: local programming tools
 ## Node Version Manager, only if actually installed
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
     export NVM_DIR="$HOME/.nvm"
@@ -293,18 +292,19 @@ if [ -f "$HOME/.cargo/env" ]; then
     source "$HOME/.cargo/env"
 fi
 
-# Go
+## Go
 if [ -d "$HOME/go/bin" ]; then
     path=("$HOME/go/bin" $path)
 fi
 
-# Pnpm
+## Pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 path=("$PNPM_HOME/bin" $path)
+# endregion
 
-# region: zsh settings, handled by zinit
+# region: prompt + plugins
 
-# Fallback
+# Fallback prompt, starship replaces it; the only prompt in the simple version
 export PS1="%{%F{39}%}%n%{%F{45}%}@%{%F{51}%}%m %{%F{195}%}%~
 %{%F{39}%}$%{%f%} "
 
